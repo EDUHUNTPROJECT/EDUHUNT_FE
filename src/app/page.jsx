@@ -4,7 +4,7 @@ import {
   Breadcrumb,
   theme,
 } from "antd";
-import MainLayout from "../components/core/layouts/MainLayout";
+import MainLayout from "@/components/core/layouts/MainLayout";
 
 const Home = () => {
   const {

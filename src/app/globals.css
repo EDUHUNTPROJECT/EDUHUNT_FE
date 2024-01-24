@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -30,4 +30,62 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
+} */
+
+
+
+
+
+/* <div className="container mx-auto flex justify-between items-center p-4">
+<Link href={"/"}>
+  <div className="flex items-center cursor-pointer">
+    <img
+      src={"/images/logo.png"}
+      alt=""
+      className="w-10 h-10"
+    />
+    <Text
+      strong
+      color="link"
+      className="ml-2 text-blue-500 text-lg"
+    >
+      EDUHUNT
+    </Text>
+  </div>
+</Link>
+
+<Menu
+  theme="light"
+  mode="horizontal"
+  defaultSelectedKeys={[`${HighlightKey()}`]}
+  items={items}
+  className="flex-grow"
+/>
+
+<div className="flex items-center space-x-4">
+  <div className="relative">
+    <Badge dot>
+      <BellOutlined className="text-xl cursor-pointer" />
+    </Badge>
+  </div>
+  <Dropdown
+    overlay={
+      <Menu>
+        {authitems.map((item) => (
+          <Menu.Item key={item.key}>{item.label}</Menu.Item>
+        ))}
+      </Menu>
+    }
+    placement="bottomRight"
+    arrow
+  >
+    <div className="relative">
+      <Avatar
+        src={<img src={"/images/avatar.png"} alt="avatar" className="w-10 h-10" />}
+        size={"large"}
+      />
+    </div>
+  </Dropdown>
+
+</div>
+</div> */

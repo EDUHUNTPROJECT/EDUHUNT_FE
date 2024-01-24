@@ -66,59 +66,40 @@ const MainLayout = ({ children }) => {
   return (
     <div className="font-sans">
       <header className="bg-white shadow">
-        <div className="container mx-auto flex justify-between items-center p-4">
-          <Link href={"/"}>
-            <div className="flex items-center cursor-pointer">
-              <img
-                src={"/images/logo.png"}
-                alt=""
-                className="w-10 h-10"
-              />
-              <Text
-                strong
-                color="link"
-                className="ml-2 text-blue-500 text-lg"
-              >
-                EDUHUNT
-              </Text>
-            </div>
-          </Link>
-
-          <Menu
-            theme="light"
-            mode="horizontal"
-            defaultSelectedKeys={[`${HighlightKey()}`]}
-            items={items}
-            className="flex-grow"
-          />
-
-          <div className="flex items-center space-x-4">
-            <div className="relative">
-              <Badge dot>
-                <BellOutlined className="text-xl cursor-pointer" />
-              </Badge>
-            </div>
-            <Dropdown
-              overlay={
-                <Menu>
-                  {authitems.map((item) => (
-                    <Menu.Item key={item.key}>{item.label}</Menu.Item>
-                  ))}
-                </Menu>
-              }
-              placement="bottomRight"
-              arrow
-            >
-              <div className="relative">
-                <Avatar
-                  src={<img src={"/images/avatar.png"} alt="avatar" className="w-10 h-10" />}
-                  size={"large"}
-                />
-              </div>
-            </Dropdown>
-
+        <nav className="flex items-center justify-between flex-wrap p-6">
+          <div className="flex items-center flex-shrink-0 text-white mr-6">
+            <span className="font-extrabold text-6xl tracking-tight text-brown">EDU HUNT</span>
           </div>
-        </div>
+          <div className="flex-grow lg:flex ">
+            <div className="lg:flex-grow">
+              <div className="flex items-center justify-center">
+                <a href="#responsive-header" className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200">
+                  Home
+                </a>
+                <a href="#responsive-header" className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200">
+                  Hahahaha
+                </a>
+                <a href="#responsive-header" className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200">
+                  News
+                </a>
+                <a href="#responsive-header" className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200">
+                  Contact
+                </a>
+              </div>
+            </div>
+            
+            
+          </div>
+          <div className="mt-8 m-right-40px">
+              <div className="flex h-8 w-24 justify-center items-center rounded"  style={{background: '#67D0FD', color: 'white'}}>
+                <Link href="/login" className="mr-1">Sign In</Link>
+                <svg class="h-4 w-4"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" stroke-linejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+              </div>
+            </div>
+        </nav>
+        <div></div>
       </header>
 
       <main className="container mx-auto p-4">{children}</main>
