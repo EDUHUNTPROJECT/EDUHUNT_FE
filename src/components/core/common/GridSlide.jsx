@@ -93,7 +93,7 @@ const GridSlide = () => {
 
     return (
         <div className="w-full h-[55vh]" style={{background: '#FAFAFA'}}>
-            <div className="text-5xl border-l h-16"><span className="font-black ml-3 ">New</span> <span>scholarships</span></div>
+            <div className=" text-5xl border-l h-[3.7rem] ml-5"><span className="font-black ml-3 ">New</span> <span>scholarships</span></div>
             <div className='grid place-items-center h-[78%]'>
                 <div className='w-[93%] h-[100%] flex justify-center items-center'>
                     {listItem.map((item) => {
