@@ -1,6 +1,12 @@
+import MainLayout from "@/components/core/layouts/MainLayout";
 
 const Profile = () => {
-    return <div>Profile</div>;
+    return (
+        <MainLayout>
+            <div>Profile</div>
+        </MainLayout>
+    )
+    ;
 };
 
 

@@ -5,6 +5,8 @@ import {
   theme,
 } from "antd";
 import MainLayout from "@/components/core/layouts/MainLayout";
+import Slider from "../components/core/common/Slider.jsx";
+import GridSlide from "@/components/core/common/GridSlide";
 
 const Home = () => {
   const {
@@ -13,14 +15,16 @@ const Home = () => {
 
   return (
     <MainLayout>
-      <Breadcrumb className="my-4">
+      <Slider />
+      {/* <Breadcrumb className="my-4">
         <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
-      </Breadcrumb>
-      <div
+      </Breadcrumb> */}
+      {/* <div
         className={`bg-${colorBgContainer} min-h-280 p-6 rounded-${borderRadiusLG}`}
       >
         Trang chủ
-      </div>
+      </div> */}
+      <GridSlide/>
     </MainLayout>
   );
 };

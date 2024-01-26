@@ -1,6 +1,11 @@
+import MainLayout from "@/components/core/layouts/MainLayout";
 
 const Mentor = () => {
-    return <div>Mentor</div>;
+    return (
+    <MainLayout>
+        <div>Mentor</div>
+    </MainLayout>
+    );
 };
 
 

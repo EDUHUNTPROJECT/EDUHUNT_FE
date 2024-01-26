@@ -2,6 +2,7 @@
 "use client";
 import React, { useState } from 'react';
 import useChat from '../../hooks/useChat';
+import MainLayout from '@/components/core/layouts/MainLayout';
 
 const Message = () => {
   const { messages, sendMessage } = useChat();
@@ -19,7 +20,7 @@ const Message = () => {
   };
 
   return (
-    <div>
+    <MainLayout>
       <div>
         <h2>Chat Room</h2>
         <div style={{ height: '300px', overflowY: 'scroll', border: '1px solid #ccc', padding: '10px' }}>
@@ -37,7 +38,7 @@ const Message = () => {
         />
         <button onClick={handleSendMessage}>Send</button>
       </div>
-    </div>
+    </MainLayout>
   );
 };
 
