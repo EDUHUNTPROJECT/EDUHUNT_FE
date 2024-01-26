@@ -93,22 +93,22 @@ const GridSlide = () => {
 
     return (
         <div className="w-full h-[55vh]" style={{background: '#FAFAFA'}}>
-            <div className="text-7xl border-l h-20"><span className="font-black ml-3 ">New</span> <span>scholarships</span></div>
+            <div className="text-5xl border-l h-16"><span className="font-black ml-3 ">New</span> <span>scholarships</span></div>
             <div className='grid place-items-center h-[78%]'>
                 <div className='w-[93%] h-[100%] flex justify-center items-center'>
                     {listItem.map((item) => {
                         if(item.key >= currentIndex && item.key < currentIndex + 4) {
                             return (
                                 <div key={item.key} className='w-[20%] h-[100%] mr-8 text-center rounded' style={{background: 'white'}}>
-                                    <div style={{backgroundImage: `url(${FPTU.src})`}} className="bg-no-repeat bg-cover w-[90%] h-[75%] inline-block relative mt-2 mb-1 rounded">
+                                    <div style={{backgroundImage: `url(${FPTU.src})`}} className="bg-no-repeat bg-cover w-[90%] h-[70%] inline-block relative mt-2 mb-1 rounded">
                                         <div className='absolute bottom-0 right-0 mr-1 mb-1 w-[60%] rounded ' style={{background: 'rgba(255,255,255,0.85)'}}>{item.name}</div>
                                     </div>
                                     <div className='flex text-center mb-1 ml-2'>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-10 h-10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-7 h-8">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                                         </svg>
-                                        <span className='text-xl font-bold leading-10' style={{color: 'grey'}}>{item.locate}</span>
+                                        <span className='text-lg font-bold leading-8' style={{color: 'grey'}}>{item.locate}</span>
                                     </div>
                                     <style jsx>{`
                                     .div-hover:hover {
@@ -118,7 +118,7 @@ const GridSlide = () => {
                                     `}</style>
                                     
                                     
-                                    <button className='border-2 rounded w-[90%] div-hover font-extrabold'>
+                                    <button className='border-2 rounded w-[90%] div-hover font-extrabold mt-1'>
                                         SHOW MORE...
                                     </button>
                                     
