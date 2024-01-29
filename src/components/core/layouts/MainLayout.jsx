@@ -1,4 +1,5 @@
 'use client'
+<<<<<<< Updated upstream
 import React from "react";
 import { ReactNode } from "react";
 import {
@@ -18,7 +19,15 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Footer from "../common/Footer";
+=======
+import React, { useState, useEffect } from 'react'; // Correct import statement
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Avatar, Badge, Menu, Dropdown, Typography } from 'antd';
+import { SearchOutlined, TeamOutlined, MessageOutlined, BellOutlined } from '@ant-design/icons';
+>>>>>>> Stashed changes
 
+const { Text } = Typography;
 const items = [
   {
     label: <Link href={"/"} className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200">HOME</Link>,
@@ -45,21 +54,20 @@ const items = [
     icon: <MessageOutlined />,
   },
 ];
-const authitems = [
-  {
-    label: <Link href={"/login"} className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200">LOGIN</Link>,
-    key: "0",
-    icon: <SearchOutlined />,
-  },
-  {
-    label: <Link href={"/mentor"} className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200">SINGUP</Link>,
-    key: "1",
-    icon: <TeamOutlined />,
-  },
-];
 
 const MainLayout = ({ children }) => {
   const pathName = usePathname();
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Correct usage of useState
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsAuthenticated(false);
+  };
 
   const HighlightKey = () => {
     if (pathName === "/") {
@@ -98,14 +106,25 @@ const MainLayout = ({ children }) => {
             
             
           </div>
-            <div className="mt-8 m-right-40px" style={{color: 'white'}}>
-              <div className="flex h-8 w-24 justify-center items-center rounded"  style={{background: '#67D0FD'}}>
-                <Link href="/login" className="mr-1">Sign In</Link>
-                <svg className="h-4 w-4"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+           
+
+
+            {isAuthenticated ? (
+          <div className="mt-8 m-right-40px" style={{color: 'white'}}>
+            <div className="flex h-8 w-24 justify-center items-center rounded" style={{background: '#67D0FD'}}>
+              <button onClick={handleLogout}>Log Out</button>
+            </div>
+          </div>
+        ) : (
+          <div className="mt-8 m-right-40px" style={{color: 'white'}}>
+            <div className="flex h-8 w-24 justify-center items-center rounded"  style={{background: '#67D0FD'}}>
+              <Link href="/login" className="mr-1">Sign In</Link>
+              <svg className="h-4 w-4"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                 </svg>
-              </div>
             </div>
+          </div>
+        )}
         </nav>
 
       <main className="mx-auto pl-8 pr-8">{children}</main>
