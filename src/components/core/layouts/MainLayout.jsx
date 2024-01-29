@@ -1,9 +1,22 @@
 'use client'
+import { ReactNode } from "react";
+import {
+  Avatar,
+  Badge,
+  Menu,
+  Dropdown,
+  Typography,
+} from "antd";
+import {
+  SearchOutlined,
+  TeamOutlined,
+  MessageOutlined,
+  BellOutlined,
+} from "@ant-design/icons";
+import Footer from "../common/Footer";
 import React, { useState, useEffect } from 'react'; // Correct import statement
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Avatar, Badge, Menu, Dropdown, Typography } from 'antd';
-import { SearchOutlined, TeamOutlined, MessageOutlined, BellOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
 const items = [
