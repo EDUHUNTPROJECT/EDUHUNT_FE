@@ -17,6 +17,7 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Footer from "../common/Footer";
 
 const items = [
   {
@@ -109,9 +110,7 @@ const MainLayout = ({ children }) => {
 
       <main className="mx-auto pl-8 pr-8">{children}</main>
 
-      <footer className="text-center p-4 mt-4">
-        Ant Design ©{new Date().getFullYear()} Created by Ant UED
-      </footer>
+      <Footer />
     </div>
   );
 };
