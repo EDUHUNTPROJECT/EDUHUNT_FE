@@ -29,7 +29,7 @@ export default function LoginPage() {
 
   const submit = (e) => {
     e.preventDefault();
-  
+
     login({ email, password, rememberMe })
       .then(() => {
         console.log("Login success");
@@ -38,8 +38,6 @@ export default function LoginPage() {
         alert(error.message);
       });
   };
-  
-  
 
   return (
     <>
@@ -77,7 +75,7 @@ export default function LoginPage() {
                   className="text-[#333] text-sm float-right flex gap-[5px] items-center cursor-pointer"
                   onClick={togglePasswordVisibility}
                 >
-                   <svg
+                  <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
                     height="14"
