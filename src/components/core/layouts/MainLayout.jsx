@@ -1,12 +1,6 @@
-'use client'
+"use client";
 import { ReactNode } from "react";
-import {
-  Avatar,
-  Badge,
-  Menu,
-  Dropdown,
-  Typography,
-} from "antd";
+import { Avatar, Badge, Menu, Dropdown, Typography } from "antd";
 import {
   SearchOutlined,
   TeamOutlined,
@@ -14,33 +8,90 @@ import {
   BellOutlined,
 } from "@ant-design/icons";
 import Footer from "../common/Footer";
-import React, { useState, useEffect } from 'react'; // Correct import statement
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import React, { useState, useEffect } from "react"; // Correct import statement
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Breadcrumb } from "antd";
 
 const { Text } = Typography;
 const items = [
   {
-    label: <Link href={"/"} className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200">HOME</Link>,
-    labelhighlight: <Link href={"/home"} className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold">HOME</Link>,
+    label: (
+      <Link
+        href={"/"}
+        className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+      >
+        HOME
+      </Link>
+    ),
+    labelhighlight: (
+      <Link
+        href={"/"}
+        className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+      >
+        HOME
+      </Link>
+    ),
     key: "0",
     icon: <SearchOutlined />,
   },
   {
-    label: <Link href={"/profile"} className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200">PROFILE</Link>,
-    labelhighlight: <Link href={"/profile"} className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold">PROFILE</Link>,
+    label: (
+      <Link
+        href={"/find"}
+        className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+      >
+        FIND
+      </Link>
+    ),
+    labelhighlight: (
+      <Link
+        href={"/find"}
+        className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+      >
+        FIND
+      </Link>
+    ),
     key: "1",
     icon: <SearchOutlined />,
   },
   {
-    label: <Link href={"/mentor"} className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200">MENTOR</Link>,
-    labelhighlight: <Link href={"/mentor"} className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold">MENTOR</Link>,
+    label: (
+      <Link
+        href={"/mentor"}
+        className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+      >
+        MENTOR
+      </Link>
+    ),
+    labelhighlight: (
+      <Link
+        href={"/mentor"}
+        className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+      >
+        MENTOR
+      </Link>
+    ),
     key: "2",
     icon: <TeamOutlined />,
   },
   {
-    label: <Link href={"/message"} className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200">CHAT</Link>,
-    labelhighlight: <Link href={"/message"} className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold">CHAT</Link>,
+    label: (
+      <Link
+        href={"/message/4"}
+        className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+      >
+        CHAT
+      </Link>
+    ),
+    labelhighlight: (
+      <Link
+        href={"/message/4"}
+        className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+      >
+        CHAT
+      </Link>
+    ),
     key: "3",
     icon: <MessageOutlined />,
   },
@@ -49,14 +100,15 @@ const items = [
 const MainLayout = ({ children }) => {
   const pathName = usePathname();
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Correct usage of useState
+  const [breadcrumb, setBreadcrumb] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     setIsAuthenticated(!!token);
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setIsAuthenticated(false);
   };
 
@@ -72,52 +124,80 @@ const MainLayout = ({ children }) => {
     } else return 0;
   };
 
+  useEffect(() => {
+    const path = window.location.pathname.split("/").filter((i) => i);
+    const capitalizedPath = path.map(
+      (item) => item.charAt(0).toUpperCase() + item.slice(1)
+    );
+    setBreadcrumb(["Home", ...capitalizedPath]);
+  }, []);
+
   console.log(pathName);
   console.log(HighlightKey());
 
   return (
     <div className="font-sans">
-        <nav className="flex items-center justify-between flex-wrap p-6">
-          <div className="flex items-center flex-shrink-0 text-white mr-6">
-            <span className="font-extrabold text-6xl tracking-tight text-brown">EDU HUNT</span>
-          </div>
-          <div className="flex-grow lg:flex ">
-            <div className="lg:flex-grow">
-              <div className="flex items-center justify-center">
-                {items.map((item) => {
-                  if(HighlightKey() == item.key) {
-                    return item.labelhighlight
-                  }
-                  return (
-                    item.label
-                  )
-                })}
-              </div>
+      <nav className="flex items-center justify-between flex-wrap p-6">
+        <div className="flex items-center flex-shrink-0 text-white mr-6">
+          <span className="font-extrabold text-6xl tracking-tight text-brown">
+            EDU HUNT
+          </span>
+        </div>
+        <div className="flex-grow lg:flex ">
+          <div className="lg:flex-grow">
+            <div className="flex items-center justify-center">
+              {items.map((item) => {
+                if (HighlightKey() == item.key) {
+                  return item.labelhighlight;
+                }
+                return item.label;
+              })}
             </div>
-            
-            
           </div>
-           
+        </div>
 
-
-            {isAuthenticated ? (
-          <div className="mt-8 m-right-40px" style={{color: 'white'}}>
-            <div className="flex h-8 w-24 justify-center items-center rounded" style={{background: '#67D0FD'}}>
+        {isAuthenticated ? (
+          <div className="mt-8 m-right-40px" style={{ color: "white" }}>
+            <div
+              className="flex h-8 w-24 justify-center items-center rounded"
+              style={{ background: "#67D0FD" }}
+            >
               <button onClick={handleLogout}>Log Out</button>
             </div>
           </div>
         ) : (
-          <div className="mt-8 m-right-40px" style={{color: 'white'}}>
-            <div className="flex h-8 w-24 justify-center items-center rounded"  style={{background: '#67D0FD'}}>
-              <Link href="/login" className="mr-1">Sign In</Link>
-              <svg className="h-4 w-4"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                </svg>
+          <div className="mt-8 m-right-40px" style={{ color: "white" }}>
+            <div
+              className="flex h-8 w-24 justify-center items-center rounded"
+              style={{ background: "#67D0FD" }}
+            >
+              <Link href="/login" className="mr-1">
+                Sign In
+              </Link>
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
             </div>
           </div>
         )}
-        </nav>
-
+      </nav>
+      {breadcrumb.length > 1 && (
+        <Breadcrumb className="ml-8">
+          {breadcrumb.map((item, index) => (
+            <Breadcrumb.Item key={index}>{item}</Breadcrumb.Item>
+          ))}
+        </Breadcrumb>
+      )}
       <main className="mx-auto pl-8 pr-8">{children}</main>
 
       <Footer />

@@ -1,31 +1,11 @@
 import React from "react";
 import Image from "next/image";
+import MainLayout from "../../components/core/layouts/MainLayout.jsx";
 
 function DetailQuestion() {
   return (
-    <>
+    <MainLayout>
       <div className="w-[100%] bg-white shadow">
-        <div className="w-[100%] h-[104px] flex justify-between items-center px-[48px]">
-          <div>
-            <div className=" text-yellow-700 text-[40px] font-extrabold">
-              EduHunt
-            </div>
-          </div>
-          <div className="flex gap-[48px]">
-            <div className="text-center text-zinc-500 text-base font-bold ">
-              Contacts
-            </div>
-            <div className="text-center text-zinc-500 text-base font-bold ">
-              News
-            </div>
-            <div className="text-center text-zinc-500 text-base font-bold ">
-              Hahahahaha
-            </div>
-            <div className="text-center text-slate-700 text-base font-bold ">
-              Home
-            </div>
-          </div>
-        </div>
         <div className="w-[360px] ml-[48px] text-sky-300 text-[32px] font-extrabold">
           ANSWER QUESTION
         </div>
@@ -114,7 +94,7 @@ function DetailQuestion() {
           </div>
         </div>
       </div>
-    </>
+    </MainLayout>
   );
 }
 

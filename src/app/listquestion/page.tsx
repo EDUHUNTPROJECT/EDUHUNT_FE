@@ -1,51 +1,15 @@
 "use client";
 import React from "react";
+import MainLayout from "../../components/core/layouts/MainLayout.jsx";
 
 function ListQuestion() {
   return (
-    <>
+    <MainLayout>
       <div className="w-[100%] bg-white">
-        <div className="w-[100%] h-[104px] flex justify-between items-center px-[48px]">
-          <div>
-            <div className=" text-yellow-700 text-[40px] font-extrabold">
-              EduHunt
-            </div>
-          </div>
-          <div className="flex gap-[48px]">
-            <div className="text-center text-zinc-500 text-base font-bold ">
-              Contacts
-            </div>
-            <div className="text-center text-zinc-500 text-base font-bold ">
-              News
-            </div>
-            <div className="text-center text-zinc-500 text-base font-bold ">
-              Hahahahaha
-            </div>
-            <div className="text-center text-slate-700 text-base font-bold ">
-              Home
-            </div>
-          </div>
-        </div>
         <div className="w-[252px] ml-[48px] text-sky-300 text-[32px] font-extrabold">
           LIST QUESTION
         </div>
         <div>
-          <div className=" flex gap-[12px]">
-            <button
-              onClick={() => {
-                window.location.href = "/detailquestion?action=add";
-              }}
-            >
-              ADD
-            </button>
-            <button
-              onClick={() => {
-                window.location.href = "/detailquestion?action=edit";
-              }}
-            >
-              EDIT
-            </button>
-          </div>
           <div className="flex justify-center pt-[20px]">
             <div className="flex rounded-lg border-2 border-red-600">
               <div className="text-black text-xl font-extrabold border-r border-gray-900  p-[20px]">
@@ -82,7 +46,7 @@ function ListQuestion() {
           </div>
         </div>
       </div>
-    </>
+    </MainLayout>
   );
 }
 

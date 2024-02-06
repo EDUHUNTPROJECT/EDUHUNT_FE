@@ -1,13 +1,11 @@
-import MainLayout from "@/components/core/layouts/MainLayout";
+import MainLayout from "../../components/core/layouts/MainLayout";
 
 const Mentor = () => {
-    return (
+  return (
     <MainLayout>
-        <div>Mentor</div>
+      <div>Mentor</div>
     </MainLayout>
-    );
+  );
 };
-
-
 
 export default Mentor;
