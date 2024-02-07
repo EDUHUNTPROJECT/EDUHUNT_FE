@@ -16,17 +16,17 @@ const Home = () => {
 
   return (
     <MainLayout>
-      <Slider />
-      {/* <Breadcrumb className="my-4">
-        <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
-      </Breadcrumb> */}
-      {/* <div
-        className={`bg-${colorBgContainer} min-h-280 p-6 rounded-${borderRadiusLG}`}
-      >
-        Trang chủ
-      </div> */}
-      <GridSlide/>
-      <GridItem></GridItem>
+        <Slider />
+        {/* <Breadcrumb className="my-4">
+          <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
+        </Breadcrumb> */}
+        {/* <div
+          className={`bg-${colorBgContainer} min-h-280 p-6 rounded-${borderRadiusLG}`}
+        >
+          Trang chủ
+        </div> */}
+        <GridSlide/>
+        <GridItem></GridItem>
     </MainLayout>
   );
 };
