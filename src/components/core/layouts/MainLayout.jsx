@@ -22,7 +22,7 @@ const { Text } = Typography;
 const items = [
   {
     label: <Link href={"/"} className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200">HOME</Link>,
-    labelhighlight: <Link href={"/home"} className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold">HOME</Link>,
+    labelhighlight: <Link href={"/"} className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold">HOME</Link>,
     key: "0",
     icon: <SearchOutlined />,
   },

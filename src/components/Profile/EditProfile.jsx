@@ -67,7 +67,7 @@ function EditProfile() {
   return (
 
     <div className="flex">
-      <div className="w-1/4 bg-[#f0f0f0] p-10 rounded-lg h-screen">
+      <div className="w-1/4  p-10 rounded-lg h-screen">
 
       </div>
 
