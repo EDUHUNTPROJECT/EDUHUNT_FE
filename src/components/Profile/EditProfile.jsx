@@ -23,11 +23,11 @@ function EditProfile() {
     // Fetch the user's profile when the component mounts
     getProfile(userId)
       .then((data) => {
-
+        console.log(data);
         // Update the field names here to match your API response
         setProfile({
           id: data.id,
-          avatarUrl: data.UrlAvatar || '',
+          avatarUrl: data.urlAvatar || '',
           firstName: data.firstName || '',
           lastName: data.lastName || '',
           userName: data.userName || '',
@@ -59,7 +59,7 @@ function EditProfile() {
     const reader = new FileReader();
     reader.onload = function () {
       const dataURL = reader.result;
-      setProfile({ ...profile, UrlAvatar: dataURL });
+      setProfile({ ...profile, urlAvatar: dataURL });
     };
     reader.readAsDataURL(file);
   };
@@ -67,7 +67,7 @@ function EditProfile() {
   return (
 
     <div className="flex">
-      <div className="w-1/4 bg-[#f0f0f0] p-10 rounded-lg h-screen">
+      <div className="w-1/4  p-10 rounded-lg h-screen">
 
       </div>
 
@@ -80,7 +80,7 @@ function EditProfile() {
             onMouseLeave={() => setIsHovered(false)}
           >
             <Image
-              src={profile.avatarUrl || "https://via.placeholder.com/150"}
+              src={profile.urlAvatar || "https://via.placeholder.com/150"}
               alt="Avatar"
               width={100}
               height={100}

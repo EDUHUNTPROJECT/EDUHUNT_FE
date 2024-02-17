@@ -1,22 +1,18 @@
 
 "use client";
 import MainLayout from "@/components/core/layouts/MainLayout";
-import EditProfile from "@/components/Profile/EditProfile";
+import UploadCV from "@/components/Profile/UploadCV";
 import ProfileLayout from "@/components/core/layouts/ProfileLayout";
-
-const Profile = () => {
+const UploadCVPage = () => {
     return (
         <MainLayout>
             <ProfileLayout>
-            
-            <EditProfile />
+
+            <UploadCV />
 
             </ProfileLayout>
         </MainLayout>
     )
-    ;
-};
+}
 
-
-
-export default Profile;
+export default UploadCVPage
