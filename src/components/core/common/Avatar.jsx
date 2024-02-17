@@ -1,12 +1,17 @@
 'use client'
 import Link from "next/link"
 import { useState } from "react";
+import React from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const Avatars = () => {
     const [state, setState] = useState(false);
+    const { data: session } = useSession();
     let overflowStyle = {
         
     };
+
+    
     if(state == false) {
         overflowStyle = {
             overflow: "hidden"
@@ -16,6 +21,31 @@ const Avatars = () => {
             overflow: "visible"
         }
     }
+
+
+    if(session && session.user) {
+        return (
+            <div className="max-h-12 grid place-items-center" style={overflowStyle}>
+                <div className="mb-1 pt-1 pb-1 " onClick={() => {setState(!state)}}>
+                    <img
+                        className="inline-block h-10 w-10 rounded-full ring-2 ring-white avatarImage"
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt=""
+                    />
+                </div>
+                <div className="w-40 rounded text-xl shadow-md"  style={{background: "rgb(141, 232, 250)"}}>
+                        <div className="hover:bg-black loginNavBar pb-1">
+                            <Link href={"/profile"} className="ml-4">Profile</Link>
+                        </div>
+                        <div className="loginNavBar pb-1">
+                            <button onClick={() => signOut()} className="ml-4">Sign Out</button>
+                        </div>
+                </div>
+            </div>
+        )
+    }
+
+
     return (
         <div className="max-h-12 grid place-items-center" style={overflowStyle}>
             <div className="mb-1 pt-1 pb-1 " onClick={() => {setState(!state)}}>

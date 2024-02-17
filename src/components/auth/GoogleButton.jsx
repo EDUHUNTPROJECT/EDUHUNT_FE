@@ -1,8 +1,19 @@
-import { signIn } from "next-auth/react";
+"use client";
+import React from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 function GoogleButton() {
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  if (session && session.user) {
+    router.replace("/")
+    return null;
+  }
+
   return (
-    <>
+    <div>
       <button
         onClick={() =>
           signIn("google", { callbackUrl: "http://localhost:3000/" })
@@ -34,10 +45,10 @@ function GoogleButton() {
               fill="#EB4335"
             />
           </svg>
-        </span>
+        </span> 
         Continue with Google
       </button>
-    </>
+    </div>
   );
 }
 
