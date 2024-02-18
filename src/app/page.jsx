@@ -4,10 +4,10 @@ import {
   Breadcrumb,
   theme,
 } from "antd";
-import MainLayout from "@/components/core/layouts/MainLayout";
+import MainLayout from "../components/core/layouts/MainLayout";
 import Slider from "../components/core/common/Slider.jsx";
-import GridSlide from "@/components/core/common/GridSlide";
-import GridItem from "@/components/core/common/GridItem";
+import GridSlide from "../components/core/common/GridSlide";
+import GridItem from "../components/core/common/GridItem";
 
 const Home = () => {
   const {
