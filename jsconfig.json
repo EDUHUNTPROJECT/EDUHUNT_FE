@@ -1,9 +1,5 @@
 {
   "compilerOptions": {
-<<<<<<< HEAD
-    "jsx": "react",
-=======
->>>>>>> main
     "paths": {
       "@/*": ["./src/*"]
     }

@@ -1,17 +1,4 @@
 'use client'
-<<<<<<< HEAD
-import React from "react";
-import Footer from "../common/Footer";
-import NavBar from "../common/Header";
-
-const MainLayout = ({ children }) => {
-  return (
-    <div className="font-sans">
-      <NavBar/>
-      <div className="z-10">
-        <main className="mx-auto pl-8 pr-8">{children}</main>
-      </div>
-=======
 import { ReactNode } from "react";
 import {
   Avatar,
@@ -133,7 +120,6 @@ const MainLayout = ({ children }) => {
 
       <main className="mx-auto pl-8 pr-8">{children}</main>
 
->>>>>>> main
       <Footer />
     </div>
   );

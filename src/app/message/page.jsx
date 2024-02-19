@@ -42,8 +42,4 @@ const Message = () => {
   );
 };
 
-<<<<<<< HEAD
-export default Message;
-=======
 export default withAuth(Message);
->>>>>>> main
