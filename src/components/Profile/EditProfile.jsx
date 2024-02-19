@@ -1,14 +1,15 @@
 
-import { useProfile } from "@/hooks/useProfile";
-import { useEffect, useState } from "react";
+import { useProfile } from "../../hooks/useProfile";
+import React, { useEffect, useState } from "react";
 import Image from 'next/image';
+import CloudinaryUpload from "../cloud/CloudinaryUpload";
 
 function EditProfile() {
   const userId = localStorage.getItem("userId");
   const { getProfile, updateProfile } = useProfile();
   const [profile, setProfile] = useState({
     id: '',
-    avatarUrl: '', // check api
+    urlAvatar: '', // check api
     firstName: '', // Change these field names to match your API response
     lastName: '',
     userName: '',
@@ -16,8 +17,6 @@ function EditProfile() {
     address: '',
     description: '',
   });
-
-  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     // Fetch the user's profile when the component mounts
@@ -27,7 +26,7 @@ function EditProfile() {
         // Update the field names here to match your API response
         setProfile({
           id: data.id,
-          avatarUrl: data.urlAvatar || '',
+          urlAvatar: data.urlAvatar || '',
           firstName: data.firstName || '',
           lastName: data.lastName || '',
           userName: data.userName || '',
@@ -54,14 +53,8 @@ function EditProfile() {
       .catch((error) => console.error('Error updating profile:', error));
   };
 
-  const handleAvatarChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = function () {
-      const dataURL = reader.result;
-      setProfile({ ...profile, urlAvatar: dataURL });
-    };
-    reader.readAsDataURL(file);
+  const handleImageUpload = (imageUrl) => {
+    setProfile(prevProfile => ({ ...prevProfile, urlAvatar: imageUrl }));
   };
 
   return (
@@ -73,12 +66,8 @@ function EditProfile() {
 
       <div className="flex-1 px-10 pt-2 pb-10 border border-solid border-[#ccc] rounded mx-3 h-full">
         <h1 className="font-extrabold text-4xl mb-5 ">My Profile</h1>
-        <div>
-          <div
-            className="w-32 h-32 rounded-full my-4 relative "
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
+        <div className="mb-20">
+        <div className="w-32 h-32 rounded-full my-4 mb-2 relative">
             <Image
               src={profile.urlAvatar || "https://via.placeholder.com/150"}
               alt="Avatar"
@@ -86,22 +75,8 @@ function EditProfile() {
               height={100}
               className="object-cover w-32 h-32 rounded-full mx-auto my-4"
             />
-            {isHovered && (
-              <label
-                htmlFor="avatarInput"
-                className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white cursor-pointer rounded-full"
-                style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', transition: 'background-color 0.3s', color:'white' }}>
-                Change Avatar
-              </label>
-            )}
+            <CloudinaryUpload onUpload={handleImageUpload} /> {/* Render the CloudinaryUpload component */}
           </div>
-          <input
-            id="avatarInput"
-            type="file"
-            accept="image/*"
-            onChange={handleAvatarChange}
-            className="hidden"
-          />
         </div>
         <div className="my-2">
           <label htmlFor="firstName" className="font-bold block mb-5px">First Name:</label>

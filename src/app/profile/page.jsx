@@ -1,8 +1,8 @@
 
 "use client";
-import MainLayout from "@/components/core/layouts/MainLayout";
-import EditProfile from "@/components/Profile/EditProfile";
-import ProfileLayout from "@/components/core/layouts/ProfileLayout";
+import MainLayout from "../../components/core/layouts/MainLayout";
+import EditProfile from "../../components/Profile/EditProfile";
+import ProfileLayout from "../../components/core/layouts/ProfileLayout";
 
 const Profile = () => {
     return (

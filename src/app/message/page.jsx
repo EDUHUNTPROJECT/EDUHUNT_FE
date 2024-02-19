@@ -2,8 +2,8 @@
 "use client";
 import React, { useState } from 'react';
 import useChat from '../../hooks/useChat';
-import MainLayout from '@/components/core/layouts/MainLayout';
-import withAuth from '@/HOC/withAuth';
+import MainLayout from '../../components/core/layouts/MainLayout';
+import withAuth from '../../HOC/withAuth';
 const Message = () => {
   const { messages, sendMessage } = useChat();
   const [newMessage, setNewMessage] = useState('');
