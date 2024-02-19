@@ -1,27 +1,25 @@
-import { useEffect, useState } from 'react';
-import { CldImage } from 'next-cloudinary';
+// hooks/useCloud.js
+import { v2 as cloudinary } from 'cloudinary';
 
-// This hook simplifies using Cloudinary images in a Next.js app
-const useCloud = (publicId) => {
-    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME= ""
-  const [src, setSrc] = useState('');
+// Configure Cloudinary with your account details
+cloudinary.config({
+  cloud_name: 'du7wlrmpi',
+  api_key: '848457936193612',
+  api_secret: '3iY4ybzFwl5CQUv7RA4yug6_56c'
+});
 
-  useEffect(() => {
-    // Here, you could add more logic to dynamically handle Cloudinary URLs,
-    // apply transformations, or even lazy load images.
-    if (publicId) {
-      // Construct the URL or use Cloudinary SDK features
-      const cloudName = NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-      const baseUrl = `https://res.cloudinary.com/${cloudName}/image/upload`;
-      setSrc(`${baseUrl}/${publicId}`);
-    }
-  }, [publicId]);
+export async function uploadMedia(dataUrl) {
+  try {
+    // Assuming `dataUrl` is a valid Data URL for an image
+    const response = await cloudinary.uploader.upload(dataUrl, {
+      resource_type: 'auto' // Automatically detect the resource type (image, video, etc.)
+    });
 
-  // Return a CldImage component for easy use in the component tree
-  // You might want to extend this to accept additional props for customizations
-  return {
-    CloudinaryImage: (props) => <CldImage src={src} {...props} />,
-  };
-};
-
-export default useCloud;
+    const cloudUrl = response.secure_url; // Use `secure_url` to get the HTTPS URL
+    console.log('Upload successful:', cloudUrl);
+    return cloudUrl; // Return the URL of the uploaded file
+  } catch (error) {
+    console.error('Error uploading to Cloudinary:', error);
+    throw error; // Rethrow or handle the error appropriately
+  }
+}
