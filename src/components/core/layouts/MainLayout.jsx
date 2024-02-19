@@ -13,6 +13,8 @@ import React, { useState, useEffect } from 'react'; // Correct import statement
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Header from "../common/Header";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const { Text } = Typography;
 const items = [
@@ -51,32 +53,24 @@ const MainLayout = ({ children }) => {
     setIsAuthenticated(!!token);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsAuthenticated(false);
-  };
+  var id = null;
+  const { data: session } = useSession();
+  const route = useRouter();
 
-  const HighlightKey = () => {
-    if (pathName === "/") {
-      return 0;
-    } else if (pathName === "/profile") {
-      return 1;
-    } else if (pathName === "/mentor") {
-      return 2;
-    } else if (pathName === "/message") {
-      return 3;
-    } else return 0;
-  };
+  if(typeof window !== "undefined") {
+    id = localStorage.getItem("userId");
+  }
 
-  return (
-    <div className="font-sans">
-        <Header/>
-
-      <main className="mx-auto pl-8 pr-8">{children}</main>
-
-      <Footer />
-    </div>
-  );
+  
+    return (
+      <div className="font-sans">
+          <Header/>
+  
+          <main className="mx-auto pl-8 pr-8">{children}</main>
+    
+          <Footer />
+      </div>
+    );
 };
 
 export default MainLayout;
