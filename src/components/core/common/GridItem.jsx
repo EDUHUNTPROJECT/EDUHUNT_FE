@@ -226,6 +226,10 @@ const GridItem = () => {
                                             {(() => {
                                                     var display = "";
                                                     if(item.describe.length >= 64) {
+<<<<<<< HEAD
+=======
+                                                        console.log(item.describe.charAt(i));
+>>>>>>> main
                                                         for(var i = 0; i < 49; i++) {
                                                             display += item.describe.charAt(i);
                                                         }
@@ -261,6 +265,10 @@ const GridItem = () => {
                                             {(() => {
                                                     var display = "";
                                                     if(item.describe.length >= 64) {
+<<<<<<< HEAD
+=======
+                                                        console.log(item.describe.charAt(i));
+>>>>>>> main
                                                         for(var i = 0; i < 49; i++) {
                                                             display += item.describe.charAt(i);
                                                         }

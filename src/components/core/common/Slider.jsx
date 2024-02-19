@@ -42,7 +42,11 @@ function Slider() {
   };
 
   return (
+<<<<<<< HEAD
     <div className='z-0 max-w-[100%] h-[390px] w-full relative group mb-6'>
+=======
+    <div className='max-w-[100%] h-[390px] w-full relative group mb-6'>
+>>>>>>> main
       <div
         style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
         className='w-full h-full rounded-2xl bg-center bg-cover duration-500 relative'
