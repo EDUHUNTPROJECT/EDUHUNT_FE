@@ -117,11 +117,15 @@ const NavBar = () => {
       <div className="flex-grow lg:flex ">
         <div className="lg:flex-grow">
           <div className="flex items-center justify-center">
-            {items.map((item) => {
+            {items.map((item, index) => {
               if (HighlightKey() == item.key) {
-                return item.labelhighlight;
+                return (
+                  <React.Fragment key={index}>
+                    {item.labelhighlight}
+                  </React.Fragment>
+                );
               }
-              return item.label;
+              return <React.Fragment key={index}>{item.label}</React.Fragment>;
             })}
           </div>
         </div>

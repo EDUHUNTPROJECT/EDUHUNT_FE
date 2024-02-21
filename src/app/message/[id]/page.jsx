@@ -12,7 +12,7 @@ import Link from "next/link";
 import { USER_DEMO } from "../../../components/constants/users";
 import Sider from "../../../components/modules/messages/Sider";
 const Message = () => {
-  const { messages, sendMessage } = useChat();
+  const { messages, sendMessage, connection } = useChat();
   const [newMessage, setNewMessage] = useState("");
   const { id } = useParams();
   const information = USER_DEMO[+id];
@@ -27,6 +27,10 @@ const Message = () => {
       setNewMessage("");
     }
   };
+
+  if (!connection) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <MainLayout>
