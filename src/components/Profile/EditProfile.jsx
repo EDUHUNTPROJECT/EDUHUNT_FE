@@ -18,11 +18,9 @@ function EditProfile() {
   });
 
   useEffect(() => {
-    // Fetch the user's profile when the component mounts
     getProfile(userId)
       .then((data) => {
         console.log(data);
-        // Update the field names here to match your API response
         setProfile({
           id: data.id,
           urlAvatar: data.urlAvatar || "",
@@ -47,7 +45,6 @@ function EditProfile() {
     updateProfile(profile.id, profile)
       .then(() => {
         console.log("Profile updated successfully");
-        // You can navigate to another page or show a success message here
       })
       .catch((error) => console.error("Error updating profile:", error));
   };
