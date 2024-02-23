@@ -8,9 +8,9 @@ const CloudinaryCV = ({ onUpload }) => {
       acceptedFiles.forEach((file) => {
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("upload_preset", "bujjo1i5"); // replace with your upload preset
+        formData.append("upload_preset", "bujjo1i5");
         axios
-          .post("https://api.cloudinary.com/v1_1/du7wlrmpi/upload", formData) // replace with your cloud name
+          .post("https://api.cloudinary.com/v1_1/du7wlrmpi/upload", formData)
           .then((response) => {
             const cvUrl = response.data.secure_url;
             onUpload(cvUrl);
@@ -26,9 +26,12 @@ const CloudinaryCV = ({ onUpload }) => {
   });
 
   return (
-    <div {...getRootProps()} className="border-2 border-dashed p-4 text-center">
+    <div
+      {...getRootProps()}
+      className="w-[60%] h-[300px] border-2 border-dashed p-4 text-center margin-auto flex items-center justify-center"
+    >
       <input {...getInputProps()} />
-      <p>Drag &rsquo;n&rsquo; drop your CV here, or click to select a file</p>
+      <p>Drag/drop your CV here, or click to select a file</p>
     </div>
   );
 };

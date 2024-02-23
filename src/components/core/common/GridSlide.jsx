@@ -11,7 +11,7 @@ const GridSlide = () => {
   const listItem = [
     {
       key: 0,
-      name: "FPT Universit",
+      name: "FPT University",
       locate: "Da Nang, VietNam",
       image: FPTU.src,
     },
@@ -29,13 +29,13 @@ const GridSlide = () => {
     },
     {
       key: 3,
-      name: "FPT Universi",
+      name: "FPT University",
       locate: "Da Nang, VietNam",
       image: FPTU.src,
     },
     {
       key: 4,
-      name: "FPT Univers",
+      name: "FPT University",
       locate: "Da Nang, VietNam",
       image: FPTU.src,
     },
