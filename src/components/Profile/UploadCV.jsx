@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CloudinaryCV from "../cloud/CloudinaryCV";
+import { Image } from "antd";
 
 const UploadCV = () => {
   const userId = localStorage.getItem("userId");
@@ -52,10 +53,23 @@ const UploadCV = () => {
   };
 
   return (
-    <div className="w-[calc(100%-16px)] bg-[#f0f0f0]">
-      <h1>Upload CV</h1>
+    <div className="bg-[#f0f0f0] flex flex-col justify-center items-center space-y-4 p-4">
       <CloudinaryCV onUpload={handleCvUpload} />
-      {cvUrl && <p className="mt-4">CV uploaded successfully. URL: {cvUrl}</p>}
+      {cvUrl && (
+        <p className="text-center text-sm text-gray-700">
+          CV uploaded successfully. URL: {cvUrl}
+        </p>
+      )}
+      {cvUrl && (
+        <Image
+          className="mt-4 w-full h-auto"
+          src={`${cvUrl.replace(
+            "/upload/",
+            "/upload/fl_attachment,fl_force_strip,pg_1/"
+          )}.jpg`}
+          alt="Uploaded CV"
+        />
+      )}
     </div>
   );
 };
