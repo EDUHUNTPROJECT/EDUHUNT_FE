@@ -26,6 +26,7 @@ export default function AdminTestPage() {
     }, []);
 
     const handleDeleteUser = async (userId) => {
+
         try {
             await deleteUser(userId);
             // Refresh user list after deletion
@@ -75,7 +76,11 @@ export default function AdminTestPage() {
                                     <td className='p-2.5 '>{user.email}</td>
                                     <td className='p-2.5 '>{user.role}</td>
                                     <td className='p-2.5 '>
-                                        <button className='py-1.5 px-2.5 rounded-lg bg-[#d12b55] text-[#fff] cursor-pointer' onClick={() => handleDeleteUser(user.id)}>Delete</button>
+                                        <button className='py-1.5 px-2.5 rounded-lg bg-[#d12b55] text-[#fff] cursor-pointer' onClick={() => {
+                                            if (window.confirm("Are you sure you want to delete this user?")) {
+                                                handleDeleteUser(user.id);
+                                            }
+                                        }}>Delete</button>
                                     </td>
                                 </tr>
                             ))}
