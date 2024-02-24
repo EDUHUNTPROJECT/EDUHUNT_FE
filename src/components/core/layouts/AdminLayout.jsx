@@ -1,7 +1,7 @@
-import React from 'react';
 import Link from 'next/link';
 import { Menu } from 'antd';
 import AdminSidebar from "../../Admin/AdminSidebar"
+import React, { useEffect, useState } from 'react';
 
 import { useProfile } from "../../../hooks/useProfile";
 
@@ -28,13 +28,14 @@ const AdminLayout = ({ children }) => {
           .catch((error) => console.error("Error fetching profile:", error));
       }, []);
 
-      const avatrurl = profile.urlAvatar;
-      const username = profile.userName;
+      let avatrurl = profile.urlAvatar;
+      let username = profile.userName;
+      console.log("check here",avatrurl,username)
     return (
         
         <div className='flex bg-[#f3f3f3] h-screen'> 
             <div className='w-[15rem] bg-[#fff] p-5'>
-                <AdminSidebar />
+                <AdminSidebar avtarurl={avatrurl} username={username} />
             </div>
 
             <div className='flex-grow p-5 bg-[#fff] ml-4 rounded-lg'>
