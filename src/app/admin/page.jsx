@@ -6,11 +6,15 @@ import AdminSearch from '../../components/Admin/AdminSearch'
 import Image from 'next/image'
 import AdminPagination from '../../components/Admin/AdminPagination'
 
+
+
+
+
 export default function AdminTestPage() {
     const { getUserList, deleteUser } = useAdmin();
     const [userList, setUserList] = useState([]);
     const [userSearch, setUserSearch] = useState('');
-
+   
     useEffect(() => {
         const fetchUserList = async () => {
             try {
