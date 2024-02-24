@@ -1,3 +1,5 @@
+
+
 import React, { useState } from "react";
 
 const CloudinaryUpload = ({ onUpload }) => {
@@ -48,20 +50,24 @@ const CloudinaryUpload = ({ onUpload }) => {
     // Pass the URL of the uploaded image to the external handler function
     onUpload(data.secure_url);
   }
+  
 
   return (
-    <div>
+     <div className=" w-[32rem] h-[32rem]">
       <form method="post" onChange={handleOnChange} onSubmit={handleOnSubmit}>
         <p>
           <input type="file" name="file" />
         </p>
-
-        <img src={imageSrc} alt="Uploaded" />
-
+        
         {imageSrc && !uploadData && (
-          <p>
-            <button>Upload Files</button>
+          <>
+          <div style={{ maxWidth: "30%", maxHeight: "30%" }}>
+            <img src={imageSrc} alt="Uploaded" />
+          </div>
+          <p className="mt-[8rem] ml-[25rem]">
+            <button className="bg-[#000] text-[#fff]">DONE</button>
           </p>
+          </>
         )}
 
         {/* {uploadData && (

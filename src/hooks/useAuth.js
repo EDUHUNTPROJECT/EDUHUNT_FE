@@ -57,17 +57,23 @@ const useAuth = () => {
 
       console.log(response);
       const data = response.data;
+     
       
-      if (rememberMe) {
-        localStorage.setItem('email', email);
-      }
 
       localStorage.setItem('loggedIn', 'true');
       localStorage.setItem('userEmail', email);
       localStorage.setItem('token', data.token);
       localStorage.setItem('userId', data.userId);
+      if (rememberMe) {
+        localStorage.setItem('email', email);
+      }
+      if(data.message=='Invalid email/password') {
+        
+        throw new Error('Invalid email/password');
+      }else{
+        router.push('/');
+      }
 
-      router.push('/');
     } catch (error) {
       throw error;
     }

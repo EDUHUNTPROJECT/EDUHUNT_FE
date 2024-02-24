@@ -33,7 +33,12 @@ export default function LoginPage() {
   
     login({ email, password, rememberMe })
       .then(() => {
+        if (localStorage.getItem("userId") !== null) {
         console.log("Login success");
+        }
+        else{
+          alert("Login failed");
+        }
       })
       .catch((error) => {
         alert(error.message);

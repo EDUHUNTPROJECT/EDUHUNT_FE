@@ -1,3 +1,4 @@
+
 import { useProfile } from "../../hooks/useProfile";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
@@ -16,6 +17,7 @@ function EditProfile() {
     address: "",
     description: "",
   });
+  const [showUpload, setShowUpload] = useState(false); // Add state to control the visibility of the upload container
 
   useEffect(() => {
     getProfile(userId)
@@ -53,6 +55,14 @@ function EditProfile() {
     setProfile((prevProfile) => ({ ...prevProfile, urlAvatar: imageUrl }));
   };
 
+  const handleShowUpload = () => {
+    setShowUpload(true);
+  };
+
+  const handleCloseUpload = () => {
+    setShowUpload(false);
+  };
+
   return (
     <div className="flex">
       <div className="w-1/4  p-10 rounded-lg h-screen"></div>
@@ -68,8 +78,24 @@ function EditProfile() {
               height={100}
               className="object-cover w-32 h-32 rounded-full mx-auto my-4"
             />
-            <CloudinaryUpload onUpload={handleImageUpload} />{" "}
-            {/* Render the CloudinaryUpload component */}
+
+            <button className="rounded bg-[#C6C6C6]" onClick={handleShowUpload}>
+              Change Avatar
+            </button>
+            {showUpload && (
+              <div className="fixed inset-0 flex items-center justify-center bg-[#000000] bg-opacity-50">
+              <div className="relative z-[11] bg-[#fff] w-[32rem] h-[32rem] bg-white p-8 rounded-lg">
+                <button
+                  onClick={handleCloseUpload}
+                  className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded"
+                >
+                  close
+                </button>
+                <CloudinaryUpload onUpload={handleImageUpload} />
+              </div>
+            </div>
+            
+            )}
           </div>
         </div>
         <div className="my-2">
