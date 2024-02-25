@@ -7,7 +7,6 @@ export const useProfile = () => {
     try {
       console.log("===============", userId);
       const response = await axios.get(`${API_URL}/${userId}`);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       throw error;
@@ -16,6 +15,7 @@ export const useProfile = () => {
 
   const updateProfile = async (id, profileData) => {
     try {
+      console.log(profileData);
       const response = await axios.put(`${API_URL}/${id}`, profileData);
       return response.data;
     } catch (error) {

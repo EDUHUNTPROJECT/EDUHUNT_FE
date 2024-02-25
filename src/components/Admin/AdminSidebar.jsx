@@ -18,7 +18,7 @@ const menuItems = [
     }
 ]
 
-const AdminSidebar = () => {
+const AdminSidebar = ({avtarurl, username}) => {
     return (
         <div className='sticky top-10'>
             <div className='flex items-center gap-5 mb-5'>
