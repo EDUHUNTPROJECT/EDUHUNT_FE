@@ -12,8 +12,16 @@ export const useScholarship = () => {
       throw error;
     }
   };
-
+  const  deleteScholarship = async (id) => {
+    try {
+      const response = await axios.delete(`${API_URL}/${id}`);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
   return {
-    getScholarship,
+    getScholarship, deleteScholarship
   };
 };
