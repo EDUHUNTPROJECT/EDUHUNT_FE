@@ -6,7 +6,6 @@ export const useScholarship = () => {
   const getScholarship = async () => {
     try {
       const response = await axios.get(API_URL);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       throw error;
@@ -15,7 +14,6 @@ export const useScholarship = () => {
   const  deleteScholarship = async (id) => {
     try {
       const response = await axios.delete(`${API_URL}/${id}`);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       throw error;
