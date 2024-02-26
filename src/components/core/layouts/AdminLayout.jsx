@@ -28,14 +28,14 @@ const AdminLayout = ({ children }) => {
           .catch((error) => console.error("Error fetching profile:", error));
       }, []);
 
-      let avatrurl = profile.urlAvatar;
+      let avatarurl = profile.urlAvatar;
       let username = profile.userName;
-      console.log("check here",avatrurl,username)
+      console.log("check here",avatarurl,username)
     return (
         
         <div className='flex bg-[#f3f3f3] h-screen'> 
             <div className='w-[15rem] bg-[#fff] p-5'>
-                <AdminSidebar avtarurl={avatrurl} username={username} />
+                <AdminSidebar avatarurl={avatarurl} username={username} />
             </div>
 
             <div className='flex-grow p-5 bg-[#fff] ml-4 rounded-lg'>
