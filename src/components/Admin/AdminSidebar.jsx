@@ -1,6 +1,13 @@
+'use client'
 import React from 'react'
 import MenuLink from '../Admin/MenuLink'
 import Image from 'next/image'
+import { useState } from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
+
+
 
 const menuItems = [
     {
@@ -18,11 +25,14 @@ const menuItems = [
     }
 ]
 
-const AdminSidebar = ({avatarurl, username}) => {
+const AdminSidebar = ({ avatarurl, username }) => {
+    const { data: session } = useSession();
+    const router = useRouter();
+
     return (
         <div className='sticky top-10'>
-            <div className='flex items-center gap-5 mb-5'>
-                <Image src={avatarurl} width={50} height={50} className='rounded-full object-cover' alt={""}/>
+            <div className='flex items-center gap-5 mb-5 '>
+                <Image src={avatarurl} width={50} height={50} className='rounded-full object-cover' alt={""} />
                 <div className='flex flex-col'>
                     <span className='font-bold'>{username}</span>
                     <span className='text-xs'>Administrator</span>
@@ -38,7 +48,9 @@ const AdminSidebar = ({avatarurl, username}) => {
                     </li>
                 ))}
             </ul>
-            <button className='p-5 my-1.5 flex items-center cursor-pointer rounded-xl bg-none border-none w-full hover:bg-[#b3b3b3]'>Logout</button>
+            <a href="/login" className='p-5 my-1.5 flex items-center cursor-pointer rounded-xl bg-none border-none w-full hover:bg-[#b3b3b3]'>
+                Logout
+            </a>
         </div>
     )
 }

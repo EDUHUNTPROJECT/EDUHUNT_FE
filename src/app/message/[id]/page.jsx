@@ -94,7 +94,7 @@ const MessagePage = () => {
       sendMessage({
         sender: localStorage.getItem('userId'),
         content: newMessage,
-        receiver: information.id,
+        receiver: information?.id,
       });
       setNewMessage('');
     }
