@@ -18,13 +18,13 @@ const menuItems = [
     }
 ]
 
-const AdminSidebar = ({avtarurl, username}) => {
+const AdminSidebar = ({avatarurl, username}) => {
     return (
         <div className='sticky top-10'>
             <div className='flex items-center gap-5 mb-5'>
-                <Image src={"/images/avatar.png"} width={50} height={50} className='rounded-full object-cover' alt={""}/>
+                <Image src={avatarurl} width={50} height={50} className='rounded-full object-cover' alt={""}/>
                 <div className='flex flex-col'>
-                    <span className='font-bold'>user1</span>
+                    <span className='font-bold'>{username}</span>
                     <span className='text-xs'>Administrator</span>
                 </div>
             </div>

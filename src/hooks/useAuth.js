@@ -67,7 +67,7 @@ const useAuth = () => {
       if (rememberMe) {
         localStorage.setItem('email', email);
       }
-      if(data.message=='Invalid email/password') {
+      if(data.message!='Login completed') {
         
         throw new Error('Invalid email/password');
       }else{
