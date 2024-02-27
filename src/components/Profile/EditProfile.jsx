@@ -1,4 +1,5 @@
 import { useProfile } from "../../hooks/useProfile";
+import { useCertificate } from "../../hooks/useCertificate";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import CloudinaryUpload from "../cloud/CloudinaryUpload";
@@ -6,18 +7,21 @@ import { Button } from "antd";
 
 function EditProfile() {
   const userId = localStorage.getItem("userId");
+  const role = localStorage.getItem("role");
   const { getProfile, updateProfile } = useProfile();
+  const { postCertificate } = useCertificate();
   const [profile, setProfile] = useState({
     id: "",
-    urlAvatar: "", // check api
-    firstName: "", // Change these field names to match your API response
+    urlAvatar: "",
+    firstName: "",
     lastName: "",
     userName: "",
     contactNumber: "",
     address: "",
     description: "",
   });
-  const [showUpload, setShowUpload] = useState(false); // Add state to control the visibility of the upload container
+  const [showAvatarUpload, setShowAvatarUpload] = useState(false);
+  const [showCertificateUpload, setShowCertificateUpload] = useState(false);
 
   useEffect(() => {
     getProfile(userId)
@@ -46,7 +50,7 @@ function EditProfile() {
     console.log(profile);
     updateProfile(profile.id, profile)
       .then(() => {
-        console.log("Profile updated successfully");
+        alert("Profile updated successfully");
       })
       .catch((error) => console.error("Error updating profile:", error));
   };
@@ -55,12 +59,28 @@ function EditProfile() {
     setProfile((prevProfile) => ({ ...prevProfile, urlAvatar: imageUrl }));
   };
 
-  const handleShowUpload = () => {
-    setShowUpload(true);
+  const handleShowAvatarUpload = () => {
+    setShowAvatarUpload(true);
   };
 
-  const handleCloseUpload = () => {
-    setShowUpload(false);
+  const handleCloseAvatarUpload = () => {
+    setShowAvatarUpload(false);
+  };
+
+  const handleShowCertificateUpload = () => {
+    setShowCertificateUpload(true);
+  };
+
+  const handleCloseCertificateUpload = () => {
+    setShowCertificateUpload(false);
+  };
+
+  const handleCertificateUpload = (imageUrl) => {
+    postCertificate(userId, imageUrl)
+      .then(() => {
+        alert("Certificate uploaded successfully");
+      })
+      .catch((error) => console.error("Error uploading certificate:", error));
   };
 
   return (
@@ -74,27 +94,54 @@ function EditProfile() {
             <Image
               src={profile.urlAvatar || "https://via.placeholder.com/150"}
               alt="Avatar"
-              width={100}
-              height={100}
+              width={128}
+              height={128}
               className="object-cover w-32 h-32 rounded-full mx-auto my-4"
             />
-
-            <Button className="rounded bg-[#C6C6C6]" onClick={handleShowUpload}>
-              Change Avatar
-            </Button>
-            {showUpload && (
-              <div className="fixed inset-0 flex items-center justify-center bg-[#000000] bg-opacity-50">
-                <div className="relative z-[11] bg-[#fff] w-[32rem] h-[32rem] bg-white p-8 rounded-lg">
-                  <button
-                    onClick={handleCloseUpload}
-                    className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded"
-                  >
-                    Close
-                  </button>
-                  <CloudinaryUpload onUpload={handleImageUpload} />
+            <div className=" flex gap-4">
+              <Button
+                className="rounded bg-[#C6C6C6]"
+                onClick={handleShowAvatarUpload}
+              >
+                Change Avatar
+              </Button>
+              {showAvatarUpload && (
+                <div className="fixed inset-0 flex items-center justify-center bg-[#000000] bg-opacity-50 z-10">
+                  <div className="relative z-[11] bg-[#fff] w-[32rem] h-[32rem] bg-white p-8 rounded-lg">
+                    <button
+                      onClick={handleCloseAvatarUpload}
+                      className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded"
+                    >
+                      Close
+                    </button>
+                    <CloudinaryUpload onUpload={handleImageUpload} />
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+              {(role === "Mentor" || role === "Scholarship Provider") && (
+                <>
+                  <Button
+                    className="rounded bg-[#C6C6C6]"
+                    onClick={handleShowCertificateUpload}
+                  >
+                    Upload Certificate
+                  </Button>
+                  {showCertificateUpload && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-[#000000] bg-opacity-50">
+                      <div className="relative z-[11] bg-[#fff] w-[32rem] h-[32rem] bg-white p-8 rounded-lg">
+                        <button
+                          onClick={handleCloseCertificateUpload}
+                          className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded"
+                        >
+                          Close
+                        </button>
+                        <CloudinaryUpload onUpload={handleCertificateUpload} />
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
           </div>
         </div>
         <div className="my-2">

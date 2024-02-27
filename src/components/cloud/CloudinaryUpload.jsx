@@ -62,7 +62,9 @@ const CloudinaryUpload = ({ onUpload }) => {
               <img src={imageSrc} alt="Uploaded" />
             </div>
             <p className="mt-[8rem] ml-[25rem]">
-              <button className="bg-[#000] text-[#fff]">DONE</button>
+              <button className="bg-[#000] text-[#fff] p-3 rounded">
+                DONE
+              </button>
             </p>
           </>
         )}
