@@ -2,10 +2,8 @@
 import React from 'react'
 import MenuLink from '../Admin/MenuLink'
 import Image from 'next/image'
-import { useState } from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { redirect } from "next/navigation";
 
 
 
