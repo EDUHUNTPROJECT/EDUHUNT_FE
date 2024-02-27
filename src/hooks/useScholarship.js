@@ -19,9 +19,9 @@ export const useScholarship = () => {
       throw error;
     }
   };
-  const postScholarship = async () => {
+  const postScholarship = async (scholarshipData) => {
     try {
-      const response = await axios.post(API_URL);
+      const response = await axios.post(API_URL, scholarshipData);
       return response.data;
     } catch (error) {
       throw error;

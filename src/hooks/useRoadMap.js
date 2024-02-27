@@ -19,9 +19,9 @@ export const useRoadMap = () => {
       throw error;
     }
   };
-  const postRoadMap = async () => {
+  const postRoadMap = async (userId, contentURL) => {
     try {
-      const response = await axios.post(API_URL);
+      const response = await axios.post(API_URL, { userId, contentURL });
       return response.data;
     } catch (error) {
       throw error;
