@@ -1,8 +1,8 @@
-
 import { useProfile } from "../../hooks/useProfile";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import CloudinaryUpload from "../cloud/CloudinaryUpload";
+import { Button } from "antd";
 
 function EditProfile() {
   const userId = localStorage.getItem("userId");
@@ -79,22 +79,21 @@ function EditProfile() {
               className="object-cover w-32 h-32 rounded-full mx-auto my-4"
             />
 
-            <button className="rounded bg-[#C6C6C6]" onClick={handleShowUpload}>
+            <Button className="rounded bg-[#C6C6C6]" onClick={handleShowUpload}>
               Change Avatar
-            </button>
+            </Button>
             {showUpload && (
               <div className="fixed inset-0 flex items-center justify-center bg-[#000000] bg-opacity-50">
-              <div className="relative z-[11] bg-[#fff] w-[32rem] h-[32rem] bg-white p-8 rounded-lg">
-                <button
-                  onClick={handleCloseUpload}
-                  className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded"
-                >
-                  close
-                </button>
-                <CloudinaryUpload onUpload={handleImageUpload} />
+                <div className="relative z-[11] bg-[#fff] w-[32rem] h-[32rem] bg-white p-8 rounded-lg">
+                  <button
+                    onClick={handleCloseUpload}
+                    className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded"
+                  >
+                    Close
+                  </button>
+                  <CloudinaryUpload onUpload={handleImageUpload} />
+                </div>
               </div>
-            </div>
-            
             )}
           </div>
         </div>

@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 
 const CloudinaryUpload = ({ onUpload }) => {
@@ -31,10 +29,10 @@ const CloudinaryUpload = ({ onUpload }) => {
       formData.append("file", file);
     }
 
-    formData.append("upload_preset", "bujjo1i5");
-    const preset = "bujjo1i5";
-    const apiKey = "848457936193612"; // Replace Your_API_Key with your actual Cloudinary API key
-    const cloudName = "du7wlrmpi"; // Replace Your_Cloud_Name with your actual Cloudinary Cloud Name
+    formData.append("upload_preset", "tstdfsn5");
+    const preset = "tstdfsn5";
+    const apiKey = "579496954431158"; // Replace Your_API_Key with your actual Cloudinary API key
+    const cloudName = "djnjql4tl"; // Replace Your_Cloud_Name with your actual Cloudinary Cloud Name
 
     const data = await fetch(
       `https://api.cloudinary.com/v1_1/${cloudName}/image/upload?upload_preset=${preset}&api_key=${apiKey}`,
@@ -50,23 +48,22 @@ const CloudinaryUpload = ({ onUpload }) => {
     // Pass the URL of the uploaded image to the external handler function
     onUpload(data.secure_url);
   }
-  
 
   return (
-     <div className=" w-[32rem] h-[32rem]">
+    <div className=" w-[32rem] h-[32rem]">
       <form method="post" onChange={handleOnChange} onSubmit={handleOnSubmit}>
         <p>
           <input type="file" name="file" />
         </p>
-        
+
         {imageSrc && !uploadData && (
           <>
-          <div style={{ maxWidth: "30%", maxHeight: "30%" }}>
-            <img src={imageSrc} alt="Uploaded" />
-          </div>
-          <p className="mt-[8rem] ml-[25rem]">
-            <button className="bg-[#000] text-[#fff]">DONE</button>
-          </p>
+            <div style={{ maxWidth: "30%", maxHeight: "30%" }}>
+              <img src={imageSrc} alt="Uploaded" />
+            </div>
+            <p className="mt-[8rem] ml-[25rem]">
+              <button className="bg-[#000] text-[#fff]">DONE</button>
+            </p>
           </>
         )}
 

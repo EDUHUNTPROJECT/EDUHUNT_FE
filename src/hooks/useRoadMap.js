@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const API_URL = "https://localhost:7292/api/ScholarshipInfoes";
+const API_URL = "https://localhost:7292/api/RoadMaps";
 
-export const useScholarship = () => {
-  const getScholarship = async () => {
+export const useRoadMap = () => {
+  const getRoadMap = async () => {
     try {
       const response = await axios.get(API_URL);
       return response.data;
@@ -11,7 +11,7 @@ export const useScholarship = () => {
       throw error;
     }
   };
-  const deleteScholarship = async (id) => {
+  const deleteRoadMap = async (id) => {
     try {
       const response = await axios.delete(`${API_URL}/${id}`);
       return response.data;
@@ -19,7 +19,7 @@ export const useScholarship = () => {
       throw error;
     }
   };
-  const postScholarship = async () => {
+  const postRoadMap = async () => {
     try {
       const response = await axios.post(API_URL);
       return response.data;
@@ -28,8 +28,8 @@ export const useScholarship = () => {
     }
   };
   return {
-    getScholarship,
-    deleteScholarship,
-    postScholarship,
+    getRoadMap,
+    deleteRoadMap,
+    postRoadMap,
   };
 };
