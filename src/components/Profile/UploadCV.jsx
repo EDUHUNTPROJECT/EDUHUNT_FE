@@ -44,7 +44,7 @@ const UploadCV = () => {
       body: JSON.stringify(payload),
     };
 
-    fetch("http://localhost:5295/api/Profiles/UploadCV", options)
+    fetch("https://localhost:7292/api/Profiles/UploadCV", options)
       .then((response) => response.json())
       .then((response) => {
         console.log(response.message);
@@ -52,24 +52,15 @@ const UploadCV = () => {
       .catch((error) => console.error("Error uploading CV:", error));
   };
 
+  const pdfToImageURL = (url) => {
+    const newUrl = url.replace(/\.pdf$/, ".jpg");
+    return newUrl;
+  };
+
   return (
-    <div className="bg-[#f0f0f0] flex flex-col justify-center items-center space-y-4 p-4">
+    <div className=" flex flex-col justify-center items-center space-y-4 p-4">
       <CloudinaryCV onUpload={handleCvUpload} />
-      {cvUrl && (
-        <p className="text-center text-sm text-gray-700">
-          CV uploaded successfully. URL: {cvUrl}
-        </p>
-      )}
-      {cvUrl && (
-        <Image
-          className="mt-4 w-full h-auto"
-          src={`${cvUrl.replace(
-            "/upload/",
-            "/upload/fl_attachment,fl_force_strip,pg_1/"
-          )}.jpg`}
-          alt="Uploaded CV"
-        />
-      )}
+      {cvUrl && <Image src={pdfToImageURL(cvUrl)} alt="CV" width={800}></Image>}
     </div>
   );
 };
