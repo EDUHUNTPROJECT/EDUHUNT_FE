@@ -5,7 +5,9 @@ import ProfileLayout from "../../../components/core/layouts/ProfileLayout";
 const UploadCVPage = () => {
   return (
     <MainLayout>
-      <UploadCV />
+      <ProfileLayout>
+        <UploadCV />
+      </ProfileLayout>
     </MainLayout>
   );
 };

@@ -6,7 +6,9 @@ import ProfileLayout from "../../../components/core/layouts/ProfileLayout";
 const ChangePasswordPage = () => {
   return (
     <MainLayout>
-      <ChangePassword />
+      <ProfileLayout>
+        <ChangePassword />
+      </ProfileLayout>
     </MainLayout>
   );
 };
