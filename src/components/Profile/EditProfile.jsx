@@ -19,6 +19,7 @@ function EditProfile() {
     contactNumber: "",
     address: "",
     description: "",
+    isVIP: false,
   });
   const [showAvatarUpload, setShowAvatarUpload] = useState(false);
   const [showCertificateUpload, setShowCertificateUpload] = useState(false);
@@ -27,6 +28,7 @@ function EditProfile() {
     getProfile(userId)
       .then((data) => {
         console.log(data);
+        localStorage.setItem("user", data);
         setProfile({
           id: data.id,
           urlAvatar: data.urlAvatar || "",
@@ -36,6 +38,7 @@ function EditProfile() {
           contactNumber: data.contactNumber || "",
           address: data.address || "",
           description: data.description || "",
+          isVIP: data.isVIP || false,
         });
       })
       .catch((error) => console.error("Error fetching profile:", error));
@@ -46,14 +49,28 @@ function EditProfile() {
     setProfile({ ...profile, [name]: value });
   };
 
-  const handleUpdateProfile = () => {
-    console.log(profile);
-    updateProfile(profile.id, profile)
+  const handleUpdateProfile = (isupdateVIP) => {
+    const updatedProfile = { ...profile };
+    
+    // Nếu isupdateVIP là true, cập nhật trường isVIP thành true
+    if (isupdateVIP) {
+      updatedProfile.isVIP = true;
+    }
+    console.log(updatedProfile.isVIP)
+    updateProfile(profile.id, updatedProfile)
       .then(() => {
-        alert("Profile updated successfully");
+        if (!isupdateVIP) {
+          alert("Profile updated successfully");
+        }
+        else{
+          alert("are you sure to pay VIP ?");
+          window.location.href = "http://localhost:3000/payment"; 
+        }
+        
       })
       .catch((error) => console.error("Error updating profile:", error));
   };
+  
 
   const handleImageUpload = (imageUrl) => {
     setProfile((prevProfile) => ({ ...prevProfile, urlAvatar: imageUrl }));
@@ -145,6 +162,19 @@ function EditProfile() {
           </div>
         </div>
         <div className="my-2">
+          {profile.isVIP ? (
+            <p className="bg-[#FFD700] text-center p-1 rounded">VIP</p>
+          ):(
+            <>
+            <p className="bg-[#FFD700] text-center p-1 rounded">Not VIP</p>
+            <Button onClick={() => { handleUpdateProfile(true)}} className="rounded bg-[#C6C6C6] padding-2 mt-5">PAYMENT</Button>
+
+            </>
+          )
+          }
+        </div>
+
+        <div className="my-2">
           <label htmlFor="firstName" className="font-bold block mb-5px">
             First Name:
           </label>
@@ -217,7 +247,7 @@ function EditProfile() {
         </div>
         <button
           className="py-2 px-5 bg-[#00277f] text-[#fff] rounded-lg border-none cursor-pointer"
-          onClick={handleUpdateProfile}
+          onClick={() => { handleUpdateProfile(false)}}
         >
           Save Profile
         </button>

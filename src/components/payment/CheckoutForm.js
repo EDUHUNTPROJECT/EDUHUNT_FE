@@ -3,7 +3,7 @@ import {useStripe, useElements, PaymentElement} from '@stripe/react-stripe-js';
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
-
+ 
   const handleSubmit = async (event) => {
     // We don't want to let default form submission happen here,
     // which would refresh the page.
@@ -33,7 +33,6 @@ const CheckoutForm = () => {
       // site first to authorize the payment, then redirected to the `return_url`.
     }
   };
-
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement />
