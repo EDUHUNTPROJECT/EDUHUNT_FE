@@ -12,6 +12,8 @@ const Profile = () => {
     location: "",
     schoolName: "",
     url: "",
+    description: "",
+    authorId: localStorage.getItem("userId"),
   });
 
   const router = useRouter();
@@ -38,6 +40,7 @@ const Profile = () => {
         location: "",
         schoolName: "",
         url: "",
+        description: "",
       });
     } catch (error) {
       alert("Error posting scholarship");
@@ -100,6 +103,17 @@ const Profile = () => {
             name="url"
             type="url"
             value={scholarshipData.url}
+            onChange={handleChange}
+            className="p-2 border rounded"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label className="text-lg font-semibold" htmlFor="description">
+            Description:
+          </label>
+          <textarea
+            name="description"
+            value={scholarshipData.description}
             onChange={handleChange}
             className="p-2 border rounded"
           />

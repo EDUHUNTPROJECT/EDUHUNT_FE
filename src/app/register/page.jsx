@@ -185,27 +185,18 @@ export default function RegisterPage() {
                     </select>
                   </div>
 
-                  <a
-                    href="#"
-                    className="text-[#333] text-sm underline float-right"
-                  >
-                    Forgot your password?
-                  </a>
-                  <label className="flex items-center text-gray-600 mb-4">
-                    <input
-                      onClick={() => setRememberMe(!rememberMe)}
-                      type="checkbox"
-                      className="mr-2"
-                    />
-                    <span>Remember me</span>
-                  </label>
-
                   <button
                     type="submit"
                     className="bg-[#67D0FD] text-white w-full py-2 rounded-[40px] mt-4"
                   >
                     Sign Up
                   </button>
+                  <p className="text-gray-600 mb-6 text-center mt-4">
+                    Have an account?
+                    <Link href="/login">
+                      <span className="text-[#12B8FF]"> Sign in</span>
+                    </Link>
+                  </p>
                 </form>
               </div>
             </div>

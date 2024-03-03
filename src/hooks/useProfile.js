@@ -34,8 +34,15 @@ export const useProfile = () => {
         throw new Error("User ID not found in localStorage");
       }
 
+      const passwordData = {
+        userId,
+        currentPassword,
+        newPassword,
+      };
+
       const response = await axios.post(
-        `https://localhost:7292/api/Account/changePassword?userId=${userId}&currentPassword=${currentPassword}&newPassword=${newPassword}`
+        `https://localhost:7292/api/Account/changePassword`,
+        passwordData
       );
 
       console.log(response);

@@ -19,9 +19,9 @@ export const useRoadMap = () => {
       throw error;
     }
   };
-  const postRoadMap = async (userId, contentURL) => {
+  const postRoadMaps = async (roadMaps) => {
     try {
-      const response = await axios.post(API_URL, { userId, contentURL });
+      const response = await axios.post(API_URL, roadMaps);
       return response.data;
     } catch (error) {
       throw error;
@@ -30,6 +30,6 @@ export const useRoadMap = () => {
   return {
     getRoadMap,
     deleteRoadMap,
-    postRoadMap,
+    postRoadMaps,
   };
 };

@@ -66,7 +66,7 @@ const useAuth = () => {
         localStorage.setItem("email", email);
       }
       if (data.message != "Login completed") {
-        throw new Error("Invalid email/password");
+        throw new Error(response.data.message);
       }
       let jwtData = data.token.split(".")[1];
       let decodedJwtJsonData = window.atob(jwtData);

@@ -2,22 +2,21 @@ import React, { useCallback, useState } from "react";
 import axios from "axios";
 
 const CloudinaryRoadmap = ({ onUpload }) => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const handleFileUpload = (e) => {
-    setSelectedFile(e.target.files[0]);
+    setSelectedFiles([...e.target.files]);
   };
 
-  const handleRemoveFile = () => {
-    setSelectedFile(null);
+  const handleRemoveFile = (index) => {
+    setSelectedFiles(selectedFiles.filter((_, i) => i !== index));
   };
 
   const handleUpload = useCallback(() => {
-    if (selectedFile) {
+    const promises = selectedFiles.map((selectedFile) => {
       const formData = new FormData();
       formData.append("file", selectedFile);
-      formData.append("upload_preset", "bujjo1i5");
-      axios
+      return axios
         .post(
           "https://api.cloudinary.com/v1_1/djnjql4tl/upload?upload_preset=tstdfsn5&api_key=579496954431158",
           formData
@@ -25,10 +24,11 @@ const CloudinaryRoadmap = ({ onUpload }) => {
         .then((response) => {
           const cvUrl = response.data.secure_url;
           onUpload(cvUrl);
-          setSelectedFile(null);
         });
-    }
-  }, [onUpload, selectedFile]);
+    });
+
+    Promise.all(promises).then(() => setSelectedFiles([]));
+  }, [onUpload, selectedFiles]);
 
   return (
     <div>
@@ -42,27 +42,29 @@ const CloudinaryRoadmap = ({ onUpload }) => {
               Choose a File
               <input
                 type="file"
+                multiple
                 accept="image/*,.pdf"
                 className="sr-only"
                 onChange={handleFileUpload}
               />
             </label>
-            {selectedFile && (
-              <div className="mt-2 flex justify-between items-center gap-4">
-                <span className="text-gray-700 text-sm">
-                  {selectedFile.name}
-                </span>
+            {selectedFiles.map((file, index) => (
+              <div
+                key={index}
+                className="mt-2 flex justify-between items-center gap-4"
+              >
+                <span className="text-gray-700 text-sm">{file.name}</span>
                 <button
-                  onClick={handleRemoveFile}
+                  onClick={() => handleRemoveFile(index)}
                   className="text-red-600 hover:text-red-700"
                 >
                   X
                 </button>
               </div>
-            )}
+            ))}
           </div>
         </div>
-        {selectedFile && (
+        {selectedFiles.length > 0 && (
           <button
             onClick={handleUpload}
             className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded text-sm font-medium"

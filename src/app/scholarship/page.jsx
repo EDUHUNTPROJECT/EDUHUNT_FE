@@ -1,13 +1,14 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import MainLayout from "../../components/core/layouts/MainLayout";
 import { Image } from "antd";
 import FPTU from "../../../public/images/FPTU.png";
 import { useScholarship } from "../../hooks/useScholarship";
-import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Scholarship = () => {
   const [scholarshipData, setScholarshipData] = useState([]);
+  const [isVip, setIsVip] = useState(false);
   const { getScholarship } = useScholarship();
   const [searchParams, setSearchParams] = useState({
     schoolname: "",
@@ -32,11 +33,30 @@ const Scholarship = () => {
       }
     };
 
+    // Get the user's VIP status
+    const fetchVipStatus = async () => {
+      try {
+        const userId = localStorage.getItem("userId");
+        const response = await axios.get(
+          `https://localhost:7292/api/Profiles/${userId}`
+        );
+        setIsVip(response.data.isVip);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchData();
+    fetchVipStatus();
   }, []);
 
   const handleSearch = (event) => {
     event.preventDefault();
+    if (!isVip) {
+      alert("Only VIP users can search.");
+      return;
+    }
+
     console.log(scholarshipData);
     const filteredData = scholarshipData.filter((scholarship) => {
       let matchSchoolName = true;
@@ -69,7 +89,7 @@ const Scholarship = () => {
     <MainLayout>
       <div className="bg-white rounded-lg shadow-md p-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Tìm kiếm học bổng</h2>
+          <h2 className="text-xl font-semibold">Search for Scholarships</h2>
         </div>
 
         <div className="mt-4">
@@ -80,18 +100,18 @@ const Scholarship = () => {
                   htmlFor="country"
                   className="block mb-2 text-sm font-medium text-gray-700"
                 >
-                  Quốc gia
+                  Country
                 </label>
                 <select
                   id="country"
                   name="country"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 >
-                  <option value="">Chọn quốc gia</option>
-                  <option value="Viet Nam">Việt Nam</option>
-                  <option value="United States">Hoa Kỳ</option>
-                  <option value="United Kingdom">Vương quốc Anh</option>
-                  <option value="Australia">Úc</option>
+                  <option value="">Select a country</option>
+                  <option value="Viet Nam">Vietnam</option>
+                  <option value="United States">United States</option>
+                  <option value="United Kingdom">United Kingdom</option>
+                  <option value="Australia">Australia</option>
                 </select>
               </div>
 
@@ -100,14 +120,14 @@ const Scholarship = () => {
                   htmlFor="city"
                   className="block mb-2 text-sm font-medium text-gray-700"
                 >
-                  Thành phố
+                  City
                 </label>
                 <input
                   type="text"
                   id="city"
                   name="city"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  placeholder="Nhập tên thành phố"
+                  placeholder="Enter city name"
                 />
               </div>
 
@@ -116,14 +136,14 @@ const Scholarship = () => {
                   htmlFor="schoolname"
                   className="block mb-2 text-sm font-medium text-gray-700"
                 >
-                  Tên trường
+                  School Name
                 </label>
                 <input
                   type="text"
                   id="schoolname"
                   name="schoolname"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  placeholder="Nhập tên trường"
+                  placeholder="Enter school name"
                   onChange={handleInputChange}
                 />
               </div>
@@ -133,14 +153,14 @@ const Scholarship = () => {
                   htmlFor="budget"
                   className="block mb-2 text-sm font-medium text-gray-700"
                 >
-                  Ngân sách
+                  Budget
                 </label>
                 <input
                   type="number"
                   id="budget"
                   name="budget"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  placeholder="Nhập ngân sách"
+                  placeholder="Enter budget"
                   onChange={handleInputChange}
                 />
               </div>
@@ -151,7 +171,7 @@ const Scholarship = () => {
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-semibold text-sm rounded-lg px-4 py-2"
               >
-                Tìm kiếm
+                Search
               </button>
             </div>
           </form>
@@ -178,7 +198,7 @@ const Scholarship = () => {
                         <p className="text-lg font-bold text-gray-800">
                           {scholarship.budget}$
                         </p>
-                        <p className="text-sm text-gray-600">Học phí</p>
+                        <p className="text-sm text-gray-600">Tuition</p>
                       </div>
                     </div>
                     <div className="flex flex-row justify-between mt-4 gap-4">
@@ -187,14 +207,14 @@ const Scholarship = () => {
                         target="_blank"
                         className="btn btn-primary"
                       >
-                        LƯU TRƯỜNG
+                        SAVE SCHOOL
                       </a>
                       <a
                         href={scholarship.url}
                         target="_blank"
                         className="btn btn-secondary"
                       >
-                        ĐĂNG KÝ ONLINE
+                        APPLY ONLINE
                       </a>
                     </div>
                   </div>

@@ -30,13 +30,12 @@ export default function LoginPage() {
 
   const submit = (e) => {
     e.preventDefault();
-  
+
     login({ email, password, rememberMe })
       .then(() => {
         if (localStorage.getItem("userId") !== null) {
-        console.log("Login success");
-        }
-        else{
+          console.log("Login success");
+        } else {
           alert("Login failed");
         }
       })
@@ -44,7 +43,7 @@ export default function LoginPage() {
         alert(error.message);
       });
   };
-  
+
   const theImage = schoolGirl.src;
 
   return (
@@ -53,13 +52,28 @@ export default function LoginPage() {
         
       </div> */}
 
-      <div className="flex justify-center items-center  w-[100%] h-[100vh] " style={{backgroundColor: '#BEE9F2'}}>
+      <div
+        className="flex justify-center items-center  w-[100%] h-[100vh] "
+        style={{ backgroundColor: "#BEE9F2" }}
+      >
         <div className="h-[85vh] w-[80vw] flex">
-          <div className="h-[100%] w-[46%] bg-no-repeat mr-[8%] rounded-3xl" style={{background: `url(${theImage})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
-          <div className="h-[100%] w-[46%] rounded-3xl" style={{background: 'white'}}>
+          <div
+            className="h-[100%] w-[46%] bg-no-repeat mr-[8%] rounded-3xl"
+            style={{
+              background: `url(${theImage})`,
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+            }}
+          ></div>
+          <div
+            className="h-[100%] w-[46%] rounded-3xl"
+            style={{ background: "white" }}
+          >
             <div className="bg-white rounded-lg p-8 w-[100%]">
               <div className="w-[80%] mx-auto">
-                <h1 className="text-2xl font-semibold mb-4 text-center">Log in</h1>
+                <h1 className="text-2xl font-semibold mb-4 text-center">
+                  Log in
+                </h1>
                 <p className="text-gray-600 mb-6 text-center">
                   Do not have an account?
                   <Link href="/register">
@@ -118,7 +132,10 @@ export default function LoginPage() {
                     />
                   </div>
 
-                  <a href="#" className="text-[#333] text-sm underline float-right">
+                  <a
+                    href="/forgotpassword"
+                    className="text-[#333] text-sm underline float-right"
+                  >
                     Forgot your password?
                   </a>
                   <label className="flex items-center text-gray-600 mb-4">
