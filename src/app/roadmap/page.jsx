@@ -7,8 +7,8 @@ import { Image } from "antd";
 import { useRouter } from "next/navigation";
 
 const Profile = () => {
-  const { postRoadMap } = useRoadMap();
-  const [contentURL, setContentURL] = useState();
+  const { postRoadMaps } = useRoadMap();
+  const [contentURLs, setContentURLs] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -19,9 +19,9 @@ const Profile = () => {
   }, []);
 
   const handleUpload = (url) => {
-    setContentURL(url);
+    setContentURLs((prevURLs) => [...prevURLs, url]);
     const userId = localStorage.getItem("userId");
-    postRoadMap(userId, url).then((response) => {
+    postRoadMaps([{ userId, contentURL: url }]).then((response) => {
       console.log(response);
     });
   };
@@ -36,7 +36,16 @@ const Profile = () => {
       <div>
         <input type="text" />
         <CloudinaryRoadMap onUpload={handleUpload} />
-        {contentURL && <Image src={pdfToImageURL(contentURL)} alt="Uploaded" />}
+        <div className="flex gap-4 justify-center">
+          {contentURLs.map((url, index) => (
+            <Image
+              key={index}
+              width={400}
+              src={pdfToImageURL(url)}
+              alt={`Uploaded ${index}`}
+            />
+          ))}
+        </div>
       </div>
     </MainLayout>
   );
