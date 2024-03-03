@@ -56,6 +56,11 @@ const Avatars = () => {
           </Link>
         </div>
         <div className="loginNavBar rounded m-3 pb-1 text-center boxshadow-child-div hov-bg-grey hov-text-white">
+          <Link href={"/message/0"} className="">
+            Chat
+          </Link>
+        </div>
+        <div className="loginNavBar rounded m-3 pb-1 text-center boxshadow-child-div hov-bg-grey hov-text-white">
           <button
             onClick={() => {
               if (session && session.user) {
