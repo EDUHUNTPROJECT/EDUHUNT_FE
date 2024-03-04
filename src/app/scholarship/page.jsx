@@ -40,7 +40,7 @@ const Scholarship = () => {
         const response = await axios.get(
           `https://localhost:7292/api/Profiles/${userId}`
         );
-        setIsVip(response.data.isVip);
+        setIsVip(response.data.isVIP);
       } catch (error) {
         console.error(error);
       }
@@ -205,17 +205,26 @@ const Scholarship = () => {
                       <a
                         href={scholarship.url}
                         target="_blank"
-                        className="btn btn-primary"
+                        className="btn btn-primary font-bold"
                       >
                         SAVE SCHOOL
                       </a>
                       <a
                         href={scholarship.url}
                         target="_blank"
-                        className="btn btn-secondary"
+                        className="btn btn-secondary font-bold"
                       >
                         APPLY ONLINE
                       </a>
+                      {scholarship.isInSite && (
+                        <a
+                          href={`/scholarship/${scholarship.id}`}
+                          target="_blank"
+                          className="btn btn-primary font-bold"
+                        >
+                          DETAILS
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>

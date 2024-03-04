@@ -78,24 +78,68 @@ const NavBar = () => {
     {
       label: (
         <Link
-          href={role === "Mentor" ? "/roadmap" : "/post"}
-          className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+          href={"/message/0"}
+          className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
         >
-          {role === "Mentor" ? "ROADMAP" : "POST"}
+          CHAT
         </Link>
       ),
       labelhighlight: (
         <Link
-          href={role === "Mentor" ? "/roadmap" : "/post"}
-          className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+          href={"/message/0"}
+          className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
         >
-          {role === "Mentor" ? "ROADMAP" : "POST"}
+          CHAT
         </Link>
       ),
       key: "3",
       icon: <MessageOutlined />,
     },
   ];
+
+  if (role === "Mentor") {
+    items.push({
+      label: (
+        <Link
+          href="/roadmap"
+          className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+        >
+          ROADMAP
+        </Link>
+      ),
+      labelhighlight: (
+        <Link
+          href="/roadmap"
+          className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+        >
+          ROADMAP
+        </Link>
+      ),
+      key: "4",
+      icon: <MessageOutlined />,
+    });
+  } else if (role === "Scholarship Provider") {
+    items.push({
+      label: (
+        <Link
+          href="/post"
+          className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+        >
+          POST
+        </Link>
+      ),
+      labelhighlight: (
+        <Link
+          href="/post"
+          className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+        >
+          POST
+        </Link>
+      ),
+      key: "4",
+      icon: <MessageOutlined />,
+    });
+  }
 
   useEffect(() => {
     const userRole = localStorage.getItem("role");
@@ -109,8 +153,10 @@ const NavBar = () => {
     } else if (pathName === "/mentor") {
       return 2;
     } else if (pathName === "/roadmap" && role === "Mentor") {
-      return 3;
+      return 4;
     } else if (pathName === "/post" && role !== "Mentor") {
+      return 4;
+    } else if (pathName === "/message/0") {
       return 3;
     } else return 0;
   };
@@ -122,8 +168,8 @@ const NavBar = () => {
           EDU HUNT
         </span>
       </div>
-      <div className="flex-grow lg:flex ">
-        <div className="lg:flex-grow">
+      <div className="flex-grow lg:flex w-[60%]">
+        <div className="lg:flex-grow w-[100%]">
           <div className="flex items-center justify-center">
             {items.map((item, index) => {
               if (HighlightKey() == item.key) {

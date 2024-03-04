@@ -36,7 +36,7 @@ const Profile = () => {
       <div>
         <input type="text" />
         <CloudinaryRoadMap onUpload={handleUpload} />
-        <div className="flex gap-4 justify-center">
+        <div className="flex gap-4 justify-center h-[400px]">
           {contentURLs.map((url, index) => (
             <Image
               key={index}
