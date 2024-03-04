@@ -17,9 +17,6 @@ import { useRouter } from "next/navigation";
 const { Text } = Typography;
 
 const MainLayout = ({ children }) => {
-  const pathName = usePathname();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [role, setRole] = useState(null);
 
   const items = [
     {

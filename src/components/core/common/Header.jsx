@@ -14,6 +14,12 @@ const NavBar = () => {
   const pathName = usePathname();
   const [role, setRole] = useState(null);
 
+  let userRole = null;
+
+  if (typeof window !== "undefined") {
+    userRole = localStorage.getItem("role");
+  }
+
   const items = [
     {
       label: (
@@ -58,7 +64,7 @@ const NavBar = () => {
     {
       label: (
         <Link
-          href={"/mentor"}
+          href={userRole == "Mentor" ? '/mentor/connected' : '/mentor'}
           className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
         >
           MENTOR
@@ -171,7 +177,7 @@ const NavBar = () => {
       return 0;
     } else if (pathName === "/scholarship") {
       return 1;
-    } else if (pathName === "/mentor") {
+    } else if (pathName.includes("/mentor")) {
       return 2;
     } else if (pathName === "/roadmap" && role === "Mentor") {
       return 4;
