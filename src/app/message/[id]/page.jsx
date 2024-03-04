@@ -1,19 +1,19 @@
-'use client'
-import React, { useEffect, useState } from 'react';
-import useChat from '../../../hooks/useChat';
-import { useParams } from 'next/navigation';
-import Sider from '../../../components/modules/messages/Sider';
-import { Image as ImageAntd } from 'antd';
-import { VideoCameraFilled } from '@ant-design/icons';
-import Link from 'next/link';
-import MainLayout from '../../../components/core/layouts/MainLayout';
-import { useProfile } from '../../../hooks/useProfile';
-import useAdmin from '../../../hooks/useAdmin';
-import {useMessage} from '../../../hooks/useMessage'; // Import hook useMessage
+"use client";
+import React, { useEffect, useState } from "react";
+import useChat from "../../../hooks/useChat";
+import { useParams } from "next/navigation";
+import Sider from "../../../components/modules/messages/Sider";
+import { Image as ImageAntd } from "antd";
+import { VideoCameraFilled } from "@ant-design/icons";
+import Link from "next/link";
+import MainLayout from "../../../components/core/layouts/MainLayout";
+import { useProfile } from "../../../hooks/useProfile";
+import useAdmin from "../../../hooks/useAdmin";
+import { useMessage } from "../../../hooks/useMessage"; // Import hook useMessage
 
 const MessagePage = () => {
   const { messages, sendMessage, connection } = useChat();
-  const [newMessage, setNewMessage] = useState('');
+  const [newMessage, setNewMessage] = useState("");
   const { id } = useParams();
   const { getProfile } = useProfile();
   const { getUserList } = useAdmin();
@@ -24,23 +24,26 @@ const MessagePage = () => {
   useEffect(() => {
     const fetchMessageHistory = async () => {
       try {
-        const listmess = await getHistoryMessages(localStorage.getItem('userId'), id);
+        const listmess = await getHistoryMessages(
+          localStorage.getItem("userId"),
+          id
+        );
         setMessageHistory(listmess);
-        console.log('messageHistory:', listmess);
+        console.log("messageHistory:", listmess);
       } catch (error) {
-        console.error('Error fetching message history:', error);
+        console.error("Error fetching message history:", error);
       }
     };
 
     fetchMessageHistory();
-  }, [id]); 
+  }, [id]);
   useEffect(() => {
     const fetchUserList = async () => {
       try {
         const userListData = await getUserList();
         setUserList(userListData);
       } catch (error) {
-        console.error('Error fetching user list:', error);
+        console.error("Error fetching user list:", error);
       }
     };
 
@@ -49,34 +52,36 @@ const MessagePage = () => {
 
   useEffect(() => {
     const fetchProfiles = async () => {
-      const currentUserID = localStorage.getItem('userId');
+      const currentUserID = localStorage.getItem("userId");
       try {
-        const updatedUserList = await Promise.all(userList.map(async (user) => {
-          if (user.id !== currentUserID) {
-            try {
-              const profile = await getProfile(user.id);
-              return {
-                id: user.id,
-                name: user.name,
-                avatar: profile.urlAvatar,
-                lastMessage: "  "
-              };
-            } catch (error) {
-              console.error('Error fetching profile:', error);
-              // Handle error case, maybe set a default avatar or log the error
-              return {
-                id: user.id,
-                name: user.name,
-                avatar: '',
-                lastMessage: "  "
-              };
+        const updatedUserList = await Promise.all(
+          userList.map(async (user) => {
+            if (user.id !== currentUserID) {
+              try {
+                const profile = await getProfile(user.id);
+                return {
+                  id: user.id,
+                  name: user.name,
+                  avatar: profile.urlAvatar,
+                  lastMessage: "  ",
+                };
+              } catch (error) {
+                console.error("Error fetching profile:", error);
+                // Handle error case, maybe set a default avatar or log the error
+                return {
+                  id: user.id,
+                  name: user.name,
+                  avatar: "",
+                  lastMessage: "  ",
+                };
+              }
             }
-          }
-        }));
-        console.log('updatedUserList', updatedUserList);
+          })
+        );
+        console.log("updatedUserList", updatedUserList);
         setUserListhasAvatar(updatedUserList);
       } catch (error) {
-        console.error('Error fetching profiles:', error);
+        console.error("Error fetching profiles:", error);
       }
     };
 
@@ -86,17 +91,17 @@ const MessagePage = () => {
   }, [userList.length > 0]);
 
   const information = userListhasAvatar.find((user) => user?.id === id);
-  console.log('========userListhasAvatar==========', userListhasAvatar);
-  console.log('========info==========', information);
+  console.log("========userListhasAvatar==========", userListhasAvatar);
+  console.log("========info==========", information);
 
   const handleSendMessage = () => {
-    if (newMessage.trim() !== '') {
+    if (newMessage.trim() !== "") {
       sendMessage({
-        sender: localStorage.getItem('userId'),
+        sender: localStorage.getItem("userId"),
         content: newMessage,
         receiver: information.id,
       });
-      setNewMessage('');
+      setNewMessage("");
     }
   };
 
@@ -129,20 +134,38 @@ const MessagePage = () => {
         <div className="flex flex-1 h-[524px] overflow-auto">
           <Sider users={userListhasAvatar}></Sider>
           <div className="flex flex-col justify-end p-4">
-          <div className="pb-4">
-  {/* Render messageHistory from useMessage hook */}
-  {messageHistory.map((message, index) => (
-    <div key={index} className={` ${message.sender === localStorage.getItem('userId') ? 'text-right' : 'text-left'}`}>
-      {`${userList.find(user => user.id === message.sender)?.name }: ${message.content}`}
-    </div>
-  ))}
+            <div className="pb-4">
+              {/* Render messageHistory from useMessage hook */}
+              {messageHistory.map((message, index) => (
+                <div
+                  key={index}
+                  className={` ${
+                    message.sender === localStorage.getItem("userId")
+                      ? "text-right"
+                      : "text-left"
+                  }`}
+                >
+                  {`${
+                    userList.find((user) => user.id === message.sender)?.name
+                  }: ${message.content}`}
+                </div>
+              ))}
 
-  {messages.map((message, index) => (
-    <div key={index} className={`${message.sender === localStorage.getItem('userId') ? 'text-right' : 'text-left'}`}>
-      {`${userList.find(user => user.id === message.sender)?.name }: ${message.content}`}
-    </div>
-  ))}
-</div>
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`${
+                    message.sender === localStorage.getItem("userId")
+                      ? "text-right"
+                      : "text-left"
+                  }`}
+                >
+                  {`${
+                    userList.find((user) => user.id === message.sender)?.name
+                  }: ${message.content}`}
+                </div>
+              ))}
+            </div>
             <div className="flex w-[74vw]">
               <input
                 type="text"

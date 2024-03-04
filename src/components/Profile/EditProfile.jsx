@@ -51,26 +51,22 @@ function EditProfile() {
 
   const handleUpdateProfile = (isupdateVIP) => {
     const updatedProfile = { ...profile };
-    
-    // Nếu isupdateVIP là true, cập nhật trường isVIP thành true
     if (isupdateVIP) {
       updatedProfile.isVIP = true;
     }
-    console.log(updatedProfile.isVIP)
+    console.log(updatedProfile.isVIP);
     updateProfile(profile.id, updatedProfile)
       .then(() => {
         if (!isupdateVIP) {
           alert("Profile updated successfully");
+        } else {
+          if (window.confirm("Are you sure to pay VIP ?")) {
+            window.location.href = "http://localhost:3000/payment";
+          }
         }
-        else{
-          alert("are you sure to pay VIP ?");
-          window.location.href = "http://localhost:3000/payment"; 
-        }
-        
       })
       .catch((error) => console.error("Error updating profile:", error));
   };
-  
 
   const handleImageUpload = (imageUrl) => {
     setProfile((prevProfile) => ({ ...prevProfile, urlAvatar: imageUrl }));
@@ -109,7 +105,7 @@ function EditProfile() {
         <div className="mb-20">
           <div className="w-32 h-32 rounded-full my-4 mb-2 relative">
             <Image
-              src={profile.urlAvatar || "https://via.placeholder.com/150"}
+              src={profile.urlAvatar}
               alt="Avatar"
               width={128}
               height={128}
@@ -117,7 +113,7 @@ function EditProfile() {
             />
             <div className=" flex gap-4">
               <Button
-                className="rounded bg-[#C6C6C6]"
+                className="rounded bg-[#C6C6C6] font-bold"
                 onClick={handleShowAvatarUpload}
               >
                 Change Avatar
@@ -138,13 +134,13 @@ function EditProfile() {
               {(role === "Mentor" || role === "Scholarship Provider") && (
                 <>
                   <Button
-                    className="rounded bg-[#C6C6C6]"
+                    className="rounded bg-[#C6C6C6] font-bold"
                     onClick={handleShowCertificateUpload}
                   >
                     Upload Certificate
                   </Button>
                   {showCertificateUpload && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-[#000000] bg-opacity-50">
+                    <div className="fixed inset-0 flex items-center justify-center bg-[#000000] bg-opacity-50 z-10">
                       <div className="relative z-[11] bg-[#fff] w-[32rem] h-[32rem] bg-white p-8 rounded-lg">
                         <button
                           onClick={handleCloseCertificateUpload}
@@ -164,14 +160,19 @@ function EditProfile() {
         <div className="my-2">
           {(profile.isVIP && localStorage.getItem("role") === "User") ? (
             <p className="bg-[#FFD700] text-center p-1 rounded">VIP</p>
-          ):(
+          ) : (
             <>
-            <p className="bg-[#FFD700] text-center p-1 rounded">Not VIP</p>
-            <Button onClick={() => { handleUpdateProfile(true)}} className="rounded bg-[#C6C6C6] padding-2 mt-5">PAYMENT</Button>
-
+              <p className="bg-[#FFD700] text-center p-1 rounded">Not VIP</p>
+              <Button
+                onClick={() => {
+                  handleUpdateProfile(true);
+                }}
+                className="rounded bg-[#C6C6C6] padding-2 mt-5 font-bold"
+              >
+                Payment
+              </Button>
             </>
-          )
-          }
+          )}
         </div>
 
         <div className="my-2">
@@ -247,7 +248,9 @@ function EditProfile() {
         </div>
         <button
           className="py-2 px-5 bg-[#00277f] text-[#fff] rounded-lg border-none cursor-pointer"
-          onClick={() => { handleUpdateProfile(false)}}
+          onClick={() => {
+            handleUpdateProfile(false);
+          }}
         >
           Save Profile
         </button>

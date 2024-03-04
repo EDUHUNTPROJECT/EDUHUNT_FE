@@ -85,24 +85,68 @@ const MainLayout = ({ children }) => {
     {
       label: (
         <Link
-          href={role === "Mentor" ? "/roadmap" : "/post"}
-          className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+          href={"/message/0"}
+          className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
         >
-          {role === "Mentor" ? "ROADMAP" : "POST"}
+          CHAT
         </Link>
       ),
       labelhighlight: (
         <Link
-          href={role === "Mentor" ? "/roadmap" : "/post"}
-          className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+          href={"/message/0"}
+          className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
         >
-          {role === "Mentor" ? "ROADMAP" : "POST"}
+          CHAT
         </Link>
       ),
       key: "3",
       icon: <MessageOutlined />,
     },
   ];
+
+  if (role === "Mentor") {
+    items.push({
+      label: (
+        <Link
+          href="/roadmap"
+          className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+        >
+          ROADMAP
+        </Link>
+      ),
+      labelhighlight: (
+        <Link
+          href="/roadmap"
+          className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+        >
+          ROADMAP
+        </Link>
+      ),
+      key: "4",
+      icon: <MessageOutlined />,
+    });
+  } else if (role === "Scholarship Provider") {
+    items.push({
+      label: (
+        <Link
+          href="/post"
+          className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+        >
+          POST
+        </Link>
+      ),
+      labelhighlight: (
+        <Link
+          href="/post"
+          className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+        >
+          POST
+        </Link>
+      ),
+      key: "4",
+      icon: <MessageOutlined />,
+    });
+  }
 
   useEffect(() => {
     const token = localStorage.getItem("token");

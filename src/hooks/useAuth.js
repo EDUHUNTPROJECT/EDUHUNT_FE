@@ -78,7 +78,11 @@ const useAuth = () => {
         ];
 
       localStorage.setItem("role", role);
-      router.push("/");
+      if (role === "Admin") {
+        router.push("/admin");
+      } else {
+        router.push("/");
+      }
     } catch (error) {
       throw error;
     }
