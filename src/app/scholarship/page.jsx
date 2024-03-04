@@ -202,19 +202,21 @@ const Scholarship = () => {
                       </div>
                     </div>
                     <div className="flex flex-row justify-between mt-4 gap-4">
-                      <a
+                      {/* <a
                         href={scholarship.url}
                         target="_blank"
                         className="btn btn-primary font-bold"
                       >
                         SAVE SCHOOL
-                      </a>
+                      </a> */}
                       <a
                         href={scholarship.url}
                         target="_blank"
                         className="btn btn-secondary font-bold"
                       >
-                        APPLY ONLINE
+                        <button style={{ backgroundColor: "#BEBDBB", borderRadius: "10px", padding: "10px" }} id="visitScholarshipWebsite" className="btn btn-secondary font-bold">
+                          Visit Scholarship Website
+                        </button>
                       </a>
                       {scholarship.isInSite && (
                         <a
@@ -222,7 +224,9 @@ const Scholarship = () => {
                           target="_blank"
                           className="btn btn-primary font-bold"
                         >
-                          DETAILS
+                          <button style={{ backgroundColor: "#BEBDBB", borderRadius: "10px", padding: "10px" }} id="visitScholarshipWebsite" className="btn btn-secondary font-bold">
+                         Detail
+                        </button>
                         </a>
                       )}
                     </div>
