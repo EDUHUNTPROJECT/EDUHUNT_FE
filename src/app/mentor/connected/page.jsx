@@ -10,10 +10,8 @@ const Mentor = () => {
     const [mentor, setMentor] = useState();
     const {getQAList, getProfiles} = useMentor();
  
-    let id;
     let role;
     if (typeof window !== "undefined") {
-        id = localStorage.getItem("userId");
         role = localStorage.getItem("role");
     }
 
@@ -72,13 +70,6 @@ const Mentor = () => {
                     if(item.answer != "") {
                         isAnswered = "Answered";
                         answer = true;
-                    }
-                    let text;
-                    if(id = item.answerId) {
-                        text = "To: "
-                        
-                    } else {
-
                     }
                     return (
                         <div className="grid place-items-center" key={key}>
