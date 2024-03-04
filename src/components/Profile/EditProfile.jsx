@@ -158,7 +158,7 @@ function EditProfile() {
           </div>
         </div>
         <div className="my-2">
-          {profile.isVIP ? (
+          {(profile.isVIP && localStorage.getItem("role") === "User") ? (
             <p className="bg-[#FFD700] text-center p-1 rounded">VIP</p>
           ) : (
             <>
