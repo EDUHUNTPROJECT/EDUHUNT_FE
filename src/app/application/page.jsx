@@ -1,5 +1,21 @@
-export default Application=()=>{
+'use client'
+import ListApplication from "../../components/Application/ListApplication";
+import MainLayout from "../../components/core/layouts/MainLayout";
+
+
+ const Application=()=>{
     return (
-        <h1>Application</h1>
+        <>
+        <MainLayout>
+
+
+        <ListApplication>
+
+        </ListApplication>
+        </MainLayout>
+        </>
+
     )
 }
+
+export default Application;
