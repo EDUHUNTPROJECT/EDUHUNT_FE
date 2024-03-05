@@ -14,6 +14,12 @@ const NavBar = () => {
   const pathName = usePathname();
   const [role, setRole] = useState(null);
 
+  let userRole = null;
+
+  if (typeof window !== "undefined") {
+    userRole = localStorage.getItem("role");
+  }
+
   const items = [
     {
       label: (
@@ -58,66 +64,68 @@ const NavBar = () => {
     {
       label: (
         <Link
-          href={"/mentor"}
+          href={"/message/0"}
           className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
         >
-          MENTOR
+          CHAT
         </Link>
       ),
       labelhighlight: (
         <Link
-          href={"/mentor"}
+          href={"/message/0"}
           className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
         >
-          MENTOR
+          CHAT
         </Link>
       ),
       key: "2",
-      icon: <TeamOutlined />,
-    },
-    {
-      label: (
-        <Link
-          href={"/message/0"}
-          className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
-        >
-          CHAT
-        </Link>
-      ),
-      labelhighlight: (
-        <Link
-          href={"/message/0"}
-          className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
-        >
-          CHAT
-        </Link>
-      ),
-      key: "3",
       icon: <MessageOutlined />,
     },
   ];
 
   if (role === "Mentor") {
-    items.push({
-      label: (
-        <Link
-          href="/roadmap"
-          className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
-        >
-          ROADMAP
-        </Link>
-      ),
-      labelhighlight: (
-        <Link
-          href="/roadmap"
-          className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
-        >
-          ROADMAP
-        </Link>
-    ),
-      key: "4",
-      icon: <MessageOutlined />,
-    });
+    items.push(
+      {
+        label: (
+          <Link
+            href={"/mentor"}
+            className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+          >
+            MENTOR
+          </Link>
+        ),
+        labelhighlight: (
+          <Link
+            href={"/mentor"}
+            className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+          >
+            MENTOR
+          </Link>
+        ),
+        key: "4",
+        icon: <TeamOutlined />,
+      },
+      {
+        label: (
+          <Link
+            href="/roadmap"
+            className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+          >
+            ROADMAP
+          </Link>
+        ),
+        labelhighlight: (
+          <Link
+            href="/roadmap"
+            className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+          >
+            ROADMAP
+          </Link>
+        ),
+        key: "3",
+        icon: <MessageOutlined />,
+      }
+    );
   } else if (role === "Scholarship Provider") {
     items.push({
       label: (
@@ -136,30 +144,52 @@ const NavBar = () => {
           POST
         </Link>
       ),
-      key: "4",
+      key: "3",
       icon: <MessageOutlined />,
     });
-  }else if (role === "User") {
-    items.push({
-      label: (
-        <Link
-          href="/application"
-          className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
-        >
-          APPLICATION
-        </Link>
-      ),
-      labelhighlight: (
-        <Link
-          href="/application"
-          className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
-        >
-          APPLICATION
-        </Link>
-      ),
-      key: "4",
-      icon: <MessageOutlined />,
-    });
+  } else if (role === "User") {
+    items.push(
+      {
+        label: (
+          <Link
+            href={"/mentor"}
+            className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+          >
+            MENTOR
+          </Link>
+        ),
+        labelhighlight: (
+          <Link
+            href={"/mentor"}
+            className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+          >
+            MENTOR
+          </Link>
+        ),
+        key: "4",
+        icon: <TeamOutlined />,
+      },
+      {
+        label: (
+          <Link
+            href="/application"
+            className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+          >
+            APPLICATION
+          </Link>
+        ),
+        labelhighlight: (
+          <Link
+            href="/application"
+            className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+          >
+            APPLICATION
+          </Link>
+        ),
+        key: "3",
+        icon: <MessageOutlined />,
+      }
+    );
   }
 
   useEffect(() => {
@@ -172,15 +202,15 @@ const NavBar = () => {
     } else if (pathName === "/scholarship") {
       return 1;
     } else if (pathName === "/mentor") {
-      return 2;
-    } else if (pathName === "/roadmap" && role === "Mentor") {
       return 4;
-    } else if (pathName === "/post" && role == "Scholarship Provider") {
-      return 4;
-    } else if (pathName === "/application" && role == "User") {
-      return 4;
-    } else if (pathName === "/message/0") {
+    } else if (
+      pathName === "/roadmap" ||
+      pathName === "/application" ||
+      pathName === "/post"
+    ) {
       return 3;
+    } else if (pathName === "/message/0") {
+      return 2;
     } else return 0;
   };
 

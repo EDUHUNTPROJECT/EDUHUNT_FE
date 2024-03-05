@@ -1,11 +1,13 @@
 "use client";
+import React, { useState, useEffect } from "react";
 import MainLayout from "../../components/core/layouts/MainLayout";
-import { useState, useEffect } from "react";
 import { useScholarship } from "../../hooks/useScholarship";
+import { useProfile } from "../../hooks/useProfile";
 import { useRouter } from "next/navigation";
 
 const Profile = () => {
   const { postScholarship } = useScholarship();
+  const { getProfile } = useProfile();
   const [scholarshipData, setScholarshipData] = useState({
     budget: "",
     title: "",
@@ -15,13 +17,20 @@ const Profile = () => {
     description: "",
     authorId: localStorage.getItem("userId"),
   });
-
   const router = useRouter();
 
   useEffect(() => {
     const role = localStorage.getItem("role");
+    const userId = localStorage.getItem("userId");
     if (role !== "Scholarship Provider") {
       router.push("/");
+    } else {
+      getProfile(userId).then((profile) => {
+        if (!profile.isAllow) {
+          router.push("/");
+          alert("You are not allowed to post a scholarship.");
+        }
+      });
     }
   }, []);
 
@@ -41,6 +50,7 @@ const Profile = () => {
         schoolName: "",
         url: "",
         description: "",
+        authorId: localStorage.getItem("userId"),
       });
     } catch (error) {
       alert("Error posting scholarship");

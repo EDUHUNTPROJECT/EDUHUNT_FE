@@ -16,6 +16,18 @@ const menuItems = [
         title: "Manage Posts",
         path: "/admin/manageposts",
       },
+      {
+        title: "Approve Posts",
+        path: "/admin/approvescholarship",
+      },
+      {
+        title: "Approve Certificate",
+        path: "/admin/approvecertificate",
+      },
+      {
+        title: "Approve Roadmap",
+        path: "/admin/approveroadmap",
+      },
     ],
   },
 ];

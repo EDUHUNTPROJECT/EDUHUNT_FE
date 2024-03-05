@@ -5,8 +5,8 @@ import { useScholarship } from "../../../hooks/useScholarship";
 import AdminLayout from "../../../components/core/layouts/AdminLayout";
 import { useRouter } from "next/navigation";
 
-const ManageScholarshipPage = () => {
-  const { getScholarship, deleteScholarship } = useScholarship();
+const ApproveScholarshipPage = () => {
+  const { getScholarship, approveScholarship } = useScholarship();
   const [scholarshipData, setScholarshipData] = useState([]);
   const router = useRouter();
 
@@ -18,10 +18,10 @@ const ManageScholarshipPage = () => {
     const fetchData = async () => {
       try {
         const data = await getScholarship();
-        const approvedScholarships = data.filter(
-          (scholarship) => scholarship.isApproved
+        const unapprovedScholarships = data.filter(
+          (scholarship) => !scholarship.isApproved
         );
-        setScholarshipData(approvedScholarships);
+        setScholarshipData(unapprovedScholarships);
       } catch (error) {
         console.error(error);
       }
@@ -30,15 +30,15 @@ const ManageScholarshipPage = () => {
     fetchData();
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleApprove = async (id, isApproved) => {
     try {
-      await deleteScholarship(id);
-      // If deletion is successful, update the scholarship data by filtering out the deleted item
+      console.log(id, isApproved);
+      await approveScholarship(id, isApproved);
       setScholarshipData(scholarshipData.filter((item) => item.id !== id));
-      message.success("Scholarship deleted successfully");
+      message.success("Scholarship approved successfully");
     } catch (error) {
       console.error(error);
-      message.error("Failed to delete scholarship");
+      message.error("Failed to approve scholarship");
     }
   };
 
@@ -58,27 +58,28 @@ const ManageScholarshipPage = () => {
       key: "action",
       render: (text, record) => (
         <Popconfirm
-          title="Are you sure delete this scholarship?"
-          onConfirm={() => handleDelete(record.id)}
+          title="Do you want to approve this scholarship?"
+          onConfirm={() => handleApprove(record.id, true)}
+          onCancel={() => handleApprove(record.id, false)}
           okText={<span style={{ color: "black" }}>Yes</span>}
           cancelText="No"
         >
           <Button type="primary" danger size="small">
-            Delete
+            Approve
           </Button>
         </Popconfirm>
       ),
     },
   ];
-  console.log(scholarshipData);
+
   return (
     <AdminLayout>
       <div>
-        <h1>Scholarship Management</h1>
+        <h1>Approve Scholarships</h1>
         <Table dataSource={scholarshipData} columns={columns} />
       </div>
     </AdminLayout>
   );
 };
 
-export default ManageScholarshipPage;
+export default ApproveScholarshipPage;
