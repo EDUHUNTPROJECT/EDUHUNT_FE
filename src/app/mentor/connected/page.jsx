@@ -11,9 +11,7 @@ const Mentor = () => {
     const {getQAList, getProfiles} = useMentor();
  
     let role;
-    if (typeof window !== "undefined") {
-        role = localStorage.getItem("role");
-    }
+    role = localStorage.getItem("role");
 
     useEffect(() => {
         const fetchUserList = async () => {
@@ -27,22 +25,21 @@ const Mentor = () => {
 
         fetchUserList();
     }, []);
-    console.log(mentor);
     
-    const mentorName = mentor?.map((mentor) => {
+    let mentorName = mentor?.map((mentor) => {
         let fName = mentor.firstName;
         let sName = mentor.lastName;
         let id = mentor.id;
-        if(fName != null && sName != null) {
+        let userID = mentor.userId;
+        if(fName != null && sName != null && fName != "" && sName != "") {
             return {
                 fName,
                 sName,
-                id
+                id,
+                userID
             }
         }
     })
-
-    console.log(mentorName);
 
     useEffect(() => {
         const fetchUserList = async () => {
@@ -57,7 +54,22 @@ const Mentor = () => {
         fetchUserList();
     }, []);
 
+    mentorName = mentorName?.filter((mentor) => mentor != undefined)
+
     console.log(qa);
+    const mentorNames = qa?.map((mentor) => {
+        const name = mentorName?.filter((mentorNamed) => mentorNamed?.userID == mentor.answerId)
+        let named = name[0];
+        return (named.fName + " " +named.sName)
+    })
+    console.log(mentorNames);
+
+    const userNames = qa?.map((mentor) => {
+        const name = mentorName?.filter((mentorNamed) => mentorNamed?.userID == mentor.askerId)
+        let named = name[0];
+        return (named?.fName + " " +named?.sName)
+    })
+    console.log(userNames);
 
     return (
     <MainLayout>
@@ -92,9 +104,21 @@ const Mentor = () => {
                                 </div>
                                 <div className="text-center w-[13vw] border-l">
                                     <div><span className="font-bold">Date: </span> {date.slice(0,date.indexOf('T'))}</div>
-                                    <div><span className="font-bold">Status: 
-                                    </span> <span className="font-bold" style={{color: answer ? "#ADFF2F" : "red"}}>{isAnswered}</span></div>
-                                    <div></div>
+                                    <div>
+                                        <span className="font-bold">Status: </span> 
+                                        <span className="font-bold" style={{color: answer ? "#ADFF2F" : "red"}}>{isAnswered}</span>
+                                    </div>
+                                        {
+                                            role == "Mentor" ? 
+                                            <div>
+                                            <span className="font-bold">From: </span> 
+                                            <span>{userNames[key]}</span>
+                                            </div> :
+                                            <div>
+                                            <span className="font-bold">To: </span> 
+                                            <span>{mentorNames[key]}</span>
+                                            </div>
+                                        }
                                 </div>
                             </div>
                         </div>

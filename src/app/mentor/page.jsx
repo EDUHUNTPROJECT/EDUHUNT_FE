@@ -18,7 +18,7 @@ const Mentor = () => {
     let id;
     if (typeof window !== "undefined") {
         id = localStorage.getItem("userId");
-    }                                                                   
+    }
 
     useEffect(() => {
         const fetchUserList = async () => {
