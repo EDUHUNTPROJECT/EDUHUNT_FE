@@ -27,9 +27,21 @@ export const useScholarship = () => {
       throw error;
     }
   };
+  const getDetailScholarShip = async (id) => {
+    try {
+      const response = await axios.get(`${API_URL}/${id}`);
+      return response.data;
+    }
+    catch (error) {
+      
+      throw error;
+
+    }
+  }
   return {
     getScholarship,
     deleteScholarship,
     postScholarship,
+    getDetailScholarShip,
   };
 };
