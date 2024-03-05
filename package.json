@@ -51,7 +51,7 @@
     "resend": "^3.2.0",
     "style-loader": "^3.3.4",
     "styled-components": "^6.1.8",
-    "swr": "^2.2.4",
+    "swr": "^2.2.5",
     "text-encoding-polyfill": "^0.6.7",
     "uploadthing": "^6.2.0",
     "url-loader": "^4.1.1",
