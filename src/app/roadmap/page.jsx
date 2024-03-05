@@ -3,18 +3,29 @@ import React, { useState, useEffect } from "react";
 import MainLayout from "../../components/core/layouts/MainLayout";
 import CloudinaryRoadMap from "../../components/cloud/CloudinaryRoadMap";
 import { useRoadMap } from "../../hooks/useRoadMap";
+import { useProfile } from "../../hooks/useProfile";
 import { Image } from "antd";
 import { useRouter } from "next/navigation";
 
 const Profile = () => {
   const { postRoadMaps } = useRoadMap();
+  const { getProfile } = useProfile();
   const [contentURLs, setContentURLs] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
     const role = localStorage.getItem("role");
+    const userId = localStorage.getItem("userId");
+
     if (role !== "Mentor") {
       router.push("/");
+    } else {
+      getProfile(userId).then((profile) => {
+        if (!profile.isAllow) {
+          router.push("/");
+          alert("You are not allowed to post a roadmap.");
+        }
+      });
     }
   }, []);
 

@@ -11,6 +11,18 @@ export const useCertificate = () => {
       throw error;
     }
   };
+
+  const approveCertificate = async (id, isApproved) => {
+    try {
+      const response = await axios.put(`${API_URL}/${id}/approve`, isApproved, {
+        headers: { "Content-Type": "application/json" },
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const deleteCertificate = async (id) => {
     try {
       const response = await axios.delete(`${API_URL}/${id}`);
@@ -31,5 +43,6 @@ export const useCertificate = () => {
     getCertificate,
     deleteCertificate,
     postCertificate,
+    approveCertificate,
   };
 };

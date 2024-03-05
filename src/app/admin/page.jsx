@@ -18,9 +18,6 @@ export default function AdminTestPage() {
     if (role !== "Admin") {
       router.push("/");
     }
-  }, []);
-
-  useEffect(() => {
     const fetchUserList = async () => {
       try {
         const userListData = await getUserList();
