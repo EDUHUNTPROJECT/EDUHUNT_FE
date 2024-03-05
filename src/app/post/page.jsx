@@ -4,7 +4,9 @@ import MainLayout from "../../components/core/layouts/MainLayout";
 import { useScholarship } from "../../hooks/useScholarship";
 import { useProfile } from "../../hooks/useProfile";
 import { useRouter } from "next/navigation";
-
+import Image from "next/image";
+import ImageIcon from "../../asset/icon/ImageIcon.png"
+import MoreOptions from "../../asset/icon/MoreOptions.png"
 const Profile = () => {
   const { postScholarship } = useScholarship();
   const { getProfile } = useProfile();
@@ -59,82 +61,48 @@ const Profile = () => {
 
   return (
     <MainLayout>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex flex-col">
-          <label className="text-lg font-semibold" htmlFor="budget">
-            Budget:
-          </label>
-          <input
-            name="budget"
-            type="number"
-            value={scholarshipData.budget}
-            onChange={handleChange}
-            className="p-2 border rounded"
-          />
+      <div>
+        <h1 className="text-[120px] font-bold">Create Post</h1>
+      </div>
+      <div className="flex flex-row gap-[35px]">
+        <div className="w-[450px] h-[450px] border-[2px] border-dashed shadow-sm rounded-[25px] border-[#B5B5B5] flex flex-col gap-[10px] items-center justify-center">
+          <Image src={ImageIcon} width={400} height={400} className="w-[100px] h-[100px]"></Image>
+          <input type="file" id="input_image" className="hidden"/>
+          <h3 className="font-semibold">Drop your image here or <label htmlFor="input_image" className="text-[#1B92FF]">browse</label></h3>
         </div>
-        <div className="flex flex-col">
-          <label className="text-lg font-semibold" htmlFor="title">
-            Title:
-          </label>
-          <textarea
-            name="title"
-            value={scholarshipData.title}
-            onChange={handleChange}
-            className="p-2 border rounded"
-          />
+        <form className="flex flex-col gap-[15px]">
+          <div className="w-[calc(100vw-600px)]">
+            <h4 className="font-bold text-[30px]">Budget</h4>
+            <textarea name="" id="" rows="1" className="w-full border border-[#B5B5B5] shadow-md p-[10px] rounded-[10px] text-[28px]"></textarea>
+          </div>
+          <div className="w-[calc(100vw-600px)]">
+            <h4 className="font-bold text-[30px]">Title</h4>
+            <textarea name="" id="" rows="2" className="w-full border border-[#B5B5B5] shadow-md p-[10px] rounded-[10px] text-[28px]"></textarea>
+          </div>
+          <div className="w-[calc(100vw-600px)]">
+            <h4 className="font-bold text-[30px]">Location</h4>
+            <textarea name="" id="" rows="1" className="w-full border border-[#B5B5B5] shadow-md p-[10px] rounded-[10px] text-[28px]"></textarea>
+          </div>
+          <div className="w-[calc(100vw-600px)]">
+            <h4 className="font-bold text-[30px]">School Name</h4>
+            <textarea name="" id="" rows="1" className="w-full border border-[#B5B5B5] shadow-md p-[10px] rounded-[10px] text-[28px]"></textarea>
+          </div>
+          <div className="w-[calc(100vw-600px)]">
+            <h4 className="font-bold text-[30px]">URL</h4>
+            <textarea name="" id="" rows="1" className="w-full border border-[#B5B5B5] shadow-md p-[10px] rounded-[10px] text-[28px]"></textarea>
+          </div>
+          <div className="w-[calc(100vw-600px)]">
+            <h4 className="font-bold text-[30px]">Description</h4>
+            <textarea name="" id="" rows="4" className="w-full border border-[#B5B5B5] shadow-md p-[10px] rounded-[10px] text-[28px]"></textarea>
+          </div>
+          <div className="flex flex-row justify-end ">
+          <button type="submit" className="py-[20px] px-[90px] flex items-center justify-center bg-[#3EAEFF] rounded-[10px] text-[24px] font-semibold text-[#fff]">
+            Post 
+          </button>
         </div>
-        <div className="flex flex-col">
-          <label className="text-lg font-semibold" htmlFor="location">
-            Location:
-          </label>
-          <input
-            name="location"
-            value={scholarshipData.location}
-            onChange={handleChange}
-            className="p-2 border rounded"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="text-lg font-semibold" htmlFor="schoolName">
-            School Name:
-          </label>
-          <input
-            name="schoolName"
-            value={scholarshipData.schoolName}
-            onChange={handleChange}
-            className="p-2 border rounded"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="text-lg font-semibold" htmlFor="url">
-            URL:
-          </label>
-          <input
-            name="url"
-            type="url"
-            value={scholarshipData.url}
-            onChange={handleChange}
-            className="p-2 border rounded"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="text-lg font-semibold" htmlFor="description">
-            Description:
-          </label>
-          <textarea
-            name="description"
-            value={scholarshipData.description}
-            onChange={handleChange}
-            className="p-2 border rounded"
-          />
-        </div>
-        <button
-          type="submit"
-          className="py-2 px-4 rounded bg-[#00277f] text-[white]"
-        >
-          Submit
-        </button>
-      </form>
+        </form>
+        
+      </div>
     </MainLayout>
   );
 };
