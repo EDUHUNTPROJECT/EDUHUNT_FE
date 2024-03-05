@@ -120,7 +120,7 @@ const NavBar = () => {
         >
           ROADMAP
         </Link>
-      ),
+    ),
       key: "4",
       icon: <MessageOutlined />,
     });
@@ -145,6 +145,27 @@ const NavBar = () => {
       key: "4",
       icon: <MessageOutlined />,
     });
+  }else if (role === "User") {
+    items.push({
+      label: (
+        <Link
+          href="/application"
+          className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+        >
+          APPLICATION
+        </Link>
+      ),
+      labelhighlight: (
+        <Link
+          href="/application"
+          className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+        >
+          APPLICATION
+        </Link>
+      ),
+      key: "4",
+      icon: <MessageOutlined />,
+    });
   }
 
   useEffect(() => {
@@ -160,7 +181,9 @@ const NavBar = () => {
       return 2;
     } else if (pathName === "/roadmap" && role === "Mentor") {
       return 4;
-    } else if (pathName === "/post" && role !== "Mentor") {
+    } else if (pathName === "/post" && role == "Scholarship Provider") {
+      return 4;
+    } else if (pathName === "/application" && role == "User") {
       return 4;
     } else if (pathName === "/message/0") {
       return 3;
