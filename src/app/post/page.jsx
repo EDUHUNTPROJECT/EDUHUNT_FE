@@ -4,6 +4,7 @@ import MainLayout from "../../components/core/layouts/MainLayout";
 import { useScholarship } from "../../hooks/useScholarship";
 import { useProfile } from "../../hooks/useProfile";
 import { useRouter } from "next/navigation";
+import CloudinaryPost from "../../components/cloud/CloudinaryPost";
 
 const Profile = () => {
   const { postScholarship } = useScholarship();
@@ -16,6 +17,7 @@ const Profile = () => {
     url: "",
     description: "",
     authorId: localStorage.getItem("userId"),
+    imageUrl: "",
   });
   const router = useRouter();
 
@@ -38,9 +40,15 @@ const Profile = () => {
     setScholarshipData({ ...scholarshipData, [e.target.name]: e.target.value });
   };
 
+  const handleUpload = (url) => {
+    setScholarshipData({ ...scholarshipData, imageUrl: url });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log("check============")
+      console.log(scholarshipData);
       await postScholarship(scholarshipData);
       alert("Scholarship posted successfully");
       setScholarshipData({
@@ -51,6 +59,7 @@ const Profile = () => {
         url: "",
         description: "",
         authorId: localStorage.getItem("userId"),
+        imageUrl: "",
       });
     } catch (error) {
       alert("Error posting scholarship");
@@ -59,82 +68,84 @@ const Profile = () => {
 
   return (
     <MainLayout>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex flex-col">
-          <label className="text-lg font-semibold" htmlFor="budget">
-            Budget:
-          </label>
-          <input
-            name="budget"
-            type="number"
-            value={scholarshipData.budget}
-            onChange={handleChange}
-            className="p-2 border rounded"
-          />
+      <div>
+        <h1 className="text-[60px] font-bold">Create Post</h1>
+      </div>
+      <div className="flex flex-row gap-[35px]">
+        <div className="w-[450px] h-[450px] border-[2px] border-dashed shadow-sm rounded-[25px] flex flex-col gap-[10px] items-center justify-center">
+          <CloudinaryPost onUpload={handleUpload} />
         </div>
-        <div className="flex flex-col">
-          <label className="text-lg font-semibold" htmlFor="title">
-            Title:
-          </label>
-          <textarea
-            name="title"
-            value={scholarshipData.title}
-            onChange={handleChange}
-            className="p-2 border rounded"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="text-lg font-semibold" htmlFor="location">
-            Location:
-          </label>
-          <input
-            name="location"
-            value={scholarshipData.location}
-            onChange={handleChange}
-            className="p-2 border rounded"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="text-lg font-semibold" htmlFor="schoolName">
-            School Name:
-          </label>
-          <input
-            name="schoolName"
-            value={scholarshipData.schoolName}
-            onChange={handleChange}
-            className="p-2 border rounded"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="text-lg font-semibold" htmlFor="url">
-            URL:
-          </label>
-          <input
-            name="url"
-            type="url"
-            value={scholarshipData.url}
-            onChange={handleChange}
-            className="p-2 border rounded"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="text-lg font-semibold" htmlFor="description">
-            Description:
-          </label>
-          <textarea
-            name="description"
-            value={scholarshipData.description}
-            onChange={handleChange}
-            className="p-2 border rounded"
-          />
-        </div>
-        <button
-          type="submit"
-          className="py-2 px-4 rounded bg-[#00277f] text-[white]"
-        >
-          Submit
-        </button>
-      </form>
+        <form className="flex flex-col gap-[15px]" onSubmit={handleSubmit}>
+          <div className="w-[calc(100vw-600px)]">
+            <h4 className="font-bold text-[20px]">Budget</h4>
+            <textarea
+              name="budget"
+              rows="1"
+              value={scholarshipData.budget}
+              onChange={handleChange}
+              className="w-full pl-4  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
+            ></textarea>
+          </div>
+          <div className="w-[calc(100vw-600px)]">
+            <h4 className="font-bold text-[20px]">Title</h4>
+            <textarea
+              name="title"
+              rows="2"
+              value={scholarshipData.title}
+              onChange={handleChange}
+              className="w-full pl-4  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
+            ></textarea>
+          </div>
+          <div className="w-[calc(100vw-600px)]">
+            <h4 className="font-bold text-[20px]">Location</h4>
+            <textarea
+              name="location"
+              rows="1"
+              value={scholarshipData.location}
+              onChange={handleChange}
+              className="w-full pl-4  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
+            ></textarea>
+          </div>
+          <div className="w-[calc(100vw-600px)]">
+            <h4 className="font-bold text-[20px]">School Name</h4>
+            <textarea
+              name="schoolName"
+              rows="1"
+              value={scholarshipData.schoolName}
+              onChange={handleChange}
+              className="w-full pl-4  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
+            ></textarea>
+          </div>
+          <div className="w-[calc(100vw-600px)]">
+            <h4 className="font-bold text-[20px]">URL</h4>
+            <textarea
+              name="url"
+              rows="1"
+              value={scholarshipData.url}
+              onChange={handleChange}
+              className="w-full pl-4  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
+            ></textarea>
+          </div>
+          <div className="w-[calc(100vw-600px)]">
+            <h4 className="font-bold text-[20px]">Description</h4>
+            <textarea
+              name="description"
+              rows="4"
+              value={scholarshipData.description}
+              onChange={handleChange}
+              className="w-full pl-4  border border-[#B5B5B5] shadow-md  rounded-[10px] text-[18px]"
+            ></textarea>
+          </div>
+          <div className="flex flex-row justify-end ">
+            <button
+              type="submit"
+              className="py-[10px] px-[20px] flex items-center justify-center bg-[#3EAEFF] rounded-[10px] text-[24px] font-semibold text-[#fff]"
+            >
+              Post
+            </button>
+          </div>
+        </form>
+      </div>
     </MainLayout>
   );
 };

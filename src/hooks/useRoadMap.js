@@ -12,6 +12,15 @@ export const useRoadMap = () => {
     }
   };
 
+  const getRoadMapById = async (id) => {
+    try {
+      const response = await axios.get(`${API_URL}/${id}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const approveRoadMap = async (id, isApproved) => {
     try {
       const response = await axios.put(`${API_URL}/${id}/approve`, isApproved, {
@@ -31,6 +40,7 @@ export const useRoadMap = () => {
     }
   };
   const postRoadMaps = async (roadMaps) => {
+    console.log(roadMaps);
     try {
       const response = await axios.post(API_URL, roadMaps);
       return response.data;
@@ -40,6 +50,7 @@ export const useRoadMap = () => {
   };
   return {
     getRoadMap,
+    getRoadMapById,
     deleteRoadMap,
     postRoadMaps,
     approveRoadMap,
