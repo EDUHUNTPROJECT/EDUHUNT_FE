@@ -32,6 +32,7 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log("check============")
       await postScholarship(scholarshipData);
       alert("Scholarship posted successfully");
       setScholarshipData({
@@ -41,6 +42,7 @@ const Profile = () => {
         schoolName: "",
         url: "",
         description: "",
+        authorId: localStorage.getItem("userId") || ""
       });
     } catch (error) {
       alert("Error posting scholarship");

@@ -3,23 +3,29 @@ import React, { useState, useEffect } from 'react';
 import { Button, Table, Popconfirm, message } from 'antd';
 import { useScholarship } from '../../../hooks/useScholarship';
 import AdminLayout from '../../../components/core/layouts/AdminLayout'
+import { useRouter } from 'next/navigation';
 
 const ManageScholarshipPage = () => {
     const { getScholarship, deleteScholarship } = useScholarship();
     const [scholarshipData, setScholarshipData] = useState([]);
+    const router = useRouter();
 
     useEffect(() => {
+        const role = localStorage.getItem("role");
+        if (role !== "Admin") {
+          router.push("/");
+        }
         const fetchData = async () => {
-            try {
-                const data = await getScholarship();
-                setScholarshipData(data);
-            } catch (error) {
-                console.error(error);
-            }
+          try {
+            const data = await getScholarship();
+            setScholarshipData(data);
+          } catch (error) {
+            console.error(error);
+          }
         };
-
+    
         fetchData();
-    }, []);
+      }, []);
 
     const handleDelete = async (id) => {
         try {
