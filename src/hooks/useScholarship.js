@@ -11,6 +11,18 @@ export const useScholarship = () => {
       throw error;
     }
   };
+
+  const approveScholarship = async (id, isApproved) => {
+    try {
+      const response = await axios.put(`${API_URL}/${id}/approve`, isApproved, {
+        headers: { "Content-Type": "application/json" },
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const deleteScholarship = async (id) => {
     try {
       const response = await axios.delete(`${API_URL}/${id}`);
@@ -27,9 +39,22 @@ export const useScholarship = () => {
       throw error;
     }
   };
+  const getDetailScholarShip = async (id) => {
+    try {
+      const response = await axios.get(`${API_URL}/${id}`);
+      return response.data;
+    }
+    catch (error) {
+      
+      throw error;
+
+    }
+  }
   return {
     getScholarship,
     deleteScholarship,
     postScholarship,
+    getDetailScholarShip,
+    approveScholarship,
   };
 };
