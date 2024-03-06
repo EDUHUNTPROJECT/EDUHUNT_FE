@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import CloudinaryUpload from "../cloud/CloudinaryUpload";
 import { Button } from "antd";
+import { Avatar } from "@nextui-org/avatar";
+
 
 function EditProfile() {
   const userId = localStorage.getItem("userId");
@@ -104,13 +106,25 @@ function EditProfile() {
         <h1 className="font-extrabold text-4xl mb-5 ">My Profile</h1>
         <div className="mb-20">
           <div className="w-32 h-32 rounded-full my-4 mb-2 relative">
-            <Image
-              src={profile.urlAvatar}
-              alt="Avatar"
-              width={128}
-              height={128}
-              className="object-cover w-32 h-32 rounded-full mx-auto my-4"
-            />
+            {profile.isVIP ? (
+              <Avatar
+                isBordered
+                color="warning"
+                src={profile.urlAvatar}
+                alt="Avatar"
+                width={128}
+                height={128}
+                className="object-cover w-32 h-32 rounded-full mx-auto my-4"
+              />
+            ) : (
+              <Image
+                src={profile.urlAvatar}
+                alt="Avatar"
+                width={128}
+                height={128}
+                className="object-cover w-32 h-32 rounded-full mx-auto my-4"
+              />
+            )}
             <div className=" flex gap-4">
               <Button
                 className="rounded bg-[#C6C6C6] font-bold"
