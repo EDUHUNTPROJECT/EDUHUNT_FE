@@ -148,7 +148,29 @@ const MainLayout = ({ children }) => {
       ),
       key: "3",
       icon: <MessageOutlined />,
-    });
+    },
+    {
+      label: (
+        <Link
+          href="/application"
+          className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+        >
+          APPLICATION
+        </Link>
+      ),
+      labelhighlight: (
+        <Link
+          href="/application"
+          className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+        >
+          APPLICATION
+        </Link>
+      ),
+      key: "4",
+      icon: <MessageOutlined />,
+    }
+    
+    );
   } else if (role === "User") {
     items.push(
       {
