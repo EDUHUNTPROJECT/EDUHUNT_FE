@@ -106,7 +106,7 @@ function EditProfile() {
         <h1 className="font-extrabold text-4xl mb-5 ">My Profile</h1>
         <div className="mb-20">
           <div className="w-32 h-32 rounded-full my-4 mb-2 relative">
-            {profile.isVIP ? (
+            {profile.isVIP && role === "User" ? (
               <Avatar
                 isBordered
                 color="warning"
@@ -172,22 +172,27 @@ function EditProfile() {
           </div>
         </div>
         <div className="my-2">
-          {(profile.isVIP && localStorage.getItem("role") === "User") ? (
-            <p className="bg-[#FFD700] text-center p-1 rounded">VIP</p>
-          ) : (
+          {role === "User" && (
             <>
-              <p className="bg-[#FFD700] text-center p-1 rounded">Not VIP</p>
-              <Button
-                onClick={() => {
-                  handleUpdateProfile(true);
-                }}
-                className="rounded bg-[#C6C6C6] padding-2 mt-5 font-bold"
-              >
-                Payment
-              </Button>
+              {profile.isVIP ? (
+                <p className="bg-[#FFD700] text-center p-1 rounded">VIP</p>
+              ) : (
+                <>
+                  <p className="bg-[#FFD700] text-center p-1 rounded">Not VIP</p>
+                  <Button
+                    onClick={() => {
+                      handleUpdateProfile(true);
+                    }}
+                    className="rounded bg-[#C6C6C6] padding-2 mt-5 font-bold"
+                  >
+                    Payment
+                  </Button>
+                </>
+              )}
             </>
           )}
         </div>
+
 
         <div className="my-2">
           <label htmlFor="firstName" className="font-bold block mb-5px">
