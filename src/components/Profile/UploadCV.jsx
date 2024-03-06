@@ -58,7 +58,7 @@ const UploadCV = () => {
   };
 
   return (
-    <div className=" flex flex-col items-center space-y-4 p-4 h-[400px]">
+    <div className=" flex flex-col items-center space-y-4 p-4">
       <CloudinaryCV onUpload={handleCvUpload} />
       {cvUrl && <Image src={pdfToImageURL(cvUrl)} alt="CV" width={800}></Image>}
     </div>

@@ -113,6 +113,14 @@ const Mentor = () => {
                     </div>
                   )}
                 </div>
+                <button
+                  onClick={() =>
+                    router.push(`/mentor/roadmap/${mentor.userId}`)
+                  }
+                  className="font-bold"
+                >
+                  View Road Map
+                </button>
               </div>
             </div>
           );
