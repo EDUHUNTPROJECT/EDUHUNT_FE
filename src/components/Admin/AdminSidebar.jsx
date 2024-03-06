@@ -17,6 +17,10 @@ const menuItems = [
         path: "/admin/manageposts",
       },
       {
+        title: "Manage Roadmap",
+        path: "/admin/manageroadmap",
+      },
+      {
         title: "Approve Posts",
         path: "/admin/approvescholarship",
       },

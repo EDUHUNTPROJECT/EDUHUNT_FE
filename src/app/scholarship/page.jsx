@@ -26,8 +26,10 @@ const Scholarship = () => {
     const fetchData = async () => {
       try {
         const data = await getScholarship();
-        console.log(data);
-        setScholarshipData(data);
+        const scholarships = data.filter(
+          (scholarship) => scholarship.isApproved
+        );
+        setScholarshipData(scholarships);
       } catch (error) {
         console.error(error);
       }
@@ -214,7 +216,17 @@ const Scholarship = () => {
                         target="_blank"
                         className="btn btn-secondary font-bold"
                       >
-                        <button style={{ backgroundColor: "White", borderRadius: "10px", padding: "10px" , boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)" }} id="visitScholarshipWebsite" className="btn btn-secondary font-bold">
+                        <button
+                          style={{
+                            backgroundColor: "White",
+                            borderRadius: "10px",
+                            padding: "10px",
+                            boxShadow:
+                              "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                          }}
+                          id="visitScholarshipWebsite"
+                          className="btn btn-secondary font-bold"
+                        >
                           Visit Scholarship Website
                         </button>
                       </a>
@@ -224,9 +236,19 @@ const Scholarship = () => {
                           target="_blank"
                           className="btn btn-primary font-bold"
                         >
-                          <button style={{ backgroundColor: "White", borderRadius: "10px", padding: "10px" , boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)" }} id="visitScholarshipWebsite" className="btn btn-secondary font-bold">
-                         Detail
-                        </button>
+                          <button
+                            style={{
+                              backgroundColor: "White",
+                              borderRadius: "10px",
+                              padding: "10px",
+                              boxShadow:
+                                "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                            }}
+                            id="visitScholarshipWebsite"
+                            className="btn btn-secondary font-bold"
+                          >
+                            Detail
+                          </button>
                         </a>
                       )}
                     </div>
