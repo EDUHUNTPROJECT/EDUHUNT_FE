@@ -20,6 +20,7 @@ function EditProfile() {
     address: "",
     description: "",
     isVIP: false,
+    isAllow: false,
   });
   const [showAvatarUpload, setShowAvatarUpload] = useState(false);
   const [showCertificateUpload, setShowCertificateUpload] = useState(false);
@@ -39,6 +40,7 @@ function EditProfile() {
           address: data.address || "",
           description: data.description || "",
           isVIP: data.isVIP || false,
+          isAllow: data.isAllow || false,
         });
       })
       .catch((error) => console.error("Error fetching profile:", error));
@@ -133,12 +135,32 @@ function EditProfile() {
               )}
               {(role === "Mentor" || role === "Scholarship Provider") && (
                 <>
-                  <Button
-                    className="rounded bg-[#C6C6C6] font-bold"
-                    onClick={handleShowCertificateUpload}
-                  >
-                    Upload Certificate
-                  </Button>
+                  {profile.isAllow ? (
+                    <div className="flex">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="green"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m4.5 12.75 6 6 9-13.5"
+                        />
+                      </svg>
+                      <span className="text-[green]">Verified</span>
+                    </div>
+                  ) : (
+                    <Button
+                      className="rounded bg-[#C6C6C6] font-bold"
+                      onClick={handleShowCertificateUpload}
+                    >
+                      Upload Certificate
+                    </Button>
+                  )}
                   {showCertificateUpload && (
                     <div className="fixed inset-0 flex items-center justify-center bg-[#000000] bg-opacity-50 z-10">
                       <div className="relative z-[11] bg-[#fff] w-[32rem] h-[32rem] bg-white p-8 rounded-lg">
@@ -158,7 +180,7 @@ function EditProfile() {
           </div>
         </div>
         <div className="my-2">
-          {(profile.isVIP && localStorage.getItem("role") === "User") ? (
+          {profile.isVIP && localStorage.getItem("role") === "User" ? (
             <p className="bg-[#FFD700] text-center p-1 rounded">VIP</p>
           ) : (
             <>

@@ -5,6 +5,8 @@ import CloudinaryPost from "../../components/cloud/CloudinaryPost";
 import { useRoadMap } from "../../hooks/useRoadMap";
 import { useProfile } from "../../hooks/useProfile";
 import { useRouter } from "next/navigation";
+import UploadImg from "../../../public/Vector.png";
+import { Image } from "antd";
 
 const Profile = () => {
   const { postRoadMaps } = useRoadMap();
@@ -71,6 +73,11 @@ const Profile = () => {
       </div>
       <div className="flex flex-row gap-[35px]">
         <div className="w-[450px] h-[450px] border-[2px] border-dashed shadow-sm rounded-[25px] flex flex-col gap-[10px] items-center justify-center">
+          <Image
+            src={UploadImg.src}
+            className="w-[60px] h-[60px]"
+            alt="Upload"
+          ></Image>
           <CloudinaryPost onUpload={handleUpload} />
         </div>
         <form className="flex flex-col gap-[15px]" onSubmit={handleSubmit}>

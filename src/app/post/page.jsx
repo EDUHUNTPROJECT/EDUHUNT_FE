@@ -5,6 +5,8 @@ import { useScholarship } from "../../hooks/useScholarship";
 import { useProfile } from "../../hooks/useProfile";
 import { useRouter } from "next/navigation";
 import CloudinaryPost from "../../components/cloud/CloudinaryPost";
+import UploadImg from "../../../public/Vector.png";
+import { Image } from "antd";
 
 const Profile = () => {
   const { postScholarship } = useScholarship();
@@ -47,7 +49,7 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("check============")
+      console.log("check============");
       console.log(scholarshipData);
       await postScholarship(scholarshipData);
       alert("Scholarship posted successfully");
@@ -69,10 +71,15 @@ const Profile = () => {
   return (
     <MainLayout>
       <div>
-        <h1 className="text-[60px] font-bold">Create Post</h1>
+        <h1 className="text-[60px] font-bold ml-[62px]">Create Post</h1>
       </div>
       <div className="flex flex-row gap-[35px]">
         <div className="w-[450px] h-[450px] border-[2px] border-dashed shadow-sm rounded-[25px] flex flex-col gap-[10px] items-center justify-center">
+          <Image
+            src={UploadImg.src}
+            className="w-[60px] h-[60px]"
+            alt="Upload"
+          ></Image>
           <CloudinaryPost onUpload={handleUpload} />
         </div>
         <form className="flex flex-col gap-[15px]" onSubmit={handleSubmit}>
