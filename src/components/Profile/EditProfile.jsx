@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import CloudinaryUpload from "../cloud/CloudinaryUpload";
 import { Button } from "antd";
+import { Avatar } from "@nextui-org/avatar";
 
 function EditProfile() {
   const userId = localStorage.getItem("userId");
@@ -20,6 +21,7 @@ function EditProfile() {
     address: "",
     description: "",
     isVIP: false,
+    isAllow: false,
   });
   const [showAvatarUpload, setShowAvatarUpload] = useState(false);
   const [showCertificateUpload, setShowCertificateUpload] = useState(false);
@@ -39,6 +41,7 @@ function EditProfile() {
           address: data.address || "",
           description: data.description || "",
           isVIP: data.isVIP || false,
+          isAllow: data.isAllow || false,
         });
       })
       .catch((error) => console.error("Error fetching profile:", error));
@@ -104,13 +107,25 @@ function EditProfile() {
         <h1 className="font-extrabold text-4xl mb-5 ">My Profile</h1>
         <div className="mb-20">
           <div className="w-32 h-32 rounded-full my-4 mb-2 relative">
-            <Image
-              src={profile.urlAvatar}
-              alt="Avatar"
-              width={128}
-              height={128}
-              className="object-cover w-32 h-32 rounded-full mx-auto my-4"
-            />
+            {profile.isVIP && role === "User" ? (
+              <Avatar
+                isBordered
+                color="warning"
+                src={profile.urlAvatar}
+                alt="Avatar"
+                width={128}
+                height={128}
+                className="object-cover w-32 h-32 rounded-full mx-auto my-4"
+              />
+            ) : (
+              <Image
+                src={profile.urlAvatar}
+                alt="Avatar"
+                width={128}
+                height={128}
+                className="object-cover w-32 h-32 rounded-full mx-auto my-4"
+              />
+            )}
             <div className=" flex gap-4">
               <Button
                 className="rounded bg-[#C6C6C6] font-bold"
@@ -133,12 +148,32 @@ function EditProfile() {
               )}
               {(role === "Mentor" || role === "Scholarship Provider") && (
                 <>
-                  <Button
-                    className="rounded bg-[#C6C6C6] font-bold"
-                    onClick={handleShowCertificateUpload}
-                  >
-                    Upload Certificate
-                  </Button>
+                  {profile.isAllow ? (
+                    <div className="flex">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="green"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m4.5 12.75 6 6 9-13.5"
+                        />
+                      </svg>
+                      <span className="text-[green]">Verified</span>
+                    </div>
+                  ) : (
+                    <Button
+                      className="rounded bg-[#C6C6C6] font-bold"
+                      onClick={handleShowCertificateUpload}
+                    >
+                      Upload Certificate
+                    </Button>
+                  )}
                   {showCertificateUpload && (
                     <div className="fixed inset-0 flex items-center justify-center bg-[#000000] bg-opacity-50 z-10">
                       <div className="relative z-[11] bg-[#fff] w-[32rem] h-[32rem] bg-white p-8 rounded-lg">
@@ -158,19 +193,25 @@ function EditProfile() {
           </div>
         </div>
         <div className="my-2">
-          {(profile.isVIP && localStorage.getItem("role") === "User") ? (
-            <p className="bg-[#FFD700] text-center p-1 rounded">VIP</p>
-          ) : (
+          {role === "User" && (
             <>
-              <p className="bg-[#FFD700] text-center p-1 rounded">Not VIP</p>
-              <Button
-                onClick={() => {
-                  handleUpdateProfile(true);
-                }}
-                className="rounded bg-[#C6C6C6] padding-2 mt-5 font-bold"
-              >
-                Payment
-              </Button>
+              {profile.isVIP ? (
+                <p className="bg-[#FFD700] text-center p-1 rounded">VIP</p>
+              ) : (
+                <>
+                  <p className="bg-[#FFD700] text-center p-1 rounded">
+                    Not VIP
+                  </p>
+                  <Button
+                    onClick={() => {
+                      handleUpdateProfile(true);
+                    }}
+                    className="rounded bg-[#C6C6C6] padding-2 mt-5 font-bold"
+                  >
+                    Payment
+                  </Button>
+                </>
+              )}
             </>
           )}
         </div>

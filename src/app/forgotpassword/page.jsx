@@ -80,7 +80,7 @@ export default function ForgotPassword() {
             }}
           ></div>
           <div
-            className="h-[100%] w-[46%] rounded-3xl"
+            className="h-[50%] w-[46%] rounded-3xl items-center flex mt-[20vh]"
             style={{ background: "white" }}
           >
             <div className="bg-white rounded-lg p-8 w-[100%]">
