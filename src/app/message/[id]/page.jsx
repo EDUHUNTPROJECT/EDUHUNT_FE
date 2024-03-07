@@ -71,7 +71,7 @@ const MessagePage = () => {
         const updatedUserList = await Promise.all(
           userList.map(async (user) => {
             console.log("userinlist", user);
-            if (user.id !== currentUserID || user.role[0] !== "Admin") {
+            if (user.id !== currentUserID && user.role[0] !== "Admin") {
               try {
 
                 const profile = profiles.find(
@@ -190,6 +190,12 @@ const MessagePage = () => {
                 onChange={(e) => setNewMessage(e.target.value)}
                 placeholder="Type your message..."
                 className="flex-grow mr-3 p-2 rounded border shadow-sm"
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault(); // Prevent the default action to stop from newline being added when pressing Enter
+                    handleSendMessage();
+                  }
+                }}
               />
               <button
                 onClick={handleSendMessage}
