@@ -5,7 +5,13 @@ import { useRouter } from "next/navigation";
 const useAuth = () => {
   const router = useRouter();
 
-  const registerUser = async ({ name, email, password, confirmPassword }) => {
+  const registerUser = async ({
+    name,
+    email,
+    password,
+    confirmPassword,
+    roleId,
+  }) => {
     try {
       const response = await axios.post(
         "https://localhost:7292/api/Account/register",
@@ -14,6 +20,7 @@ const useAuth = () => {
           email,
           password,
           confirmPassword,
+          roleId,
         },
         {
           headers: {
@@ -23,7 +30,6 @@ const useAuth = () => {
       );
 
       const data = response.data;
-      console.log(data);
 
       return data;
     } catch (error) {

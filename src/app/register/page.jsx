@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import schoolGirl from "../../../public/images/registerGirl.png";
+import useAuth from "../../hooks/useAuth";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,7 +13,7 @@ export default function RegisterPage() {
   const [rePassword, setRePassword] = useState("");
   const [username, setUsername] = useState("");
   const [roleId, setRoleId] = useState(1);
-
+  const { registerUser } = useAuth();
   const router = useRouter();
 
   const togglePasswordVisibility = () => {
@@ -20,35 +21,25 @@ export default function RegisterPage() {
     setPasswordInputType(showPassword ? "password" : "text");
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-
-    const url = "https://localhost:7292/api/Account/register";
-
-    let payload = {
-      name: username,
-      email: email,
-      password: password,
-      confirmPassword: rePassword,
-      roleId: roleId,
-    };
-
-    let options = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(payload),
-    };
-
-    fetch(url, options)
-      .then((response) => response.json())
-      .then((response) => {
-        alert(response.message);
-        if (response.flag) {
-          router.replace("http://localhost:3000/login");
-        }
+    try {
+      const response = await registerUser({
+        name: username,
+        email: email,
+        password: password,
+        confirmPassword: rePassword,
+        roleId: roleId,
       });
+
+      alert(response.message);
+      if (response.flag) {
+        router.push("/login");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred while registering. Please try again.");
+    }
   };
 
   const theImage = schoolGirl.src;

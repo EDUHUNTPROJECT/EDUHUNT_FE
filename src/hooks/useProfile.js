@@ -24,20 +24,19 @@ export const useProfile = () => {
     }
   };
 
-  const changePassword = async (currentPassword, newPassword) => {
+  const changePassword = async (password, newPassword) => {
     try {
-      const userId = localStorage.getItem("userId");
-      console.log(userId);
-      console.log("===============", currentPassword);
+      const id = localStorage.getItem("userId");
+      const email = localStorage.getItem("userEmail");
+      console.log(email);
+      console.log(id);
+      console.log("===============", password);
       console.log("===============", newPassword);
 
-      if (!userId) {
-        throw new Error("User ID not found in localStorage");
-      }
-
       const passwordData = {
-        userId,
-        currentPassword,
+        email,
+        id,
+        password,
         newPassword,
       };
 
@@ -53,9 +52,36 @@ export const useProfile = () => {
     }
   };
 
+  const uploadCV = async (userId, cvUrl) => {
+    try {
+      const payload = {
+        userId,
+        urlCV: cvUrl,
+      };
+      const response = await axios.post(`${API_URL}/UploadCV`, payload);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const getCV = async (userId) => {
+    try {
+      const payload = {
+        userId,
+      };
+      const response = await axios.post(`${API_URL}/UploadCV`, payload);
+      return response.data.urlCV;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   return {
     getProfile,
     updateProfile,
     changePassword,
+    uploadCV,
+    getCV,
   };
 };

@@ -5,11 +5,13 @@ import { Image } from "antd";
 import FPTU from "../../../public/images/FPTU.png";
 import { useScholarship } from "../../hooks/useScholarship";
 import axios from "axios";
+import { useProfile } from "../../hooks/useProfile";
 
 const Scholarship = () => {
   const [scholarshipData, setScholarshipData] = useState([]);
   const [isVip, setIsVip] = useState(false);
   const { getScholarship } = useScholarship();
+  const { getProfile } = useProfile();
   const [searchParams, setSearchParams] = useState({
     schoolname: "",
     budget: "",
@@ -39,10 +41,8 @@ const Scholarship = () => {
     const fetchVipStatus = async () => {
       try {
         const userId = localStorage.getItem("userId");
-        const response = await axios.get(
-          `https://localhost:7292/api/Profiles/${userId}`
-        );
-        setIsVip(response.data.isVIP);
+        const response = await getProfile(userId);
+        setIsVip(response.isVIP);
       } catch (error) {
         console.error(error);
       }
