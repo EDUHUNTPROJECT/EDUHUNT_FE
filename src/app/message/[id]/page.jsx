@@ -71,7 +71,7 @@ const MessagePage = () => {
         const updatedUserList = await Promise.all(
           userList.map(async (user) => {
             console.log("userinlist", user);
-            if (user.id !== currentUserID && user.role[0] !== "Admin") {
+            if ((user.id !== currentUserID) && (user.role[0] !== "Admin")) {
               try {
 
                 const profile = profiles.find(
@@ -87,12 +87,7 @@ const MessagePage = () => {
               } catch (error) {
                 console.error("Error fetching profile:", error);
                 // Handle error case, maybe set a default avatar or log the error
-                return {
-                  id: user.id,
-                  name: user.name,
-                  avatar: "",
-                  lastMessage: "  ",
-                };
+          
               }
             }
           })
