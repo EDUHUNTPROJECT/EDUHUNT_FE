@@ -1,14 +1,13 @@
-'use client'
-
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Card, Typography, Button, Spin, Descriptions } from 'antd';
-import { useApplication } from '../../hooks/useApplication'; // Giả sử bạn có hook này để lấy chi tiết ứng dụng
+import { useRouter } from 'next/navigation'; // Updated to correct import statement
+import { Card, Typography, Button, Spin, Descriptions, message, Modal } from 'antd';
+
+import { useApplication } from '../../hooks/useApplication'; // Assuming you have this hook for application details
 import { useScholarship } from '../../hooks/useScholarship';
+
 const { Title, Text } = Typography;
 
-export default function DetailApplication({id}) {
-    console.log(id);
+export default function DetailApplicationScholarshipProvider({ id }) {
     const role = localStorage.getItem("role");
     const router = useRouter();
     const { getApplication, putApplication } = useApplication();
@@ -39,6 +38,43 @@ export default function DetailApplication({id}) {
         }
     }, [id]);
 
+    const confirmAction = (action) => {
+        Modal.confirm({
+            title: `Are you sure you want to ${action} this application?`,
+            content: `This action will ${action} the application and cannot be undone.`,
+            okText: 'Yes',
+            okType: action === 'approve' ? 'primary' : 'danger',
+            cancelText: 'No',
+            onOk: () => {
+                action === 'approve' ? handleApprove() : handleDeny();
+            },
+        });
+    };
+
+    const handleApprove = async () => {
+        const updatedApplication = { ...application, status: 'Approved' };
+        try {
+            await putApplication(application.id, updatedApplication);
+            message.success('Application approved successfully');
+            router.push('/application'); // Adjust the path as needed
+        } catch (error) {
+            console.error("Error updating application:", error);
+            message.error('Failed to approve application');
+        }
+    };
+
+    const handleDeny = async () => {
+        const updatedApplication = { ...application, status: 'Denied' };
+        try {
+            await putApplication(application.id, updatedApplication);
+            message.success('Application denied successfully');
+            router.push('/application'); // Adjust the path as needed
+        } catch (error) {
+            console.error("Error updating application:", error);
+            message.error('Failed to deny application');
+        }
+    };
+
     if (loading) {
         return <Spin size="large" />;
     }
@@ -47,7 +83,6 @@ export default function DetailApplication({id}) {
         return <Text>Details not found</Text>;
     }
 
-    // Format budget here as needed
     const formatBudget = (budget) => {
         return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(budget);
     };
@@ -62,7 +97,17 @@ export default function DetailApplication({id}) {
                     <Descriptions.Item label="Location">{scholarship.location || "N/A"}</Descriptions.Item>
                     <Descriptions.Item label="Application Reason">{application.applicationReason || "No reason provided"}</Descriptions.Item>
                 </Descriptions>
-                <Button type="primary" href={scholarship.url || "#"} target="_blank">
+                {role === 'Scholarship Provider' && (
+                   <div>
+                   <Button type="primary" onClick={() => confirmAction('approve')} style={{ marginRight: 10 }}>
+                       Approve
+                   </Button>
+                   <Button danger onClick={() => confirmAction('deny')}>
+                       Deny
+                   </Button>
+               </div>
+                )}
+                <Button type="primary" href={scholarship.url || "#"} target="_blank" style={{ marginTop: 10 }}>
                     Visit Scholarship Website
                 </Button>
             </Card>

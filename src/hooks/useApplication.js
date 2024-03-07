@@ -48,11 +48,21 @@ export const useApplication = () => {
     }
   };
 
+  const getApplicationsByScholarshipProvider = async (scholarshipProviderId) => {
+    try {
+      const response = await axios.get(`${API_URL}/ScholarshipProvider/${scholarshipProviderId}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   return {
     getApplications,
     getApplication,
     postApplication,
     putApplication,
     deleteApplication,
+    getApplicationsByScholarshipProvider, // Add this line to return the new function
   };
 };
