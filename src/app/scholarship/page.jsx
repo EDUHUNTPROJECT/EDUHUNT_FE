@@ -187,9 +187,11 @@ const Scholarship = () => {
                 <div className="bg-white rounded-lg shadow-lg">
                   <div className="flex flex-col items-center justify-center p-8 w-[400px]">
                     <Image
-                      src={FPTU.src}
+                      src={scholarship.imageUrl || FPTU.src}
                       alt={`${scholarship.schoolName} logo`}
-                      className="w-24 h-24 mb-4"
+                      className="mb-4 rounded-md object-cover"
+                      width={300}
+                      height={300}
                     />
                     <h1 className="text-2xl font-bold text-gray-800">
                       {scholarship.schoolName}
