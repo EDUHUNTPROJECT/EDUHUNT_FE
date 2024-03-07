@@ -35,7 +35,7 @@ const ScholarshipDetail = () => {
     const applicationData = {
       StudentID: studentID,
       ScholarshipID: id,
-      Status: "wait",
+      Status: "Wait",
       ApplicationReason: applicationReason || "No reason provided", // Add this line to include the reason in your application data
     };
 

@@ -19,7 +19,6 @@ const ManagePostPage = () => {
     const fetchData = async () => {
       try {
         const data = await getRoadMap();
-        console.log(data);
         const approvedPosts = data.filter((post) => post.isApproved);
         setPostData(approvedPosts);
       } catch (error) {

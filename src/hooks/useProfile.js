@@ -5,7 +5,6 @@ const API_URL = "https://localhost:7292/api/Profiles"; // Adjust the API URL as 
 export const useProfile = () => {
   const getProfile = async (userId) => {
     try {
-      console.log("===============", userId);
       const response = await axios.get(`${API_URL}/${userId}`);
       console.log(response.data);
       return response.data;
@@ -13,6 +12,16 @@ export const useProfile = () => {
       throw error;
     }
   };
+
+  const getallprofile = async () => {
+    try {
+      const response = await axios.get(`${API_URL}`);
+      return response.data;
+    }
+    catch (error) {
+      throw error;
+    }
+  }
 
   const updateProfile = async (id, profileData) => {
     try {
@@ -27,9 +36,6 @@ export const useProfile = () => {
   const changePassword = async (currentPassword, newPassword) => {
     try {
       const userId = localStorage.getItem("userId");
-      console.log(userId);
-      console.log("===============", currentPassword);
-      console.log("===============", newPassword);
 
       if (!userId) {
         throw new Error("User ID not found in localStorage");
@@ -57,5 +63,6 @@ export const useProfile = () => {
     getProfile,
     updateProfile,
     changePassword,
+    getallprofile,
   };
 };
