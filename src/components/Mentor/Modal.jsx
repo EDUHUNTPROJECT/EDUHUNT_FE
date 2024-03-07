@@ -76,7 +76,7 @@ export default function MentorModal(prop) {
     <div>
       <button
         onClick={onOpen}
-        className="py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
+        className="py-2 bg-blue-600 hover:bg-blue-700 text-white rounded pr-5 scale-150"
       >
         {role == "Mentor" ? (
           <div className="text-white font-bold">Answer</div>
