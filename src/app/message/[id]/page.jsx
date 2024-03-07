@@ -21,6 +21,20 @@ const MessagePage = () => {
   const [userListhasAvatar, setUserListhasAvatar] = useState([]);
   const { getHistoryMessages } = useMessage(); // Use the useMessage hook
   const [messageHistory, setMessageHistory] = useState([]); // State to store message history
+  const [profiles, setProfiles] = useState([]);
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const profileData = await getallprofile();
+        setProfiles(profileData);
+
+      }
+      catch (error) {
+        
+      }
+    }
+    fetchProfile();
+  })
   useEffect(() => {
     const fetchMessageHistory = async () => {
       try {
@@ -59,7 +73,11 @@ const MessagePage = () => {
             console.log("userinlist", user);
             if (user.id !== currentUserID || user.role[0] !== "Admin") {
               try {
-                const profile = await getProfile(user.id);
+
+                const profile = profiles.find(
+                  (profile) => profile.userId === user.id
+                )
+                console.log("profile", profile);
                 return {
                   id: user.id,
                   name: user.name,
@@ -92,8 +110,6 @@ const MessagePage = () => {
   }, [userList.length > 0]);
 
   const information = userListhasAvatar.find((user) => user?.id === id);
-  console.log("========userListhasAvatar==========", userListhasAvatar);
-  console.log("========info==========", information);
 
   const handleSendMessage = () => {
     if (newMessage.trim() !== "") {

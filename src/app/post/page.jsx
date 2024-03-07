@@ -49,7 +49,6 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("check============");
       console.log(scholarshipData);
       await postScholarship(scholarshipData);
       alert("Scholarship posted successfully");
