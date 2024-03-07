@@ -81,7 +81,7 @@ const MessagePage = () => {
                 return {
                   id: user.id,
                   name: user.name,
-                  avatar: profile.urlAvatar,
+                  avatar: profile?.urlAvatar,
                   lastMessage: "  ",
                 };
               } catch (error) {
