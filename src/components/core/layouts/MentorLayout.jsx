@@ -20,7 +20,7 @@ const MentorLayout = ({children}) => {
                         {
                             role == "Mentor" ? <div></div> :
                             <Link href="/mentor" className="pb-1.5 px-5 border-b" style={{ fontWeight: (pathname == "/mentor") ? "900" : "600", borderBottomColor: (pathname == "/mentor") ? "white" : "black", borderBottomWidth: "4px"}}>
-                                SEARCH MENTORS
+                                MENTORS LIST
                             </Link>
                         }
                         <Link href="/mentor/connected" className="pb-1.5 px-5 border-b" style={{ fontWeight: (pathname == "/mentor/connected") ? "900" : "600", borderBottomColor: (pathname != "/mentor") ? "white" : "black", borderBottomWidth: "4px"}}>

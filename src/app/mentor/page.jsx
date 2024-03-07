@@ -72,7 +72,7 @@ const Mentor = () => {
           {mentorProfileList?.map((mentor, index) => {
             const text = mentor.description;
             return (
-              <div className="mb-4 flex w-[100%] justify-center object-fit" key={index}>
+              <div className="mb-7 flex w-[100%] justify-center object-fit" key={index}>
                 <div className="rounded border flex">
                 <div className="w-[10vw] m-5">
                   <img
