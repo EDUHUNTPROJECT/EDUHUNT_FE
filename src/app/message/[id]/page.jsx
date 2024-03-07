@@ -56,7 +56,8 @@ const MessagePage = () => {
       try {
         const updatedUserList = await Promise.all(
           userList.map(async (user) => {
-            if (user.id !== currentUserID) {
+            console.log("userinlist", user);
+            if (user.id !== currentUserID || user.role[0] !== "Admin") {
               try {
                 const profile = await getProfile(user.id);
                 return {
