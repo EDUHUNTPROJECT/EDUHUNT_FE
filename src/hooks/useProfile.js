@@ -14,6 +14,16 @@ export const useProfile = () => {
     }
   };
 
+  const getallprofile = async () => {
+    try {
+      const response = await axios.get(`${API_URL}`);
+      return response.data;
+    }
+    catch (error) {
+      throw error;
+    }
+  }
+
   const updateProfile = async (id, profileData) => {
     try {
       console.log(profileData);
@@ -57,5 +67,6 @@ export const useProfile = () => {
     getProfile,
     updateProfile,
     changePassword,
+    getallprofile,
   };
 };

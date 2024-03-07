@@ -15,7 +15,7 @@ const MessagePage = () => {
   const { messages, sendMessage, connection } = useChat();
   const [newMessage, setNewMessage] = useState("");
   const { id } = useParams();
-  const { getProfile } = useProfile();
+  const { getProfile , getallprofile} = useProfile();
   const { getUserList } = useAdmin();
   const [userList, setUserList] = useState([]);
   const [userListhasAvatar, setUserListhasAvatar] = useState([]);
