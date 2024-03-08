@@ -121,6 +121,7 @@ export default function DetailApplicationScholarshipProvider({ id }) {
         {role === "Scholarship Provider" && (
           <div className="mt-2">
             <Button
+              danger
               type="primary"
               onClick={() => confirmAction("approve")}
               style={{ marginRight: 10 }}
@@ -141,14 +142,12 @@ export default function DetailApplicationScholarshipProvider({ id }) {
           Visit Scholarship Website
         </Button>
         <Button
-          type="primary"
           onClick={() => router.push("/calendar/" + id)}
           className="mt-4 ml-2"
         >
           Schedule
         </Button>
         <Button
-          type="primary"
           onClick={() => router.push(`/message/${application.studentID}`)}
           className="mt-4 ml-2"
         >
