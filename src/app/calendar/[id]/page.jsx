@@ -6,9 +6,91 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon, ExclamationTriangleIcon } from "@heroicons/react/20/solid";
-import MainLayout from "../../components/core/layouts/MainLayout";
+import MainLayout from "../../../components/core/layouts/MainLayout";
+import { useParams } from "next/navigation";
+import { useApplication } from "../../../hooks/useApplication";
+import { VideoCameraFilled } from "@ant-design/icons";
+import Link from "next/link";
 
 export default function Home() {
+  const { id } = useParams();
+  const { getApplication, putApplication } = useApplication();
+  const role = localStorage.getItem("role");
+  const [canAddEvent, setCanAddEvent] = useState(true);
+  const [canSetDay, setCanSetDay] = useState(false);
+  const [studentId, setStudentId] = useState(null);
+  const [scholarshipId, setScholarshipId] = useState(null);
+  const [status, setStatus] = useState(null);
+  const [meetLink, setMeetLink] = useState("");
+  const [allEvents, setAllEvents] = useState([]);
+  const [newEvent, setNewEvent] = useState({
+    title: "",
+    start: "",
+    end: "",
+    allDay: false,
+    id: 0,
+  });
+  console.log(id);
+  console.log(role);
+
+  useEffect(() => {
+    const fetchApplication = async () => {
+      try {
+        const response = await getApplication(id);
+        setStudentId(response.studentID);
+        setStatus(response.status);
+        setScholarshipId(response.scholarshipID);
+        setMeetLink(response.meetingURL);
+        console.log(response);
+        if (
+          role === "User" &&
+          response.scholarshipProviderAvailableStartDate === null &&
+          response.scholarshipProviderAvailableEndDate === null
+        ) {
+          setCanAddEvent(false);
+        }
+
+        if (
+          response.scholarshipProviderAvailableStartDate !== null &&
+          response.scholarshipProviderAvailableEndDate !== null
+        ) {
+          setCanSetDay(true);
+        }
+
+        if (
+          (response.scholarshipProviderAvailableStartDate &&
+            response.scholarshipProviderAvailableEndDate) ||
+          response.studentChooseDate
+        ) {
+          const start = response.scholarshipProviderAvailableStartDate
+            ? new Date(
+                response.scholarshipProviderAvailableStartDate
+              ).toISOString()
+            : new Date(response.studentChooseDate).toISOString();
+          const end = response.scholarshipProviderAvailableEndDate
+            ? new Date(
+                response.scholarshipProviderAvailableEndDate
+              ).toISOString()
+            : "";
+
+          const newEvent = {
+            title: "Scholarship Provider Availability",
+            start: start,
+            end: end,
+            allDay: true,
+            id: new Date().getTime(),
+          };
+
+          setAllEvents((prevEvents) => [...prevEvents, newEvent]);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchApplication();
+  }, []);
+
   const [events, setEvents] = useState([
     { title: "event 1", id: "1" },
     { title: "event 2", id: "2" },
@@ -16,16 +98,9 @@ export default function Home() {
     { title: "event 4", id: "4" },
     { title: "event 5", id: "5" },
   ]);
-  const [allEvents, setAllEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [idToDelete, setIdToDelete] = useState(null);
-  const [newEvent, setNewEvent] = useState({
-    title: "",
-    start: "",
-    allDay: false,
-    id: 0,
-  });
 
   useEffect(() => {
     let draggableEl = document.getElementById("draggable-el");
@@ -42,10 +117,14 @@ export default function Home() {
     }
   }, []);
 
-  function handleDateClick(arg) {
+  function handleSelect(arg) {
+    if (!canAddEvent) {
+      return;
+    }
     setNewEvent({
       ...newEvent,
-      start: arg.date,
+      start: arg.start,
+      end: arg.end,
       allDay: arg.allDay,
       id: new Date().getTime(),
     });
@@ -55,7 +134,8 @@ export default function Home() {
   function addEvent(data) {
     const event = {
       ...newEvent,
-      start: data.date.toISOString(),
+      start: data.start.toISOString(),
+      end: data.end.toISOString(),
       title: data.draggedEl.innerText,
       allDay: data.allDay,
       id: new Date().getTime(),
@@ -81,6 +161,7 @@ export default function Home() {
     setNewEvent({
       title: "",
       start: "",
+      end: "",
       allDay: false,
       id: 0,
     });
@@ -97,11 +178,32 @@ export default function Home() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (role === "User") {
+      putApplication(id, {
+        id: id,
+        studentID: studentId,
+        scholarshipID: scholarshipId,
+        meetingURL: `/message/${id}/meet`,
+        studentChooseDate: newEvent.start.toISOString(),
+        status: status,
+      });
+    }
+    if (role === "Scholarship Provider") {
+      putApplication(id, {
+        id: id,
+        studentID: studentId,
+        scholarshipID: scholarshipId,
+        scholarshipProviderAvailableStartDate: newEvent.start.toISOString(),
+        scholarshipProviderAvailableEndDate: newEvent.end.toISOString(),
+        status: status,
+      });
+    }
     setAllEvents([...allEvents, newEvent]);
     setShowModal(false);
     setNewEvent({
       title: "",
       start: "",
+      end: "",
       allDay: false,
       id: 0,
     });
@@ -111,6 +213,11 @@ export default function Home() {
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="grid grid-cols-10">
           <div className="col-span-8">
+            {meetLink && (
+              <Link href={meetLink} passHref>
+                <VideoCameraFilled />
+              </Link>
+            )}
             <FullCalendar
               plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
               headerToolbar={{
@@ -124,11 +231,12 @@ export default function Home() {
               droppable={true}
               selectable={true}
               selectMirror={true}
-              dateClick={handleDateClick}
+              select={handleSelect}
               drop={(data) => addEvent(data)}
               eventClick={(data) => handleDeleteModal(data)}
             />
           </div>
+
           <div
             id="draggable-el"
             className="ml-8 w-full border-2 p-2 rounded-md mt-16 lg:h-1/2 bg-violet-50"
@@ -145,7 +253,6 @@ export default function Home() {
             ))}
           </div>
         </div>
-
         <Transition.Root show={showDeleteModal} as={Fragment}>
           <Dialog
             as="div"
@@ -163,7 +270,6 @@ export default function Home() {
             >
               <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
             </Transition.Child>
-
             <div className="fixed inset-0 z-10 overflow-y-auto">
               <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                 <Transition.Child
