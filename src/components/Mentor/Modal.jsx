@@ -67,7 +67,11 @@ export default function MentorModal(prop) {
         body: JSON.stringify(payload),
       };
 
-      await fetch(url, options);
+      try {
+        await fetch(url, options);
+      } catch(error) {
+        console.error('Error during fetch:', error);
+      }
       mutate(url);
     }
   };
