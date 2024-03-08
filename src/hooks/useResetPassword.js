@@ -1,0 +1,47 @@
+import axios from "axios";
+
+const API = "https://localhost:7292/api";
+
+export const usePasswordReset = () => {
+  const send = async (email) => {
+    try {
+      await axios.post(`${API}/CodeVerifies/resetpassword`, email, {
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const verify = async (email, code) => {
+    try {
+      const response = await axios.post(`${API}/CodeVerifies/Verify`, {
+        email,
+        code,
+      });
+
+      if (response.status !== 200) {
+        throw new Error("The verification code is incorrect");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const reset = async (email, password) => {
+    try {
+      await axios.post(`${API}/Account/forgotPassword`, {
+        email,
+        newPassword: password,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return {
+    send,
+    verify,
+    reset,
+  };
+};

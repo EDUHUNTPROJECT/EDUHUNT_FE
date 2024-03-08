@@ -2,27 +2,21 @@
 import React, { useState } from "react";
 import axios from "axios";
 import schoolGirl from "../../../public/images/schoolGirl.png";
+import { usePasswordReset } from "../../hooks/useResetPassword";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [step, setStep] = useState(0);
+  const { send, verify, reset } = usePasswordReset();
 
   const theImage = schoolGirl.src;
 
   const sendEmail = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/api/send", {
-        email,
-      });
-      const code = response.data.validationCode;
-
-      await axios.post("https://localhost:7292/api/CodeVerifies/Save", {
-        email,
-        code,
-      });
+      await send(email);
 
       setStep(1);
     } catch (err) {
@@ -33,31 +27,18 @@ export default function ForgotPassword() {
   const verifyCode = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `https://localhost:7292/api/CodeVerifies/Verify`,
-        {
-          email,
-          code,
-        }
-      );
+      const response = await verify(email, code);
 
-      if (response.status === 200) {
-        setStep(2);
-      } else {
-        alert("The verification code is incorrect");
-      }
+      if (response.status === 200) setStep(2);
     } catch (err) {
-      console.error(err);
+      alert("The verification code is incorrect");
     }
   };
 
   const resetPassword = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://localhost:7292/api/Account/forgotPassword", {
-        email,
-        newPassword: password,
-      });
+      await reset(email, password);
       window.location.href = "/login";
     } catch (err) {
       console.error(err);

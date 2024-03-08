@@ -1,55 +1,22 @@
 import React, { useState, useEffect } from "react";
 import CloudinaryCV from "../cloud/CloudinaryCV";
 import { Image } from "antd";
+import { useProfile } from "../../hooks/useProfile";
 
 const UploadCV = () => {
   const userId = localStorage.getItem("userId");
   const [cvUrl, setCvUrl] = useState("");
+  const { uploadCV, getCV } = useProfile();
 
   useEffect(() => {
-    let payload = {
-      userId: userId,
-    };
-
-    let options = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(payload),
-    };
-
-    fetch("https://localhost:7292/api/Profiles/UploadCV", options)
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.urlCV) {
-          setCvUrl(response.urlCV);
-        }
-      })
-      .catch((error) => console.error("Error fetching CV:", error));
-  }, [userId]);
+    getCV(userId).then(setCvUrl).catch(console.error);
+  }, [userId, getCV]);
 
   const handleCvUpload = (cvUrl) => {
     setCvUrl(cvUrl);
-    let payload = {
-      userId: userId,
-      urlCV: cvUrl,
-    };
-
-    let options = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(payload),
-    };
-
-    fetch("https://localhost:7292/api/Profiles/UploadCV", options)
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response.message);
-      })
-      .catch((error) => console.error("Error uploading CV:", error));
+    uploadCV(userId, cvUrl)
+      .then((response) => console.log(response.message))
+      .catch(console.error);
   };
 
   const pdfToImageURL = (url) => {

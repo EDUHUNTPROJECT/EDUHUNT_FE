@@ -6,6 +6,7 @@ export const useApplication = () => {
   const getApplications = async () => {
     try {
       const response = await axios.get(API_URL);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       throw error;
@@ -15,6 +16,7 @@ export const useApplication = () => {
   const getApplication = async (id) => {
     try {
       const response = await axios.get(`${API_URL}/${id}`);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       throw error;
@@ -31,8 +33,10 @@ export const useApplication = () => {
   };
 
   const putApplication = async (id, application) => {
+    console.log(application);
     try {
       const response = await axios.put(`${API_URL}/${id}`, application);
+      console.log(response);
       return response.data;
     } catch (error) {
       throw error;
@@ -48,9 +52,13 @@ export const useApplication = () => {
     }
   };
 
-  const getApplicationsByScholarshipProvider = async (scholarshipProviderId) => {
+  const getApplicationsByScholarshipProvider = async (
+    scholarshipProviderId
+  ) => {
     try {
-      const response = await axios.get(`${API_URL}/ScholarshipProvider/${scholarshipProviderId}`);
+      const response = await axios.get(
+        `${API_URL}/ScholarshipProvider/${scholarshipProviderId}`
+      );
       return response.data;
     } catch (error) {
       throw error;

@@ -17,11 +17,10 @@ export const useProfile = () => {
     try {
       const response = await axios.get(`${API_URL}`);
       return response.data;
-    }
-    catch (error) {
+    } catch (error) {
       throw error;
     }
-  }
+  };
 
   const updateProfile = async (id, profileData) => {
     try {
@@ -33,17 +32,19 @@ export const useProfile = () => {
     }
   };
 
-  const changePassword = async (currentPassword, newPassword) => {
+  const changePassword = async (password, newPassword) => {
     try {
-      const userId = localStorage.getItem("userId");
-
-      if (!userId) {
-        throw new Error("User ID not found in localStorage");
-      }
+      const id = localStorage.getItem("userId");
+      const email = localStorage.getItem("userEmail");
+      console.log(email);
+      console.log(id);
+      console.log("===============", password);
+      console.log("===============", newPassword);
 
       const passwordData = {
-        userId,
-        currentPassword,
+        email,
+        id,
+        password,
         newPassword,
       };
 
@@ -59,10 +60,37 @@ export const useProfile = () => {
     }
   };
 
+  const uploadCV = async (userId, cvUrl) => {
+    try {
+      const payload = {
+        userId,
+        urlCV: cvUrl,
+      };
+      const response = await axios.post(`${API_URL}/UploadCV`, payload);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const getCV = async (userId) => {
+    try {
+      const payload = {
+        userId,
+      };
+      const response = await axios.post(`${API_URL}/UploadCV`, payload);
+      return response.data.urlCV;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   return {
     getProfile,
     updateProfile,
     changePassword,
+    uploadCV,
+    getCV,
     getallprofile,
   };
 };

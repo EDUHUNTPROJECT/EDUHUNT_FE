@@ -3,15 +3,18 @@ import { useProfile } from "../../hooks/useProfile";
 
 const ChangePassword = () => {
   const { changePassword } = useProfile();
-  const [currentPassword, setCurrentPassword] = useState("");
+  const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await changePassword(currentPassword, newPassword);
+      const response = await changePassword(password, newPassword);
+      if (response.flag) {
+        alert("Password changed successfully");
+      }
     } catch (error) {
-      console.error(error);
+      alert("Password change failed");
     }
   };
 
@@ -22,8 +25,8 @@ const ChangePassword = () => {
           Current Password:
           <input
             type="password"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="mt-1 p-2 border border-gray-300 rounded-md"
           />
         </label>
