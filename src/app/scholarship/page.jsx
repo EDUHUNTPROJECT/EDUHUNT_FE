@@ -4,6 +4,7 @@ import MainLayout from "../../components/core/layouts/MainLayout";
 import { Image } from "antd";
 import FPTU from "../../../public/images/FPTU.png";
 import { useScholarship } from "../../hooks/useScholarship";
+import axios from "axios";
 import { useProfile } from "../../hooks/useProfile";
 
 const Scholarship = () => {
