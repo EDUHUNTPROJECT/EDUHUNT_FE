@@ -21,7 +21,6 @@ export default function AdminTestPage() {
     const fetchUserList = async () => {
       try {
         const userListData = await getUserList();
-        console.log(userListData);
         setUserList(userListData);
       } catch (error) {
         console.error("Error fetching user list:", error);

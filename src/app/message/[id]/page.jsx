@@ -15,12 +15,26 @@ const MessagePage = () => {
   const { messages, sendMessage, connection } = useChat();
   const [newMessage, setNewMessage] = useState("");
   const { id } = useParams();
-  const { getProfile } = useProfile();
+  const { getProfile , getallprofile} = useProfile();
   const { getUserList } = useAdmin();
   const [userList, setUserList] = useState([]);
   const [userListhasAvatar, setUserListhasAvatar] = useState([]);
   const { getHistoryMessages } = useMessage(); // Use the useMessage hook
   const [messageHistory, setMessageHistory] = useState([]); // State to store message history
+  const [profiles, setProfiles] = useState([]);
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const profileData = await getallprofile();
+        setProfiles(profileData);
+
+      }
+      catch (error) {
+        
+      }
+    }
+    fetchProfile();
+  })
   useEffect(() => {
     const fetchMessageHistory = async () => {
       try {
@@ -56,24 +70,24 @@ const MessagePage = () => {
       try {
         const updatedUserList = await Promise.all(
           userList.map(async (user) => {
-            if (user.id !== currentUserID) {
+            console.log("userinlist", user);
+            if ((user.id !== currentUserID) && (user.role[0] !== "Admin")) {
               try {
-                const profile = await getProfile(user.id);
+
+                const profile = profiles.find(
+                  (profile) => profile.userId === user.id
+                )
+                console.log("profile", profile);
                 return {
                   id: user.id,
                   name: user.name,
-                  avatar: profile.urlAvatar,
+                  avatar: profile?.urlAvatar,
                   lastMessage: "  ",
                 };
               } catch (error) {
                 console.error("Error fetching profile:", error);
                 // Handle error case, maybe set a default avatar or log the error
-                return {
-                  id: user.id,
-                  name: user.name,
-                  avatar: "",
-                  lastMessage: "  ",
-                };
+          
               }
             }
           })
@@ -91,8 +105,6 @@ const MessagePage = () => {
   }, [userList.length > 0]);
 
   const information = userListhasAvatar.find((user) => user?.id === id);
-  console.log("========userListhasAvatar==========", userListhasAvatar);
-  console.log("========info==========", information);
 
   const handleSendMessage = () => {
     if (newMessage.trim() !== "") {
@@ -173,6 +185,12 @@ const MessagePage = () => {
                 onChange={(e) => setNewMessage(e.target.value)}
                 placeholder="Type your message..."
                 className="flex-grow mr-3 p-2 rounded border shadow-sm"
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault(); // Prevent the default action to stop from newline being added when pressing Enter
+                    handleSendMessage();
+                  }
+                }}
               />
               <button
                 onClick={handleSendMessage}

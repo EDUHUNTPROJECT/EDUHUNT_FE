@@ -15,7 +15,7 @@ export default function ListApplicationScholarshipProvider() {
                     console.error("Provider ID not found");
                     return;
                 }
-                
+
                 const applications = await getApplicationsByScholarshipProvider(providerId);
                 setProviderApplications(applications);
             } catch (error) {
@@ -26,25 +26,48 @@ export default function ListApplicationScholarshipProvider() {
         fetchApplications();
     }, []);
     console.log(providerApplications);
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'Approved':
+                return 'text-[#157f3e]';
+            case 'Wait':
+                return 'text-[#f7cb18]';
+            case 'Denied':
+                return 'text-[#b81d1d]';
+            default:
+                return 'text-[#364354]';
+        }
+    };
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold text-center mb-6">Applications to My Scholarships</h1>
             {providerApplications.length > 0 ? (
-                <ul>
-                    {providerApplications.map((application, index) => (
-                        <li key={index} className="bg-white shadow rounded-lg p-6 mb-4">
-                            <Link href={`/application/${application.applicationId}`} passHref>
-                                <div className="cursor-pointer">
-                                    <h2 className="text-xl font-semibold">{application.scholarshipTitle || "Scholarship Title Not Available"}</h2>
-                                    <p className="text-md text-gray-600">Budget: {application.scholarshipBudget || "N/A"}</p>
-                                    <p className="text-md text-gray-600">Location: {application.scholarshipLocation || "N/A"}</p>
-                                    <p className="text-md text-gray-600">Status: {application.status || "Unknown"}</p>
-                                    <a href={application.Url || "#"} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">Scholarship Details</a>
+                <div className="flex flex-col w-[60%] mx-auto">
+                    <ul>
+                        {providerApplications.map((application, index) => (
+                            <Link key={index} href={`/application/${application.applicationId}`} passHref>
+                            <li className="bg-white shadow-lg rounded-lg p-6 mb-4 w-full cursor-pointer">
+                                <div className="flex flex-row space-between gap-x-[30%] items-bottom pb-3">
+                                    <p className=" text-3xl font-semibold">{application.scholarshipTitle || "Scholarship Title Not Available"}</p>
+                                    <p className=" text-2xl text-gray-600 mt-1 ml-6">Budget: {application.scholarshipBudget || "N/A"}</p>
                                 </div>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
+                                <div className="flex flex-row items-bottom pb-3">
+                                    <p className="flex text-xl text-gray-600">Location: {application.scholarshipLocation || "N/A"} </p>
+                                </div>
+
+                                <div className="flex flex-row justify-between items-baseline">
+                                    <div className="flex text-xl">
+                                        <p>Status: </p>
+                                        <p className={`ml-2 ${getStatusColor(application.status)}`}>{application.status || "Unknown"}</p>
+                                    </div>
+                                    <button href={application.Url || "#"} target="_blank" rel="noopener noreferrer" className="flex bg-[#3b82f5] hover:bg-[#1d4ed8] text-[#fff] p-2 rounded-md text-lg">Scholarship Details</button>
+
+                                </div>
+                            </li>
+                        </Link>
+                        ))}
+                    </ul>
+                </div>
             ) : (
                 <p className="text-center text-gray-500">No applications found.</p>
             )}

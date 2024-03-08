@@ -16,7 +16,7 @@ function Sider({ users }) {
           prefix={<SearchOutlined />}
         />
       </div>
-      {users.map((item, index) => (
+      {users.filter(item => item).map((item, index) => (
         <SiderItem key={index} information={item}></SiderItem>
       ))}
     </div>
