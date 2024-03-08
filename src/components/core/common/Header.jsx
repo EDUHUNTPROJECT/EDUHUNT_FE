@@ -219,9 +219,15 @@ const NavBar = () => {
     setRole(userRole);
   }, []);
   const HighlightKey = () => {
+    if(role === "Scholarship Provider") {
+      if(pathName.includes("/application")) {
+        return 4;
+      }
+    }
+
     if (pathName === "/") {
       return 0;
-    } else if (pathName.includes("/scholarship")) {
+    } else if (pathName?.includes("/scholarship")) {
       return 1;
     } else if (pathName?.includes("/mentor")) {
       return 4;
