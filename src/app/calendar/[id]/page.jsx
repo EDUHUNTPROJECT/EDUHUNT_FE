@@ -17,7 +17,6 @@ export default function Home() {
   const { getApplication, putApplication } = useApplication();
   const role = localStorage.getItem("role");
   const [canAddEvent, setCanAddEvent] = useState(true);
-  const [canSetDay, setCanSetDay] = useState(false);
   const [studentId, setStudentId] = useState(null);
   const [scholarshipId, setScholarshipId] = useState(null);
   const [status, setStatus] = useState(null);
@@ -51,22 +50,15 @@ export default function Home() {
         }
 
         if (
-          response.scholarshipProviderAvailableStartDate !== null &&
-          response.scholarshipProviderAvailableEndDate !== null
-        ) {
-          setCanSetDay(true);
-        }
-
-        if (
           (response.scholarshipProviderAvailableStartDate &&
             response.scholarshipProviderAvailableEndDate) ||
-          response.studentChooseDate
+          response.studentChooseDay
         ) {
           const start = response.scholarshipProviderAvailableStartDate
             ? new Date(
                 response.scholarshipProviderAvailableStartDate
               ).toISOString()
-            : new Date(response.studentChooseDate).toISOString();
+            : new Date(response.studentChooseDay).toISOString();
           const end = response.scholarshipProviderAvailableEndDate
             ? new Date(
                 response.scholarshipProviderAvailableEndDate
@@ -184,7 +176,7 @@ export default function Home() {
         studentID: studentId,
         scholarshipID: scholarshipId,
         meetingURL: `/message/${id}/meet`,
-        studentChooseDate: newEvent.start.toISOString(),
+        studentChooseDay: newEvent.start.toISOString(),
         status: status,
       });
     }
