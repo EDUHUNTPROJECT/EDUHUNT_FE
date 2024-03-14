@@ -6,11 +6,14 @@ import { useProfile } from "../../hooks/useProfile";
 import { useRouter } from "next/navigation";
 import CloudinaryPost from "../../components/cloud/CloudinaryPost";
 import UploadImg from "../../../public/Vector.png";
-import { Image } from "antd";
+import { Image, Input, AutoComplete } from "antd";
+import debounce from "lodash.debounce";
+import { useLocation } from "../../hooks/useLocation";
 
 const Profile = () => {
   const { postScholarship } = useScholarship();
   const { getProfile } = useProfile();
+  const { getLocation, locationOptions } = useLocation();
   const [scholarshipData, setScholarshipData] = useState({
     budget: "",
     title: "",
@@ -21,6 +24,7 @@ const Profile = () => {
     authorId: localStorage.getItem("userId"),
     imageUrl: "",
   });
+
   const router = useRouter();
 
   useEffect(() => {
@@ -40,6 +44,16 @@ const Profile = () => {
 
   const handleChange = (e) => {
     setScholarshipData({ ...scholarshipData, [e.target.name]: e.target.value });
+  };
+
+  const handleLocationSearch = debounce(getLocation, 500);
+
+  const handleLocationSelect = (value) => {
+    setScholarshipData({ ...scholarshipData, location: value });
+  };
+
+  const handleLocationChange = (value) => {
+    setScholarshipData({ ...scholarshipData, location: value });
   };
 
   const handleUpload = (url) => {
@@ -67,6 +81,8 @@ const Profile = () => {
     }
   };
 
+  const { TextArea } = Input;
+
   return (
     <MainLayout>
       <div>
@@ -84,63 +100,64 @@ const Profile = () => {
         <form className="flex flex-col gap-[15px]" onSubmit={handleSubmit}>
           <div className="w-[calc(100vw-600px)]">
             <h4 className="font-bold text-[20px]">Budget</h4>
-            <textarea
+            <Input
               name="budget"
               rows="1"
               value={scholarshipData.budget}
               onChange={handleChange}
-              className="w-full pl-4  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
-            ></textarea>
+              className="w-full p-3  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
+            ></Input>
           </div>
           <div className="w-[calc(100vw-600px)]">
             <h4 className="font-bold text-[20px]">Title</h4>
-            <textarea
+            <Input
               name="title"
               rows="2"
               value={scholarshipData.title}
               onChange={handleChange}
-              className="w-full pl-4  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
-            ></textarea>
+              className="w-full p-3  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
+            ></Input>
           </div>
           <div className="w-[calc(100vw-600px)]">
             <h4 className="font-bold text-[20px]">Location</h4>
-            <textarea
-              name="location"
-              rows="1"
+            <AutoComplete
+              options={locationOptions}
+              onSearch={handleLocationSearch}
+              onSelect={handleLocationSelect}
+              onChange={handleLocationChange}
               value={scholarshipData.location}
-              onChange={handleChange}
-              className="w-full pl-4  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
-            ></textarea>
+              className="w-full h-[54px] border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
+            />
           </div>
           <div className="w-[calc(100vw-600px)]">
             <h4 className="font-bold text-[20px]">School Name</h4>
-            <textarea
+            <Input
               name="schoolName"
               rows="1"
               value={scholarshipData.schoolName}
               onChange={handleChange}
-              className="w-full pl-4  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
-            ></textarea>
+              className="w-full p-3  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
+            ></Input>
           </div>
           <div className="w-[calc(100vw-600px)]">
             <h4 className="font-bold text-[20px]">URL</h4>
-            <textarea
+            <Input
               name="url"
               rows="1"
               value={scholarshipData.url}
               onChange={handleChange}
-              className="w-full pl-4  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
-            ></textarea>
+              className="w-full p-3  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
+            ></Input>
           </div>
           <div className="w-[calc(100vw-600px)]">
             <h4 className="font-bold text-[20px]">Description</h4>
-            <textarea
+            <TextArea
               name="description"
               rows="4"
               value={scholarshipData.description}
               onChange={handleChange}
-              className="w-full pl-4  border border-[#B5B5B5] shadow-md  rounded-[10px] text-[18px]"
-            ></textarea>
+              className="w-ful border border-[#B5B5B5] shadow-md  rounded-[10px] text-[18px]"
+            ></TextArea>
           </div>
           <div className="flex flex-row justify-end ">
             <button

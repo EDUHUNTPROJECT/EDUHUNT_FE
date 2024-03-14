@@ -6,11 +6,14 @@ import { useRoadMap } from "../../hooks/useRoadMap";
 import { useProfile } from "../../hooks/useProfile";
 import { useRouter } from "next/navigation";
 import UploadImg from "../../../public/Vector.png";
-import { Image } from "antd";
+import { Image, Input, AutoComplete } from "antd";
+import { useLocation } from "../../hooks/useLocation";
+import debounce from "lodash.debounce";
 
 const Profile = () => {
   const { postRoadMaps } = useRoadMap();
   const { getProfile } = useProfile();
+  const { getLocation, locationOptions } = useLocation();
   const [roadMapData, setRoadMapData] = useState({
     title: "",
     content: "",
@@ -35,6 +38,16 @@ const Profile = () => {
       });
     }
   }, []);
+
+  const handleLocationSearch = debounce(getLocation, 500);
+
+  const handleLocationSelect = (value) => {
+    setRoadMapData({ ...roadMapData, location: value });
+  };
+
+  const handleLocationChange = (value) => {
+    setRoadMapData({ ...roadMapData, location: value });
+  };
 
   const handleInputChange = (e) => {
     setRoadMapData({ ...roadMapData, [e.target.name]: e.target.value });
@@ -83,43 +96,44 @@ const Profile = () => {
         <form className="flex flex-col gap-[15px]" onSubmit={handleSubmit}>
           <div className="w-[calc(100vw-600px)]">
             <h4 className="font-bold text-[20px]">Title</h4>
-            <textarea
+            <Input
               name="title"
               rows="2"
               value={roadMapData.title}
               onChange={handleInputChange}
-              className="flex w-full pl-4  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
-            ></textarea>
+              className="flex w-full p-3 border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
+            ></Input>
           </div>
           <div className="w-[calc(100vw-600px)]">
             <h4 className="font-bold text-[20px]">Content</h4>
-            <textarea
+            <Input
               name="content"
               rows="4"
               value={roadMapData.content}
               onChange={handleInputChange}
-              className="w-full pl-4  border border-[#B5B5B5] shadow-md  rounded-[10px] text-[18px]"
-            ></textarea>
+              className="w-full p-3  border border-[#B5B5B5] shadow-md  rounded-[10px] text-[18px]"
+            ></Input>
           </div>
           <div className="w-[calc(100vw-600px)]">
             <h4 className="font-bold text-[20px]">Location</h4>
-            <textarea
-              name="location"
-              rows="1"
+            <AutoComplete
+              options={locationOptions}
+              onSearch={handleLocationSearch}
+              onSelect={handleLocationSelect}
+              onChange={handleLocationChange}
               value={roadMapData.location}
-              onChange={handleInputChange}
-              className="w-full pl-4  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
-            ></textarea>
+              className="w-full h-[54px] border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
+            />
           </div>
           <div className="w-[calc(100vw-600px)]">
             <h4 className="font-bold text-[20px]">School</h4>
-            <textarea
+            <Input
               name="school"
               rows="1"
               value={roadMapData.school}
               onChange={handleInputChange}
-              className="w-full pl-4  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
-            ></textarea>
+              className="w-full p-3  border border-[#B5B5B5] shadow-md rounded-[10px] text-[18px]"
+            ></Input>
           </div>
           <div className="flex flex-row justify-end ">
             <button

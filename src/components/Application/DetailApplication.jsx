@@ -18,6 +18,7 @@ export default function DetailApplication({ id }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log(application);
     if (id) {
       const fetchApplicationDetail = async () => {
         setLoading(true);
@@ -73,6 +74,19 @@ export default function DetailApplication({ id }) {
           </Descriptions.Item>
           <Descriptions.Item label="Application Reason">
             {application.applicationReason || "No reason provided"}
+          </Descriptions.Item>
+          <Descriptions.Item label="Attached File">
+            {application.attachFile ? (
+              <a
+                href={application.attachFile}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Attached File
+              </a>
+            ) : (
+              "No file attached"
+            )}
           </Descriptions.Item>
         </Descriptions>
         <Button
