@@ -4,6 +4,7 @@ import { Button, Table, Popconfirm, message } from "antd";
 import { useRoadMap } from "../../../hooks/useRoadMap";
 import AdminLayout from "../../../components/core/layouts/AdminLayout";
 import { useRouter } from "next/navigation";
+import { Image } from "antd";
 
 const ApproveRoadMapPage = () => {
   const { getRoadMap, approveRoadMap } = useRoadMap();
@@ -22,6 +23,7 @@ const ApproveRoadMapPage = () => {
           (roadMap) => !roadMap.isApproved
         );
         setRoadMapData(unapprovedRoadMaps);
+        console.log(unapprovedRoadMaps);
       } catch (error) {
         console.error(error);
       }
@@ -47,18 +49,32 @@ const ApproveRoadMapPage = () => {
       dataIndex: "contentURL",
       key: "contentURL",
       render: (text, record) => (
-        <img
-          src={record.contentURL}
-          alt="Roadmap"
-          style={{ width: "50px", height: "50px" }}
-        />
+        <Image width={50} src={record.contentURL} alt="Roadmap" />
       ),
     },
     {
-      title: "Created At",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      render: (text, record) => new Date(record.createdAt).toLocaleDateString(),
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+      ellipsis: true,
+    },
+    {
+      title: "Content",
+      dataIndex: "content",
+      key: "content",
+      ellipsis: true,
+    },
+    {
+      title: "Location",
+      dataIndex: "location",
+      key: "location",
+      ellipsis: true,
+    },
+    {
+      title: "School",
+      dataIndex: "school",
+      key: "school",
+      ellipsis: true,
     },
     {
       title: "Action",
@@ -68,8 +84,9 @@ const ApproveRoadMapPage = () => {
           title="Do you want to approve this roadmap?"
           onConfirm={() => handleApprove(record.id, true)}
           onCancel={() => handleApprove(record.id, false)}
-          okText={<span style={{ color: "black" }}>Yes</span>}
+          okText="Yes"
           cancelText="No"
+          okType="danger"
         >
           <Button type="primary" danger size="small">
             Approve

@@ -32,9 +32,9 @@ function SiderItem({ information }) {
       >
         <div className="flex flex-col">
           <p className="text-lg text-medium">{information?.name}</p>
-          <p className=" text-stone-600 truncate max-w-52">
+          {/* <p className=" text-stone-600 truncate max-w-52">
             You: {information?.lastMessage}
-          </p>
+          </p> */}
         </div>
       </Link>
     </div>

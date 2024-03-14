@@ -68,8 +68,9 @@ const ApproveCertificatePage = () => {
           title="Do you want to approve this certificate?"
           onConfirm={() => handleApprove(record.id, true)}
           onCancel={() => handleApprove(record.id, false)}
-          okText={<span style={{ color: "black" }}>Yes</span>}
+          okText="Yes"
           cancelText="No"
+          okType="danger"
         >
           <Button type="primary" danger size="small">
             Approve
