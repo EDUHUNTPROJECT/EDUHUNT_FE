@@ -221,17 +221,17 @@ const NavBar = () => {
   const HighlightKey = () => {
     if (pathName === "/") {
       return 0;
-    } else if (pathName === "/scholarship") {
+    } else if (pathName.includes("/scholarship")) {
       return 1;
-    } else if (pathName === "/mentor") {
+    } else if (pathName?.includes("/mentor")) {
       return 4;
     } else if (
-      pathName === "/roadmap" ||
-      pathName === "/application" ||
-      pathName === "/post"
+      pathName.includes("/roadmap") ||
+      pathName.includes("/application") ||
+      pathName.includes("/post")
     ) {
       return 3;
-    } else if (pathName === "/message/0") {
+    } else if (pathName?.includes("message")) {
       return 2;
     } else return 0;
   };
