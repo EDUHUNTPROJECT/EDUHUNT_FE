@@ -4,18 +4,28 @@ import MainLayout from "../../components/core/layouts/MainLayout";
 import { Image } from "antd";
 import FPTU from "../../../public/images/FPTU.png";
 import { useScholarship } from "../../hooks/useScholarship";
-import axios from "axios";
 import { useProfile } from "../../hooks/useProfile";
+import { Select } from "antd";
+import { useLocation } from "../../hooks/useLocation";
 
 const Scholarship = () => {
   const [scholarshipData, setScholarshipData] = useState([]);
+  const [originalData, setOriginalData] = useState([]);
   const [isVip, setIsVip] = useState(false);
   const { getScholarship } = useScholarship();
   const { getProfile } = useProfile();
+  const { Option } = Select;
+  const { getCountries, getCities, countries, cities } = useLocation();
+  const filterOption = (input, option) =>
+    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
   const [searchParams, setSearchParams] = useState({
     schoolname: "",
     budget: "",
   });
+
+  const handleCountryChange = (value) => {
+    getCities(value);
+  };
 
   const handleInputChange = (event) => {
     setSearchParams({
@@ -32,6 +42,7 @@ const Scholarship = () => {
           (scholarship) => scholarship.isApproved
         );
         setScholarshipData(scholarships);
+        setOriginalData(scholarships);
       } catch (error) {
         console.error(error);
       }
@@ -48,6 +59,7 @@ const Scholarship = () => {
       }
     };
 
+    getCountries();
     fetchData();
     fetchVipStatus();
   }, []);
@@ -59,8 +71,13 @@ const Scholarship = () => {
       return;
     }
 
+    if (!searchParams.schoolname && !searchParams.budget) {
+      setScholarshipData(originalData);
+      return;
+    }
+
     console.log(scholarshipData);
-    const filteredData = scholarshipData.filter((scholarship) => {
+    const filteredData = originalData.filter((scholarship) => {
       let matchSchoolName = true;
       let matchBudget = true;
 
@@ -83,10 +100,6 @@ const Scholarship = () => {
     setScholarshipData(filteredData);
   };
 
-  if (!scholarshipData.length) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <MainLayout>
       <div className="bg-white rounded-lg shadow-md p-4">
@@ -104,17 +117,21 @@ const Scholarship = () => {
                 >
                   Country
                 </label>
-                <select
+                <Select
                   id="country"
                   name="country"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="w-full h-[41px] border border-[black] rounded-lg "
+                  defaultValue="Select a country"
+                  onChange={handleCountryChange}
+                  showSearch
+                  filterOption={filterOption}
                 >
-                  <option value="">Select a country</option>
-                  <option value="Viet Nam">Vietnam</option>
-                  <option value="United States">United States</option>
-                  <option value="United Kingdom">United Kingdom</option>
-                  <option value="Australia">Australia</option>
-                </select>
+                  {countries.map((country, index) => (
+                    <Option key={index} value={country}>
+                      {country}
+                    </Option>
+                  ))}
+                </Select>
               </div>
 
               <div>
@@ -124,13 +141,21 @@ const Scholarship = () => {
                 >
                   City
                 </label>
-                <input
-                  type="text"
+                <Select
                   id="city"
                   name="city"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  placeholder="Enter city name"
-                />
+                  className="w-full h-[41px] border border-[black] rounded-lg "
+                  defaultValue="Select a city"
+                  showSearch
+                  filterOption={filterOption}
+                >
+                  <Select.Option value="">Select a city</Select.Option>
+                  {cities.map((city, index) => (
+                    <Option key={index} value={city}>
+                      {city}
+                    </Option>
+                  ))}
+                </Select>
               </div>
 
               <div>

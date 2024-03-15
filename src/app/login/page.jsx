@@ -148,7 +148,7 @@ export default function LoginPage() {
 
                   <button
                     type="submit"
-                    className="bg-[#67D0FD] text-white w-full py-2 rounded-[40px] mt-4"
+                    className="bg-[#67D0FD] text-[white] font-bold w-full py-2 rounded-[40px] mt-4"
                   >
                     Log In
                   </button>

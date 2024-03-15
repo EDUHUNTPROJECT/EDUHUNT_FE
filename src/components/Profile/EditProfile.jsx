@@ -62,6 +62,9 @@ function EditProfile() {
       .then(() => {
         if (!isupdateVIP) {
           alert("Profile updated successfully");
+          if (role === "Admin") {
+            window.location.href = "http://localhost:3000/admin";
+          }
         } else {
           if (window.confirm("Are you sure to pay VIP ?")) {
             window.location.href = "http://localhost:3000/payment";

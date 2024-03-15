@@ -44,7 +44,7 @@ const ManagePostPage = () => {
     {
       title: "Image",
       dataIndex: "contentURL",
-      key: "image",
+      key: "contentURL",
       render: (text, record) => (
         <Image width={50} src={record.contentURL} alt="Roadmap" />
       ),
@@ -53,16 +53,36 @@ const ManagePostPage = () => {
       title: "Title",
       dataIndex: "title",
       key: "title",
+      ellipsis: true,
+    },
+    {
+      title: "Content",
+      dataIndex: "content",
+      key: "content",
+      ellipsis: true,
+    },
+    {
+      title: "Location",
+      dataIndex: "location",
+      key: "location",
+      ellipsis: true,
+    },
+    {
+      title: "School",
+      dataIndex: "school",
+      key: "school",
+      ellipsis: true,
     },
     {
       title: "Action",
       key: "action",
       render: (text, record) => (
         <Popconfirm
-          title="Are you sure delete this post?"
+          title="Are you sure delete this scholarship?"
           onConfirm={() => handleDelete(record.id)}
-          okText={<span style={{ color: "black" }}>Yes</span>}
+          okText="Yes"
           cancelText="No"
+          okType="danger"
         >
           <Button type="primary" danger size="small">
             Delete

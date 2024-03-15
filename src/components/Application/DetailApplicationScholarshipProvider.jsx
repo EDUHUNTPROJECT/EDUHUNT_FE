@@ -117,6 +117,19 @@ export default function DetailApplicationScholarshipProvider({ id }) {
           <Descriptions.Item label="Application Reason">
             {application.applicationReason || "No reason provided"}
           </Descriptions.Item>
+          <Descriptions.Item label="Attached File">
+            {application.attachFile ? (
+              <a
+                href={application.attachFile}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Attached File
+              </a>
+            ) : (
+              "No file attached"
+            )}
+          </Descriptions.Item>
         </Descriptions>
         {role === "Scholarship Provider" && (
           <div className="mt-2">
