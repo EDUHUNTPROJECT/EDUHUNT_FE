@@ -66,10 +66,10 @@ export default function LoginPage() {
             }}
           ></div>
           <div
-            className="h-[100%] w-[46%] rounded-3xl"
+            className="h-[80%] w-[46%] rounded-3xl flex items-center mt-16"
             style={{ background: "white" }}
           >
-            <div className="bg-white rounded-lg p-8 w-[100%]">
+            <div className="bg-white rounded-lg p-8 w-[100%] items-center flex">
               <div className="w-[80%] mx-auto">
                 <h1 className="text-2xl font-semibold mb-4 text-center">
                   Log in
@@ -81,7 +81,6 @@ export default function LoginPage() {
                   </Link>
                 </p>
                 <GoogleButton />
-                <FacebookButton />
                 <form onSubmit={submit}>
                   <p className="text-gray-600 mb-4 text-center flex items-center justify-between">
                     <span className="w-[28%] h-[2px] bg-[#D7D8D9]"></span>
