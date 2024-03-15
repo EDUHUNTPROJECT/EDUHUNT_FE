@@ -81,7 +81,6 @@ export default function LoginPage() {
                   </Link>
                 </p>
                 <GoogleButton />
-                <FacebookButton />
                 <form onSubmit={submit}>
                   <p className="text-gray-600 mb-4 text-center flex items-center justify-between">
                     <span className="w-[28%] h-[2px] bg-[#D7D8D9]"></span>
