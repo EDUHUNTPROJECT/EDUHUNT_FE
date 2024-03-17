@@ -40,7 +40,7 @@ const AdminSidebar = ({ avatarurl, username }) => {
   const { data: session } = useSession();
   const router = useRouter();
   return (
-    <div className="sticky top-10">
+    <div className="sticky top-10 w-200">
       <div className="flex items-center gap-5 mb-5">
         <Image
           src={avatarurl}

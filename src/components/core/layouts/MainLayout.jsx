@@ -129,47 +129,47 @@ const MainLayout = ({ children }) => {
       }
     );
   } else if (role === "Scholarship Provider") {
-    items.push({
-      label: (
-        <Link
-          href="/post"
-          className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
-        >
-          POST
-        </Link>
-      ),
-      labelhighlight: (
-        <Link
-          href="/post"
-          className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
-        >
-          POST
-        </Link>
-      ),
-      key: "3",
-      icon: <MessageOutlined />,
-    },
-    {
-      label: (
-        <Link
-          href="/application"
-          className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
-        >
-          APPLICATION
-        </Link>
-      ),
-      labelhighlight: (
-        <Link
-          href="/application"
-          className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
-        >
-          APPLICATION
-        </Link>
-      ),
-      key: "4",
-      icon: <MessageOutlined />,
-    }
-    
+    items.push(
+      {
+        label: (
+          <Link
+            href="/post"
+            className="no-underline block lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+          >
+            POST
+          </Link>
+        ),
+        labelhighlight: (
+          <Link
+            href="/post"
+            className="no-underline block lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+          >
+            POST
+          </Link>
+        ),
+        key: "3",
+        icon: <MessageOutlined />,
+      },
+      {
+        label: (
+          <Link
+            href="/application"
+            className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black hover:border-b-2 text-center w-200"
+          >
+            APPLICATION
+          </Link>
+        ),
+        labelhighlight: (
+          <Link
+            href="/application"
+            className="no-underline block mr-10 lg:inline-block lg:mt-7 text-black border-b-2 text-center w-200 font-bold"
+          >
+            APPLICATION
+          </Link>
+        ),
+        key: "4",
+        icon: <MessageOutlined />,
+      }
     );
   } else if (role === "User") {
     items.push(

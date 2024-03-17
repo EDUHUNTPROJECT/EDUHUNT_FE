@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Modal, Input } from "antd";
+import { Button, Modal, Input, Upload } from "antd";
 import MainLayout from "../../../components/core/layouts/MainLayout";
 import { useParams } from "next/navigation";
 import { useApplication } from "../../../hooks/useApplication";
@@ -11,6 +11,7 @@ const ScholarshipDetail = () => {
   const [scholarship, setScholarship] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [applicationReason, setApplicationReason] = useState("");
+  const [attachedFile, setAttachedFile] = useState(null);
   const { id } = useParams();
   const { getApplication, postApplication, putApplication } = useApplication();
   const { getDetailScholarShip } = useScholarship();
@@ -34,12 +35,31 @@ const ScholarshipDetail = () => {
 
   const handleOk = async () => {
     const studentID = localStorage.getItem("userId");
+    const formData = new FormData();
+    formData.append("file", attachedFile);
+    formData.append("upload_preset", "tstdfsn5");
+
+    let res;
+    try {
+      res = await axios.post(
+        "https://api.cloudinary.com/v1_1/djnjql4tl/upload",
+        formData
+      );
+    } catch (error) {
+      console.error("Failed to upload the file.", error);
+      alert("Failed to upload the file. Please try again.");
+      return;
+    }
+
     const applicationData = {
       StudentID: studentID,
       ScholarshipID: id,
       Status: "Wait",
-      ApplicationReason: applicationReason || "No reason provided", // Add this line to include the reason in your application data
+      ApplicationReason: applicationReason || "No reason provided",
+      AttachFile: res.data.secure_url,
     };
+
+    console.log(applicationData);
 
     try {
       await postApplication(applicationData);
@@ -133,6 +153,7 @@ const ScholarshipDetail = () => {
             onCancel={handleCancel}
             okText="Submit Application"
             cancelText="Cancel"
+            okType="danger"
           >
             <Input.TextArea
               rows={4}
@@ -140,6 +161,14 @@ const ScholarshipDetail = () => {
               value={applicationReason}
               onChange={(e) => setApplicationReason(e.target.value)}
             />
+            <Upload
+              beforeUpload={(file) => {
+                setAttachedFile(file);
+                return false;
+              }}
+            >
+              <Button className="mt-4">Click to Upload File</Button>
+            </Upload>
           </Modal>
         </div>
         <div className="py-8 text-lg">
