@@ -60,7 +60,7 @@ const Profile = () => {
     setScholarshipData({ ...scholarshipData, imageUrl: url });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => { //xu li event submit
     e.preventDefault();
     try {
       console.log(scholarshipData);
