@@ -112,6 +112,7 @@ export default function Home() {
       end: arg.end,
       allDay: arg.allDay,
       id: new Date().getTime(),
+      //meet: arg.meet,
     });
     setShowModal(true);
   }
