@@ -31,6 +31,7 @@ export default function Home() {
     end: "",
     allDay: false,
     id: 0,
+    //meet: "",
   });
   console.log(id);
   console.log(role);
@@ -111,6 +112,7 @@ export default function Home() {
       end: arg.end,
       allDay: arg.allDay,
       id: new Date().getTime(),
+      //meet: arg.meet,
     });
     setShowModal(true);
   }
@@ -123,6 +125,7 @@ export default function Home() {
       title: data.draggedEl.innerText,
       allDay: data.allDay,
       id: new Date().getTime(),
+      //meet: data.meet.toISOString(),
     };
     setAllEvents([...allEvents, event]);
   }
@@ -148,6 +151,7 @@ export default function Home() {
       end: "",
       allDay: false,
       id: 0,
+      //meet: "",
     });
     setShowDeleteModal(false);
     setIdToDelete(null);
