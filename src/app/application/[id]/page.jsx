@@ -7,7 +7,7 @@ import DetailApplicationScholarshipProvider from "../../../components/Applicatio
 const ApplicationDetail = () => {
   const router = useRouter();
   useEffect(() => {
-    const role = localStorage.getItem("role");
+    const role = localStorage.getItem("role"); //role
     if (role == "User" || role == "Scholarship Provider") {
       
     }
@@ -22,7 +22,7 @@ const ApplicationDetail = () => {
       <MainLayout>
       {(localStorage.getItem("role")=="User") 
         ?
-        <DetailApplication id={id} />
+        <DetailApplication id={id} /> //list
             :
             <DetailApplicationScholarshipProvider id = {id} />
         }
