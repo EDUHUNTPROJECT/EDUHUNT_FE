@@ -1,5 +1,5 @@
 "use client";
-// PaymentLinkPage.js
+
 import React from "react";
 import Payment from "../../../public/images/cards_stack.png";
 
