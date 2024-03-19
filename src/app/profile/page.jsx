@@ -6,7 +6,7 @@ import EditProfile from "../../components/Profile/EditProfile";
 import ProfileLayout from "../../components/core/layouts/ProfileLayout";
 
 const Profile = () => {
-    const [role, setRole] = useState(null); 
+    const [role, setRole] = useState(null); // Initialize state to null or an appropriate default value
 
     useEffect(() => {
         // Access localStorage only on the client-side
