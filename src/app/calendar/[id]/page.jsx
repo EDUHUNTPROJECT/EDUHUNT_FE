@@ -31,6 +31,7 @@ export default function Home() {
     end: "",
     allDay: false,
     id: 0,
+    //meet: "",
   });
   console.log(id);
   console.log(role);
