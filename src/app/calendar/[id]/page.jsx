@@ -125,6 +125,7 @@ export default function Home() {
       title: data.draggedEl.innerText,
       allDay: data.allDay,
       id: new Date().getTime(),
+      //meet: data.meet.toISOString(),
     };
     setAllEvents([...allEvents, event]);
   }
