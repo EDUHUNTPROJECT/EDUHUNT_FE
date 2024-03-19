@@ -3,14 +3,16 @@ import { useCertificate } from "../../hooks/useCertificate";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import CloudinaryUpload from "../cloud/CloudinaryUpload";
-import { Button } from "antd";
+import { Button, Modal, notification } from "antd";
 import { Avatar } from "@nextui-org/avatar";
+import Toasify from "../../components/core/common/Toasify";
 
 function EditProfile() {
   const userId = localStorage.getItem("userId");
   const role = localStorage.getItem("role");
   const { getProfile, updateProfile } = useProfile();
   const { postCertificate } = useCertificate();
+  const [toasify, setToasify] = useState({ message: "", type: "" });
   const [profile, setProfile] = useState({
     id: "",
     urlAvatar: "",
@@ -25,6 +27,12 @@ function EditProfile() {
   });
   const [showAvatarUpload, setShowAvatarUpload] = useState(false);
   const [showCertificateUpload, setShowCertificateUpload] = useState(false);
+  const openNotification = (type, message) => {
+    notification[type]({
+      message: "Notification",
+      description: message,
+    });
+  };
 
   useEffect(() => {
     getProfile(userId)
@@ -61,7 +69,10 @@ function EditProfile() {
     updateProfile(profile.id, updatedProfile)
       .then(() => {
         if (!isupdateVIP) {
-          alert("Profile updated successfully");
+          setToasify({
+            message: "Profile updated successfully",
+            type: "success",
+          });
           if (role === "Admin") {
             window.location.href = "http://localhost:3000/admin";
           }
@@ -76,6 +87,8 @@ function EditProfile() {
 
   const handleImageUpload = (imageUrl) => {
     setProfile((prevProfile) => ({ ...prevProfile, urlAvatar: imageUrl }));
+    setShowAvatarUpload(false);
+    openNotification("success", "Avatar uploaded successfully.");
   };
 
   const handleShowAvatarUpload = () => {
@@ -97,13 +110,22 @@ function EditProfile() {
   const handleCertificateUpload = (imageUrl) => {
     postCertificate(userId, imageUrl)
       .then(() => {
-        alert("Certificate uploaded successfully");
+        setShowCertificateUpload(false);
+        openNotification(
+          "info",
+          "Please wait for admin to approve the certificate"
+        );
       })
-      .catch((error) => console.error("Error uploading certificate:", error));
+      .catch((error) =>
+        openNotification("error", "Failed to upload certificate.")
+      );
   };
 
   return (
     <div className="flex">
+      {toasify.message && (
+        <Toasify message={toasify.message} type={toasify.type} />
+      )}
       <div className="w-1/4  p-10 rounded-lg h-screen"></div>
 
       <div className="flex-1 px-10 pt-2 pb-10 border border-solid border-[#ccc] rounded mx-3 h-full">
@@ -137,17 +159,14 @@ function EditProfile() {
                 Change Avatar
               </Button>
               {showAvatarUpload && (
-                <div className="fixed inset-0 flex items-center justify-center bg-[#000000] bg-opacity-50 z-10">
-                  <div className="relative z-[11] bg-[#fff] w-[32rem] h-[32rem] bg-white p-8 rounded-lg">
-                    <button
-                      onClick={handleCloseAvatarUpload}
-                      className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded"
-                    >
-                      Close
-                    </button>
-                    <CloudinaryUpload onUpload={handleImageUpload} />
-                  </div>
-                </div>
+                <Modal
+                  title="Upload Avatar"
+                  visible={showAvatarUpload}
+                  onCancel={() => setShowAvatarUpload(false)}
+                  footer={null}
+                >
+                  <CloudinaryUpload onUpload={handleImageUpload} />
+                </Modal>
               )}
               {(role === "Mentor" || role === "Scholarship Provider") && (
                 <>
@@ -178,17 +197,14 @@ function EditProfile() {
                     </Button>
                   )}
                   {showCertificateUpload && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-[#000000] bg-opacity-50 z-10">
-                      <div className="relative z-[11] bg-[#fff] w-[32rem] h-[32rem] bg-white p-8 rounded-lg">
-                        <button
-                          onClick={handleCloseCertificateUpload}
-                          className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded"
-                        >
-                          Close
-                        </button>
-                        <CloudinaryUpload onUpload={handleCertificateUpload} />
-                      </div>
-                    </div>
+                    <Modal
+                      title="Upload Certificate"
+                      visible={showCertificateUpload}
+                      onCancel={() => setShowCertificateUpload(false)}
+                      footer={null}
+                    >
+                      <CloudinaryUpload onUpload={handleCertificateUpload} />
+                    </Modal>
                   )}
                 </>
               )}
@@ -228,7 +244,7 @@ function EditProfile() {
             name="firstName"
             value={profile.firstName}
             onChange={handleInputChange}
-            className="w-[calc(100%-16px)] p-1 border border-solid border-[#ccc] rounded"
+            className="w-[calc(100%-16px)] px-2 py-1 border border-[#ccc] rounded "
           />
         </div>
         <div className="my-2">
@@ -240,7 +256,7 @@ function EditProfile() {
             name="lastName"
             value={profile.lastName}
             onChange={handleInputChange}
-            className="w-[calc(100%-16px)] p-1 border border-solid border-[#ccc] rounded"
+            className="w-[calc(100%-16px)] px-2 py-1 border border-solid border-[#ccc] rounded"
           />
         </div>
         <div className="my-2">
@@ -252,7 +268,7 @@ function EditProfile() {
             name="userName"
             value={profile.userName}
             onChange={handleInputChange}
-            className="w-[calc(100%-16px)] p-1 border border-solid border-[#ccc] rounded"
+            className="w-[calc(100%-16px)] px-2 py-1 border border-solid border-[#ccc] rounded"
           />
         </div>
         <div className="my-2">
@@ -264,7 +280,7 @@ function EditProfile() {
             name="contactNumber"
             value={profile.contactNumber}
             onChange={handleInputChange}
-            className="w-[calc(100%-16px)] p-1 border border-solid border-[#ccc] rounded"
+            className="w-[calc(100%-16px)] px-2 py-1 border border-solid border-[#ccc] rounded"
           />
         </div>
         <div className="my-2">
@@ -276,7 +292,7 @@ function EditProfile() {
             name="address"
             value={profile.address}
             onChange={handleInputChange}
-            className="w-[calc(100%-16px)] p-1 border border-solid border-[#ccc] rounded"
+            className="w-[calc(100%-16px)] px-2 py-1 border border-solid border-[#ccc] rounded"
           />
         </div>
         <div className="my-2">
@@ -287,7 +303,7 @@ function EditProfile() {
             name="description"
             value={profile.description}
             onChange={handleInputChange}
-            className="w-[calc(100%-16px)] h-40 p-1 border border-solid border-[#ccc] rounded"
+            className="w-[calc(100%-16px)] h-40 px-2 py-1 border border-solid border-[#ccc] rounded"
           />
         </div>
         <button
