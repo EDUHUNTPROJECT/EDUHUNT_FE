@@ -1,14 +1,20 @@
 "use client";
+import React, { useState, useEffect } from "react";
+import { Tooltip } from "antd";
+import { QuestionCircleOutlined, MessageOutlined } from "@ant-design/icons";
 import MainLayout from "../../../components/core/layouts/MainLayout";
 import MentorLayout from "../../../components/core/layouts/MentorLayout";
-import { useState, useEffect } from "react";
 import useMentor from "../../../hooks/useMentor";
 import Modal from "../../../components/Mentor/Modal";
+import { useRouter } from "next/navigation";
+import { Button } from "antd";
 
 const Mentor = () => {
+  const router = useRouter();
   const [qa, setQa] = useState();
   const [mentor, setMentor] = useState();
   const { getQAList, getProfiles } = useMentor();
+  const mentorId = localStorage.getItem("userId");
 
   let role;
   role = localStorage.getItem("role");
@@ -55,6 +61,7 @@ const Mentor = () => {
   }, []);
 
   mentorName = mentorName?.filter((mentor) => mentor != undefined);
+  console.log(mentorName);
 
   console.log(qa);
   const mentorNames = qa?.map((mentor) => {
@@ -78,6 +85,15 @@ const Mentor = () => {
   return (
     <MainLayout>
       <MentorLayout>
+        {role === "Mentor" && (
+          <Button
+            onClick={() => router.push(`/mentor/roadmap/${mentorId}`)}
+            className="font-bold mt-4 ml-[calc(50%-80px)] rounded-lg"
+          >
+            View My Road Map
+          </Button>
+        )}
+
         {qa?.map((item, key) => {
           const date = item.createdAt;
           let isAnswered = "Answering";
@@ -92,24 +108,57 @@ const Mentor = () => {
                 <div className="font-bold pr-3 pl-3 border-r">{key + 1}</div>
                 <div className="">
                   <div className="flex h-[6vh]">
-                    <div className="w-[8vw] border-b border-r text-center font-bold">
-                      Question
+                    <div className="w-[8vw] border-b border-r font-bold flex items-center justify-center">
+                      <Tooltip
+                        title={
+                          item.askerFile ? (
+                            <a
+                              href={item.askerFile}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              View Asker File
+                            </a>
+                          ) : (
+                            "No file attached"
+                          )
+                        }
+                      >
+                        <QuestionCircleOutlined /> Question
+                      </Tooltip>
                     </div>
-                    <div className="pr-3 pl-5 w-[30vw] border-b">
+                    <div className="pr-3 pl-5 w-[30vw] border-b flex items-center">
                       {item.question}
                     </div>
                   </div>
                   <div className="flex h-[6vh]">
-                    <div className="w-[8vw] border-r text-center font-bold">
-                      Answer
+                    <div className="w-[8vw] border-r text-center font-bold flex items-center justify-center">
+                      <Tooltip
+                        title={
+                          item.answerFile ? (
+                            <a
+                              href={item.answerFile}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              View Answer File
+                            </a>
+                          ) : (
+                            "No file attached"
+                          )
+                        }
+                      >
+                        <MessageOutlined /> Answer
+                      </Tooltip>
                     </div>
-                    <div className="pr-3 pl-5 w-[30vw] ">
+                    <div className="pr-3 pl-5 w-[30vw] flex items-center">
                       {item.answer == "" && role == "Mentor" ? (
                         <Modal
                           theID={item.id}
                           askerID={item.askerId}
                           answerID={item.answerId}
                           question={item.question}
+                          askerFile={item.askerFile}
                         ></Modal>
                       ) : (
                         item.answer

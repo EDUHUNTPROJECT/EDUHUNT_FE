@@ -117,10 +117,24 @@ export default function DetailApplicationScholarshipProvider({ id }) {
           <Descriptions.Item label="Application Reason">
             {application.applicationReason || "No reason provided"}
           </Descriptions.Item>
+          <Descriptions.Item label="Attached File">
+            {application.attachFile ? (
+              <a
+                href={application.attachFile}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Attached File
+              </a>
+            ) : (
+              "No file attached"
+            )}
+          </Descriptions.Item>
         </Descriptions>
         {role === "Scholarship Provider" && (
           <div className="mt-2">
             <Button
+              danger
               type="primary"
               onClick={() => confirmAction("approve")}
               style={{ marginRight: 10 }}
@@ -141,14 +155,12 @@ export default function DetailApplicationScholarshipProvider({ id }) {
           Visit Scholarship Website
         </Button>
         <Button
-          type="primary"
           onClick={() => router.push("/calendar/" + id)}
           className="mt-4 ml-2"
         >
           Schedule
         </Button>
         <Button
-          type="primary"
           onClick={() => router.push(`/message/${application.studentID}`)}
           className="mt-4 ml-2"
         >

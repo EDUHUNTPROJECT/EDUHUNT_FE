@@ -18,6 +18,7 @@ export default function DetailApplication({ id }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log(application);
     if (id) {
       const fetchApplicationDetail = async () => {
         setLoading(true);
@@ -74,6 +75,19 @@ export default function DetailApplication({ id }) {
           <Descriptions.Item label="Application Reason">
             {application.applicationReason || "No reason provided"}
           </Descriptions.Item>
+          <Descriptions.Item label="Attached File">
+            {application.attachFile ? (
+              <a
+                href={application.attachFile}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Attached File
+              </a>
+            ) : (
+              "No file attached"
+            )}
+          </Descriptions.Item>
         </Descriptions>
         <Button
           type="primary"
@@ -84,14 +98,12 @@ export default function DetailApplication({ id }) {
           Visit Scholarship Website
         </Button>
         <Button
-          type="primary"
           onClick={() => router.push("/calendar/" + id)}
           className="mt-4 ml-2"
         >
           Schedule
         </Button>
         <Button
-          type="primary"
           onClick={() => router.push(`/message/${application.scholarshipID}`)}
           className="mt-4 ml-2"
         >

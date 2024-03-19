@@ -43,13 +43,10 @@ export const useScholarship = () => {
     try {
       const response = await axios.get(`${API_URL}/${id}`);
       return response.data;
-    }
-    catch (error) {
-      
+    } catch (error) {
       throw error;
-
     }
-  }
+  };
   return {
     getScholarship,
     deleteScholarship,

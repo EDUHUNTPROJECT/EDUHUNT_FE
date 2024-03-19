@@ -1,20 +1,15 @@
-import React from "react";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Button,
-  useDisclosure,
-  Input,
-} from "@nextui-org/react";
+import React, { useState } from "react";
+import axios from "axios";
+import { Modal, Button, Input, Upload } from "antd";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { mutate } from "swr";
+import Toasify from "../../components/core/common/Toasify";
 
 export default function MentorModal(prop) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [toasify, setToasify] = useState({ message: "", type: "" });
+  const [isVisible, setIsVisible] = useState(false);
   const [question, setQuestion] = useState();
+  const [attachedFile, setAttachedFile] = useState(null);
   const router = useRouter();
   let role;
   if (typeof window !== "undefined") {
@@ -24,6 +19,25 @@ export default function MentorModal(prop) {
   const submit = async (e) => {
     e.preventDefault();
 
+    const formData = new FormData();
+    formData.append("file", attachedFile);
+    formData.append("upload_preset", "tstdfsn5");
+
+    let res;
+    try {
+      res = await axios.post(
+        "https://api.cloudinary.com/v1_1/djnjql4tl/upload",
+        formData
+      );
+    } catch (error) {
+      console.error("Failed to upload the file.", error);
+      setToasify({
+        message: "Failed to upload the file.",
+        type: "error",
+      });
+      return;
+    }
+
     const url = "https://localhost:7292/api/QAs/Create";
     let urlAnswer = "https://localhost:7292/api/QAs/Edit";
 
@@ -32,6 +46,8 @@ export default function MentorModal(prop) {
       answerId: prop.answerID,
       question: question,
       answer: "",
+      answerFile: "",
+      askerFile: res.data.secure_url,
     };
 
     let payload2 = {
@@ -40,6 +56,8 @@ export default function MentorModal(prop) {
       answerId: prop.answerID,
       question: prop.question,
       answer: question,
+      answerFile: res.data.secure_url,
+      askerFile: prop.askerFile,
     };
 
     console.log(payload2);
@@ -55,9 +73,16 @@ export default function MentorModal(prop) {
         body: JSON.stringify(payload2),
       };
 
-      await fetch(urlAnswer, options);
-
-      mutate(urlAnswer);
+      try {
+        await fetch(urlAnswer, options);
+        mutate(urlAnswer);
+      } catch (error) {
+        console.error("Error during fetch:", error);
+        setToasify({
+          message: "Answer updated successfully.",
+          type: "success",
+        });
+      }
     } else {
       options = {
         headers: {
@@ -67,19 +92,31 @@ export default function MentorModal(prop) {
         body: JSON.stringify(payload),
       };
 
-      await fetch(url, options);
-      mutate(url);
+      try {
+        await fetch(url, options);
+        mutate(url);
+      } catch (error) {
+        console.error("Error during fetch:", error);
+        setToasify({
+          message: "Question submitted successfully.",
+          type: "success",
+        });
+      }
     }
+    setIsVisible(false);
   };
 
   return (
     <div>
+      {toasify.message && (
+        <Toasify message={toasify.message} type={toasify.type} />
+      )}
       <button
-        onClick={onOpen}
+        onClick={() => setIsVisible(true)}
         className="py-2 bg-blue-600 hover:bg-blue-700 text-white rounded pr-5 scale-150"
       >
         {role == "Mentor" ? (
-          <div className="text-white font-bold">Answer</div>
+          <div className="font-bold pr-3 pl-5">Answer</div>
         ) : (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -98,43 +135,32 @@ export default function MentorModal(prop) {
         )}
       </button>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader>
-                {role === "Mentor" ? "ANSWER QUESTION" : "INSERT QUESTION"}
-              </ModalHeader>
-              <ModalBody>
-                <p>
-                  {role === "Mentor"
-                    ? "Input your answer"
-                    : "Input your question"}
-                </p>
-                <form action="" onSubmit={submit}>
-                  <Input
-                    autoFocus
-                    placeholder={`Enter your ${
-                      role === "Mentor" ? "answer" : "question"
-                    } to this ${role === "Mentor" ? "student" : "mentor"}`}
-                    variant="bordered"
-                    onChange={(e) => {
-                      setQuestion(e.target.value);
-                    }}
-                  />
-                  <div className="flex pt-4 pb-4 gap-2">
-                    <Button type="submit" color="primary" onPress={onClose}>
-                      Send
-                    </Button>
-                    <Button color="danger" variant="flat" onPress={onClose}>
-                      Close
-                    </Button>
-                  </div>
-                </form>
-              </ModalBody>
-            </>
-          )}
-        </ModalContent>
+      <Modal
+        title={role === "Mentor" ? "ANSWER QUESTION" : "INSERT QUESTION"}
+        visible={isVisible}
+        onOk={submit}
+        onCancel={() => setIsVisible(false)}
+        okType="danger"
+        okText="Submit"
+        cancelText="Cancel"
+      >
+        <Input
+          autoFocus
+          placeholder={`Enter your ${
+            role === "Mentor" ? "answer" : "question"
+          } to this ${role === "Mentor" ? "student" : "mentor"}`}
+          onChange={(e) => {
+            setQuestion(e.target.value);
+          }}
+        />
+        <Upload
+          beforeUpload={(file) => {
+            setAttachedFile(file);
+            return false;
+          }}
+        >
+          <Button className="mt-4">Click to Upload File</Button>
+        </Upload>
       </Modal>
     </div>
   );

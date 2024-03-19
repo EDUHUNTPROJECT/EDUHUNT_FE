@@ -20,9 +20,7 @@ export const usePasswordReset = () => {
         code,
       });
 
-      if (response.status !== 200) {
-        throw new Error("The verification code is incorrect");
-      }
+      return response;
     } catch (err) {
       console.error(err);
     }

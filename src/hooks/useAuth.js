@@ -1,8 +1,9 @@
 import axios from "axios";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useProfile } from "../hooks/useProfile";
 
 const useAuth = () => {
+  const { getProfile } = useProfile();
   const router = useRouter();
 
   const registerUser = async ({
@@ -83,9 +84,18 @@ const useAuth = () => {
           "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
         ];
 
+      const profile = await getProfile(data.userId);
+      console.log(profile);
+
       localStorage.setItem("role", role);
       if (role === "Admin") {
         router.push("/admin");
+      } else if (
+        profile.firstName == null ||
+        profile.lastName == null ||
+        profile.userName == null
+      ) {
+        router.push("/profile");
       } else {
         router.push("/");
       }

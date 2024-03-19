@@ -1,38 +1,58 @@
 import React, { useCallback, useState } from "react";
 import axios from "axios";
+import { message } from "antd";
+import Toasify from "../../components/core/common/Toasify";
 
 const CloudinaryPost = ({ onUpload }) => {
+  const [toasify, setToasify] = useState({ message: "", type: "" });
   const role = localStorage.getItem("role");
-  const [selectedFiles, setSelectedFiles] = useState([]);
+
+  const handleUpload = useCallback(
+    (files) => {
+      const promises = Array.from(files).map((selectedFile) => {
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+        return axios
+          .post(
+            "https://api.cloudinary.com/v1_1/djnjql4tl/upload?upload_preset=tstdfsn5&api_key=579496954431158",
+            formData
+          )
+          .then((response) => {
+            setToasify({
+              message: "File uploaded successfully.",
+              type: "success",
+            });
+            return response.data.secure_url;
+          })
+          .catch((error) => {
+            console.error("Failed to upload the file.", error);
+            setToasify({
+              message: "Failed to upload the file.",
+              type: "error",
+            });
+          });
+      });
+
+      Promise.all(promises).then((urls) => {
+        if (role === "Scholarship Provider") {
+          onUpload(urls[0]);
+        } else {
+          onUpload(urls);
+        }
+      });
+    },
+    [onUpload, role]
+  );
 
   const handleFileUpload = (e) => {
-    setSelectedFiles([...e.target.files]);
+    handleUpload(e.target.files);
   };
-
-  const handleUpload = useCallback(() => {
-    const promises = selectedFiles.map((selectedFile) => {
-      const formData = new FormData();
-      formData.append("file", selectedFile);
-      return axios
-        .post(
-          "https://api.cloudinary.com/v1_1/djnjql4tl/upload?upload_preset=tstdfsn5&api_key=579496954431158",
-          formData
-        )
-        .then((response) => response.data.secure_url);
-    });
-
-    Promise.all(promises).then((urls) => {
-      if (role === "Scholarship Provider") {
-        onUpload(urls[0]);
-      } else {
-        onUpload(urls);
-      }
-      setSelectedFiles([]);
-    });
-  }, [onUpload, selectedFiles, role]);
 
   return (
     <div>
+      {toasify.message && (
+        <Toasify message={toasify.message} type={toasify.type} />
+      )}
       <div className="max-w-md w-full space-y-8 mx-auto mt-8 p-4">
         <div>
           <div className="relative mt-2">
@@ -52,14 +72,6 @@ const CloudinaryPost = ({ onUpload }) => {
             />
           </div>
         </div>
-        {selectedFiles.length > 0 && (
-          <button
-            onClick={handleUpload}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded text-sm font-medium"
-          >
-            Upload
-          </button>
-        )}
       </div>
     </div>
   );
