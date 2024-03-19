@@ -151,6 +151,7 @@ export default function Home() {
       end: "",
       allDay: false,
       id: 0,
+      //meet: "",
     });
     setShowDeleteModal(false);
     setIdToDelete(null);
