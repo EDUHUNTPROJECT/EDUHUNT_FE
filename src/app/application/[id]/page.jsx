@@ -1,4 +1,5 @@
 "use client";
+//application
 import DetailApplication from "../../../components/Application/DetailApplication";
 import MainLayout from "../../../components/core/layouts/MainLayout";
 import { useParams, useRouter } from "next/navigation";
