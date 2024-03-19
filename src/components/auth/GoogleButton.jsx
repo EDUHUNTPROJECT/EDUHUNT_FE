@@ -8,16 +8,14 @@ function GoogleButton() {
   const router = useRouter();
 
   if (session && session.user) {
-    router.replace("/")
+    router.replace("/");
     return null;
   }
 
   return (
     <div>
       <button
-        onClick={() =>
-          signIn("google", { callbackUrl: "http://localhost:3000/" })
-        }
+        onClick={() => signIn("google", { callbackUrl: "/" })}
         className="bg-white text-[#333] border border-solid border-[#333] w-full py-2 rounded-[40px] mb-4 flex items-center justify-center"
       >
         <span className="mr-2">
@@ -45,7 +43,7 @@ function GoogleButton() {
               fill="#EB4335"
             />
           </svg>
-        </span> 
+        </span>
         Continue with Google
       </button>
     </div>

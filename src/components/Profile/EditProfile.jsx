@@ -73,12 +73,9 @@ function EditProfile() {
             message: "Profile updated successfully",
             type: "success",
           });
-          if (role === "Admin") {
-            window.location.href = "http://localhost:3000/admin";
-          }
         } else {
           if (window.confirm("Are you sure to pay VIP ?")) {
-            window.location.href = "http://localhost:3000/payment";
+            window.location.href = "/payment";
           }
         }
       })
