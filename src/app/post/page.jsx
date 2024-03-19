@@ -42,7 +42,7 @@ const Profile = () => {
     }
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = (e) => { //cap nhat state
     setScholarshipData({ ...scholarshipData, [e.target.name]: e.target.value });
   };
 
@@ -52,11 +52,11 @@ const Profile = () => {
     setScholarshipData({ ...scholarshipData, location: value });
   };
 
-  const handleLocationChange = (value) => {
+  const handleLocationChange = (value) => { //xu li event thay doi vi tri
     setScholarshipData({ ...scholarshipData, location: value });
   };
 
-  const handleUpload = (url) => {
+  const handleUpload = (url) => { //xu li event upload img
     setScholarshipData({ ...scholarshipData, imageUrl: url });
   };
 
@@ -180,4 +180,3 @@ export default Profile;
 
 
 
-//Quan dep trai nhat nha mng
