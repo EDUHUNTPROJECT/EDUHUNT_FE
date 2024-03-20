@@ -79,14 +79,22 @@ const Avatars = () => {
             onClick={() => {
               if (session && session.user) {
                 signOut();
-                router.replace("http://localhost:3000/login");
+                localStorage.removeItem("userEmail");
+                localStorage.removeItem("userId");
+                localStorage.removeItem("token");
+                localStorage.removeItem("role");
+                signOut();
+
+              router.replace("http://localhost:3000/login");
+
               } else {
                 localStorage.removeItem("userEmail");
                 localStorage.removeItem("userId");
                 localStorage.removeItem("token");
                 localStorage.removeItem("role");
-                router.replace("http://localhost:3000/login");
               }
+              router.replace("http://localhost:3000/login");
+
             }}
           >
             Sign Out
