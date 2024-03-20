@@ -60,12 +60,28 @@ export default function Home() {
         ) {
           const start = response.scholarshipProviderAvailableStartDate
             ? new Date(
-                response.scholarshipProviderAvailableStartDate
+                new Date(
+                  response.scholarshipProviderAvailableStartDate
+                ).getTime() -
+                  new Date(
+                    response.scholarshipProviderAvailableStartDate
+                  ).getTimezoneOffset() *
+                    60000
               ).toISOString()
-            : new Date(response.studentChooseDay).toISOString();
+            : new Date(
+                new Date(response.studentChooseDay).getTime() -
+                  new Date(response.studentChooseDay).getTimezoneOffset() *
+                    60000
+              ).toISOString();
           const end = response.scholarshipProviderAvailableEndDate
             ? new Date(
-                response.scholarshipProviderAvailableEndDate
+                new Date(
+                  response.scholarshipProviderAvailableEndDate
+                ).getTime() -
+                  new Date(
+                    response.scholarshipProviderAvailableEndDate
+                  ).getTimezoneOffset() *
+                    60000
               ).toISOString()
             : "";
 
@@ -172,7 +188,10 @@ export default function Home() {
         studentID: studentId,
         scholarshipID: scholarshipId,
         meetingURL: `/message/${id}/meet`,
-        studentChooseDay: newEvent.start.toISOString(),
+        studentChooseDay: new Date(
+          new Date(newEvent.start).getTime() -
+            new Date(newEvent.start).getTimezoneOffset() * 60000
+        ).toISOString(),
         status: status,
       });
     }
@@ -181,8 +200,14 @@ export default function Home() {
         id: id,
         studentID: studentId,
         scholarshipID: scholarshipId,
-        scholarshipProviderAvailableStartDate: newEvent.start.toISOString(),
-        scholarshipProviderAvailableEndDate: newEvent.end.toISOString(),
+        scholarshipProviderAvailableStartDate: new Date(
+          new Date(newEvent.start).getTime() -
+            new Date(newEvent.start).getTimezoneOffset() * 60000
+        ).toISOString(),
+        scholarshipProviderAvailableEndDate: new Date(
+          new Date(newEvent.end).getTime() -
+            new Date(newEvent.end).getTimezoneOffset() * 60000
+        ).toISOString(),
         status: status,
       });
     }
