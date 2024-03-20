@@ -43,7 +43,7 @@ const Profile = () => {
     }
   }, []);
 
-  const handleChange = (e) => { //cap nhat state
+  const handleChange = (e) => {
     setScholarshipData({ ...scholarshipData, [e.target.name]: e.target.value });
   };
 
@@ -53,11 +53,11 @@ const Profile = () => {
     setScholarshipData({ ...scholarshipData, location: value });
   };
 
-  const handleLocationChange = (value) => { //xu li event thay doi vi tri
+  const handleLocationChange = (value) => {
     setScholarshipData({ ...scholarshipData, location: value });
   };
 
-  const handleUpload = (url) => { //xu li event upload img
+  const handleUpload = (url) => {
     setScholarshipData({ ...scholarshipData, imageUrl: url });
   };
 
@@ -184,9 +184,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-
-
-
-
-
