@@ -79,13 +79,13 @@ const Avatars = () => {
             onClick={() => {
               if (session && session.user) {
                 signOut();
-                router.replace("/login");
+                router.replace("https://eduhunt.vercel.app/login");
               } else {
                 localStorage.removeItem("userEmail");
                 localStorage.removeItem("userId");
                 localStorage.removeItem("token");
                 localStorage.removeItem("role");
-                router.replace("/login");
+                router.replace("https://eduhunt.vercel.app/login");
               }
             }}
           >
@@ -96,7 +96,7 @@ const Avatars = () => {
     </div>
   );
 }; //else {
-//     redirect("http://localhost:3000/login")
+//     redirect("https://eduhunt.vercel.app/login")
 // }
 // };
 

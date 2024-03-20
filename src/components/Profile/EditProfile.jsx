@@ -69,13 +69,13 @@ function EditProfile() {
     updateProfile(profile.id, updatedProfile)
       .then(() => {
         if (!isupdateVIP) {
-          setToasify({
-            message: "Profile updated successfully",
-            type: "success",
-          });
+          alert("Profile updated successfully");
+          if (role === "Admin") {
+            window.location.href = "https://eduhunt.vercel.app/admin";
+          }
         } else {
           if (window.confirm("Are you sure to pay VIP ?")) {
-            window.location.href = "/payment";
+            window.location.href = "https://eduhunt.vercel.app/payment";
           }
         }
       })

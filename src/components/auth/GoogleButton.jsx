@@ -15,7 +15,9 @@ function GoogleButton() {
   return (
     <div>
       <button
-        onClick={() => signIn("google", { callbackUrl: "/" })}
+        onClick={() =>
+          signIn("google", { callbackUrl: "https://eduhunt.vercel.app/" })
+        }
         className="bg-white text-[#333] border border-solid border-[#333] w-full py-2 rounded-[40px] mb-4 flex items-center justify-center"
       >
         <span className="mr-2">

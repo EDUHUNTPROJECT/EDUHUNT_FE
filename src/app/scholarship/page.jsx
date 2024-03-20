@@ -11,6 +11,7 @@ import { useLocation } from "../../hooks/useLocation";
 const Scholarship = () => {
   const [scholarshipData, setScholarshipData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
+  const role = localStorage.getItem("role");
   const [isVip, setIsVip] = useState(false);
   const { getScholarship } = useScholarship();
   const { getProfile } = useProfile();
@@ -78,7 +79,7 @@ const Scholarship = () => {
 
   const handleSearch = (event) => {
     event.preventDefault();
-    if (!isVip) {
+    if (!isVip&&role === "User") {
       alert("Only VIP users can search.");
       return;
     }
