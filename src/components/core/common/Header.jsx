@@ -230,7 +230,9 @@ const NavBar = () => {
         <div className="lg:flex-grow w-[100%]">
           <div className="flex items-center justify-center">
             {items.map((item, index) => {
-              if ((item.label.props.href) == (pathName)) {
+              if (((pathName).includes((item.label.props.href)) && item.label.props.href != "/") || 
+              ((pathName) == "/" && item.label.props.href == "/")) {
+                console.log(pathName);
                 return (
                   <React.Fragment key={index}>
                     {item.labelhighlight}
