@@ -144,11 +144,13 @@ export default function MentorModal(prop) {
         okText="Submit"
         cancelText="Cancel"
       >
+
         <Input
           autoFocus
           placeholder={`Enter your ${
             role === "Mentor" ? "answer" : "question"
           } to this ${role === "Mentor" ? "student" : "mentor"}`}
+          
           onChange={(e) => {
             setQuestion(e.target.value);
           }}

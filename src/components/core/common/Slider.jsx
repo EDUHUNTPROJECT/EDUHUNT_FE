@@ -3,7 +3,7 @@ import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { RxDotFilled } from 'react-icons/rx';
 import banner from '../../../../public/images/banner.png';
 
-function Slider() {
+function  Slider() {
   const slides = [
     {
       url: banner.src,

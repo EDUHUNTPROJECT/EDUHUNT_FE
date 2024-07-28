@@ -5,8 +5,18 @@ import React, { useState, useEffect } from "react";
 import useMentor from "../../hooks/useMentor";
 import MentorModal from "../../components/Mentor/Modal";
 import { useRouter } from "next/navigation";
+import { Link } from "@nextui-org/react";
+import { Button } from "antd";
+import CreateQuestion from "../../components/QA/CreateQuestion";
 
 const Mentor = () => {
+  const [theID, setTheID] = useState();
+  const [askerID, setAskerID] = useState();
+  const [answerID, setAnswerID] = useState();
+  const [question, setQuestion] = useState();
+  const [subject, setSubject] = useState();
+  const [askerFile, setAskerFile] = useState();
+  const [QADisplay, setQADisplay] = useState(true);
   const { getMentorIDList, getUserList } = useMentor();
   const [mentorList, setMentorList] = useState([]);
   const [userList, setUserList] = useState();
@@ -19,6 +29,7 @@ const Mentor = () => {
   if (typeof window !== "undefined") {
     id = localStorage.getItem("userId");
   }
+  const role = localStorage.getItem("role");
 
   useEffect(() => {
     const role = localStorage.getItem("role");
@@ -28,7 +39,6 @@ const Mentor = () => {
     const fetchUserList = async () => {
       try {
         const userListData = await getMentorIDList();
-        console.log(userListData);
         const listID = userListData.map((ele) => ele.id);
         setMentorList(listID);
       } catch (error) {
@@ -62,13 +72,23 @@ const Mentor = () => {
   mentorProfileList = mentorProfileList?.filter(
     (element) => element !== undefined
   );
-  console.log(mentorProfileList);
   const maxLength = 100;
+  let hideQA = "my-10 flex flex-col"
+  let hideCQ
+  if(QADisplay) {
+    hideCQ = "hidden";
+  } else {
+    hideQA += " hidden";
+    hideCQ = "";
+  }
 
   return (
     <MainLayout>
-      <MentorLayout>
-        <div className="my-10 flex flex-col">
+      <MentorLayout props={QADisplay}>
+        <div className={hideCQ}>
+          <CreateQuestion theID={theID} askerID={id} answerID={answerID} question={question} subject={subject} askerFile={askerFile}/>
+        </div>
+        <div className={hideQA}>
           {mentorProfileList?.map((mentor, index) => {
             const text = mentor.description;
             return (
@@ -76,6 +96,7 @@ const Mentor = () => {
                 className="mb-7 flex w-[100%] justify-center object-fit"
                 key={index}
               >
+                {(mentor.firstName != null && mentor.lastName != null) ?
                 <div className="rounded border flex">
                   <div className="w-[10vw] m-5">
                     <img
@@ -86,12 +107,57 @@ const Mentor = () => {
                   </div>
                   <div className="mt-5 mb-5 w-[50vw]">
                     <div className="flex relative">
-                      <div className="text-4xl font-bold">{`${mentor.firstName} ${mentor.lastName}`}</div>
+                        {
+                          (mentor.firstName != null || mentor.lastName != null) ?
+                          <div className="flex">
+                            <div className="text-4xl font-bold mr-2">
+                              {
+                                (mentor.firstName == null) ? `` : `${mentor.firstName}`
+                              }
+                            </div>
+                            <div className="text-4xl font-bold">
+                              {
+                                (mentor.lastName == null) ? `` : `${mentor.lastName}`
+                              }
+                            </div>
+                          </div> :
+                          <div className="text-4xl font-bold">
+                            {(mentor.firstName == null && mentor.lastName == null) ? `Not set name yet` : ``}
+                          </div>
+                        }
+                      
                       <div className="absolute right-0">
-                        <MentorModal
+                        {/* <MentorModal
                           askerID={id}
                           answerID={mentor.userId}
-                        ></MentorModal>
+                        ></MentorModal> */}
+                        <button
+                           onClick={() => {setQADisplay(false); 
+                            setSubject(mentor.subject); setAskerID(id);
+                            setTheID(mentor.id); setAnswerID(mentor.id);
+                            setQuestion(mentor.question); setAskerFile(mentor.askerFile)}}
+                          className="py-2 bg-blue-600 hover:bg-blue-700 text-white rounded pr-5 scale-150"
+                        >
+                          {
+                          role == "Mentor" ? (
+                            <div className="font-bold pr-3 pl-5">Answer</div>
+                          ) : (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="w-6 h-6"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
+                              />
+                            </svg>
+                          )}
+                        </button>
                       </div>
                     </div>
                     <div
@@ -131,6 +197,7 @@ const Mentor = () => {
                     </button>
                   </div>
                 </div>
+                : <div></div>}
               </div>
             );
           })}
