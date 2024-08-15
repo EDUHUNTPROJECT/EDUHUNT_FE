@@ -43,7 +43,6 @@ export default async function handler(req, res) {
       if (!lineItems) return res?.status(500).send('Internal Server Error');
 
       try {
-        // Save the data, change customer account info, etc
         console.log('Fulfill the order with custom logic');
         console.log('data', lineItems.data);
         console.log('customer email', event.data.object.customer_details.email);

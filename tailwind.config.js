@@ -10,6 +10,7 @@ module.exports = {
   theme: {
     colors: {
       brown: "#AA6227",
+      white: "#FFFFFF",
     },
     extend: {
       backgroundImage: {
